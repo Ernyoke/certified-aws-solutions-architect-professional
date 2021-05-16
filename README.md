@@ -23,9 +23,9 @@ It validates an examinee's ability to:
     - Multiple choice
     - Multiple response
 
-- Minimum passing score: 720/1000
-- Number of questions: 65
-- Time: 130 minutes to complete the exam (with a possibility to request 30 minutes extra for non-native english speakers)
+- Minimum passing score: 750/1000
+- Number of questions: 75
+- Time: 190 minutes to complete the exam (with a possibility to request 30 minutes extra for non-native english speakers)
 
 ### Exam Content
 
