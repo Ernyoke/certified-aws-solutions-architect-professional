@@ -6,6 +6,7 @@
     - [MFA](1-identity/mfa.md)
     - [IAM](1-identity/iam.md)
     - [STS](1-identity/sts.md)
+    - [AWS Resource Access Manager - RAM](1-identity/ram.md)
 
 ## Exam Description
 

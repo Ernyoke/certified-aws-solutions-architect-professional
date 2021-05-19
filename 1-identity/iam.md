@@ -74,6 +74,19 @@
         - `iam:ResourceTag/key-name`
         - `iam:PrincipalTag/key-name`
 
+### Policy Evaluation Logic
+
+- Components involved in a policy evaluations:
+    - Organization SCPs
+    - Resource Policies
+    - IAM Identity Boundaries
+    - Session Policies
+    - Identity Policies
+- Policy evaluation logic - same account:
+    ![policy evaluation logic - same account](PolicyEvaluation1.png)
+- Policy evaluation logic - different account:
+    ![policy evaluation logic - different account](PolicyEvaluation2.png)
+
 ### AWS Policy Simulator
 
 - When creating new custom policies you can test it here:
