@@ -2,11 +2,12 @@
 
 ## Table of Contents
 
-1. Identity and Federation
+1. Permissions, Identity and Federation
     - [MFA](1-identity/mfa.md)
     - [IAM](1-identity/iam.md)
     - [STS](1-identity/sts.md)
     - [AWS Resource Access Manager - RAM](1-identity/ram.md)
+    - [AWS Service Quotas](1-identity/service-quotas.md)
 
 ## Exam Description
 
