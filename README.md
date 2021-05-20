@@ -8,6 +8,7 @@
     - [STS](1-identity/sts.md)
     - [AWS Resource Access Manager - RAM](1-identity/ram.md)
     - [AWS Service Quotas](1-identity/service-quotas.md)
+    - [SAML2.0 Identity Federation](1-identity/saml.md)
 
 ## Exam Description
 
