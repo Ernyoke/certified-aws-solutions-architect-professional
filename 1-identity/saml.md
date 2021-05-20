@@ -14,3 +14,10 @@
 ## SAML 2.0 Identity Federation Authentication Process - AWS Console Access
 
 ![SAML 2.0 Federation Console](SAML2.0FederationConsole.png)
+
+## SAML 2.0 Federation
+
+- We need to setup trust between AWS IAM and SAML (both ways)
+- SAML 2.0 enabled web based, cross domain SSO
+- Uses the STS API: `AssumeRoleWithSAML`
+- It is the old way of doing federation, recommended way by AWS is to use **Amazon Single Sign On (SSO)**
