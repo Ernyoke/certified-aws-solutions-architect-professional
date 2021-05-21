@@ -10,6 +10,7 @@
     - [AWS Service Quotas](1-identity/service-quotas.md)
     - [SAML 2.0 Identity Federation](1-identity/saml.md)
     - [AWS Single Sing-On - SSO](1-identity/sso.md)
+    - [Amazon Cognito](1-identity/cognito.md)
 
 ## Exam Description
 
