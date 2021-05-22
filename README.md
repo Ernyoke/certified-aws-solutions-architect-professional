@@ -11,6 +11,7 @@
     - [SAML 2.0 Identity Federation](1-identity/saml.md)
     - [AWS Single Sing-On - SSO](1-identity/sso.md)
     - [Amazon Cognito](1-identity/cognito.md)
+    - [Amazon Workspaces](1-identity/workspaces.md)
 
 ## Exam Description
 
