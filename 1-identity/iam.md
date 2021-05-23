@@ -83,9 +83,9 @@
     - Session Policies
     - Identity Policies
 - Policy evaluation logic - same account:
-    ![policy evaluation logic - same account](PolicyEvaluation1.png)
+    ![policy evaluation logic - same account](images/PolicyEvaluation1.png)
 - Policy evaluation logic - different account:
-    ![policy evaluation logic - different account](PolicyEvaluation2.png)
+    ![policy evaluation logic - different account](images/PolicyEvaluation2.png)
 
 ### AWS Policy Simulator
 

@@ -16,7 +16,7 @@
 
 ## Workspaces Architecture
 
-![Workspaces Architecture](AmazonWorkspaces.png)
+![Workspaces Architecture](images/AmazonWorkspaces.png)
 
 - Workspaces inject an ENI into customer managed VPCs, they run into AWS managed VPCs
 - Directory services also inject ENIs into customer managed VPCs for file access, etc.

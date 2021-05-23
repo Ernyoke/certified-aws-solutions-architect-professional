@@ -9,11 +9,11 @@
 
 ## SAML 2.0 Identity Federation Authentication Process - API Access
 
-![SAML 2.0 Federation API](SAML2.0FederationAPI.png)
+![SAML 2.0 Federation API](images/SAML2.0FederationAPI.png)
 
 ## SAML 2.0 Identity Federation Authentication Process - AWS Console Access
 
-![SAML 2.0 Federation Console](SAML2.0FederationConsole.png)
+![SAML 2.0 Federation Console](images/SAML2.0FederationConsole.png)
 
 ## SAML 2.0 Federation
 

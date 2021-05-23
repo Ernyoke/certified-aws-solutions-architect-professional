@@ -13,4 +13,4 @@
 
 ## AWS SSO Architecture
 
-![AWS SSO](AWSSSO.png)
+![AWS SSO](images/AWSSSO.png)
