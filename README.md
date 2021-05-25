@@ -12,6 +12,8 @@
     - [AWS Single Sing-On - SSO](1-identity/sso.md)
     - [Amazon Cognito](1-identity/cognito.md)
     - [Amazon Workspaces](1-identity/workspaces.md)
+2. Networking and Hybrid
+    - [VPC - Virtual Private Cloud](2-networking/vpc.md)
 
 ## Exam Description
 
