@@ -114,7 +114,33 @@
     - We can share transit gateways using AWS RAM
     - Transit Gateways offer less complex architectures compared to VPC peering solutions
 
+## Advanced VPC Routing
 
+- **Subnets are associated with 1 route table (RT) only, no more noe less!**
+- This route tables is either the main route table from the VPC or a custom route table
+- In case of a custom route table association with a subnet, the main route table is disassociated. In case the custom RT is removed, the main RT is associated again with the subnet
+- RT can associated with an internet gateway (IGW) or virtual private gateway (VGW)
+- IPv4/6 are handled separately within a RT
+- Routes send traffic based on a destination to a target
+- Route tables have a maximum of 50 static routes and 100 dynamic routes
+- When a traffic arrives to an interface (IGW, VGW), it is matched to the relevant route table
+- All routes from a route table are evaluated - highest-priority matching is used
+- Route tables can contain 2 types of routes:
+    - Static routes: added manually by us
+    - Propagated routes: added when enabled by us on the VPC or on any individual RT
+- Evaluation rule for the routes: 
+    1. Longest prefix wins, example /32 wins over /24, /16 or /0. More specific routes always win!
+    2. Static routes take priority over propagated routes
+    3. For any routes learned by propagation:
+        1. DX
+        2. VPN Static
+        3. VPN BGP
+        4. AS_PATH (distance within two logical systems)
 
+## Ingress Routing
 
+- All outgoing traffic is routed to a security appliances
+- The security appliance is sitting in the public subnet which has a RT assigned to it. This RT sends all unmatched traffic out through the IGW and anything for the corporate network through the VGW
+- Ingress routing allows to assign route tables to gateways (Gateway route tables). **Gateway route tables** can be attached to internet gateways or virtual gateways and can be used to take action on inbound traffic (route to a security instance for assessment)
+![Ingress Routing](images/AdvancedRouting5.png)
 
