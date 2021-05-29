@@ -16,6 +16,7 @@
     - [VPC - Virtual Private Cloud](2-networking/vpc.md)
     - [BGP - Border Gateway Protocol](2-networking/bgp.md)
     - [AWS Global Accelerator](2-networking/global-accelerator.md)
+    - [DX - Direct Connect](2-networking/direct-connect.md)
 
 ## Exam Description
 
