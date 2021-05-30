@@ -43,3 +43,47 @@
 - With direct connect we do not share any data cap with internet providers
 - No transit over the internet, which means low and consistent latency
 - DX offers cheaper data transfers and faster speeds compared to other methods
+
+## Direct Connect Resilience and HA
+
+- Improve resilience:
+    - Order 2 DX ports instead of one => 2 cross connects, 2 customer DX routes connecting to 2 on-premises routes
+    - Connect to 2 DX locations, have to customer routers and 2 on-premises routers in different buildings (geographically separated)
+- Not resilient DX architecture:
+![DX resilience NONE](images/DirectConnectResilience1.png)
+- Resilient DX architecture:
+![DX resilience OK](images/DirectConnectResilience2.png)
+- Improved resilient DX architecture:
+![DX resilience BETTER](images/DirectConnectResilience3.png)
+- Extreme resilient DX architecture:
+![DX resilience GREAT](images/DirectConnectResilience4.png)
+
+## Direct Connect Link Aggregation Groups (LAG)
+
+- LAG: allows to take multiple physical connections and configure them to act as one
+- From speed perspective: the speed is increases linearly depending on the number of connections
+- LAG do provide resilience, although AWS does not market them as such. They do not provide any resilience regarding hardware failure or the failure of entire location
+- LAGs use an Active/Active architecture, maximum 4 connection can be part of the LAG
+- All connections must have the same speed and terminate at the same DX location
+- `MinimumLinks`: the LAG is active as long as the number of working connections is greater or equal to this value
+![DX LAG](images/DirectConnectLAG.png)
+
+## Direct Connect Gateway and Transit VIFs
+
+- Direct Connect is a regional service
+- It is a link from a customer premises to one or more DX locations
+- Public VIFs can be used to access public services in all public AWS regions
+- Private VIFs can only connect to VPCs in the same region by default via VGWs
+- Direct Connect Gateway:
+    - It is a global network device accessible in all regions
+    - Direct Connect integrates with a Direct Connect Gateway using a private VIF. This VIF is associated with the Direct Connect Gateway (not with the VGWs from the VPC)
+    - On the AWS side we create VGW associations in any VPC in any regions. This connects those VPCs to the DX gateway and onwards using the private VIF into on-premises network
+    - Direct Connect Gateway does not allow VPCs to communicate with each other, it allows only on-prem network to communicate with AWS VPCs
+- We can have 10 VGW attachments per DX Gateway
+![DX Gateway Architecture](images/DirectConnectGateway3.png)
+- Integrate DX Gateways with Transit Gateways:
+    - Transit Gateways can be integrated with DX Gateways using a transit VIF
+    - We can have 1 transit VIF per DX connections
+    - Transit VIF is associated with DX gateway and allows associations between the DX gateways and 3 transit gateways
+    - Transit gateways can be peered
+![DX Transit Gateway Architecture](images/DirectConnectGateway4.png)
