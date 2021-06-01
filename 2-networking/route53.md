@@ -23,7 +23,7 @@
 - Authority: when something is trusted in DNS, example root hints file
 - Delegation: trusted authorities can delegate a part of themselves to other entities, those entities becoming authoritative for the part delegated
 
-## Route 53 Introduction
+## Route53 Introduction
 
 - It is a managed DNS product
 - Provides 2 main services:
