@@ -148,4 +148,34 @@
 - When a record is created, it is tagged with a location (country, continent or default)
 - Subdivision: in America we can tag records with a state
 - Geolocation does not return the closest record, it will return the relevant record
-- Geolocation is ideal for restricting content
+- Geolocation record matching:
+    1. R53 checks the state (US only)
+    2. R53 checks the country
+    3. R53 checks the continent
+    4. Returns default if not previous match
+- Geolocation is ideal for restricting content based on the location of the user
+- Can be used to load balance based on the user location or deliver language based content
+
+## Route53 Geoproximity Routing
+
+- Geoproximity aims to provides records as closer to the customer as possible
+- Aims to calculate the distance to the customer and returns the record closer to the customer
+- Records can be tagged with an AWS Region or latitude an longitude coordinates
+- We can define a bias value: plus or minus value altering the effective area of the resource
+- Bias can be used to redirect more (or less) traffic to a given resource
+
+## Route53 Interoperability
+
+- Route53 acts as a domain registrar and as a domain hosting
+- We can also register domain using other external services
+- Steps happening when we register a domain using R53:
+    - R53 accepts the registration fee
+    - Allocates 4 Name Servers
+    - Creates a zone file (domain hosting) on the NS
+    - R53 communicates with the registry of the top level domain and adds the address of the 4 NS for the given domain
+- Route53 acting as a registrar only:
+    - We pay for the domain for Route53 but the name servers are allocated by other entity
+    - We have to allocate the name servers to Route53 which will communicate with the top level domain registry
+- Using Route53 for hosting only:
+    - Generally used for existing domains. The domain is registered at third party
+    - We create a hosted zone inside R53 and provide the address of the name servers to the third party
