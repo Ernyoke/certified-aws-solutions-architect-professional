@@ -153,4 +153,60 @@
 - Acceleration can be enabled when creating a Transit Gateway attachment only! Not compatible with VPNs using virtual gateways (VGW)
 - Accelerated Site-to-Site VPN has a fixed accelerator cost fee and a transfer fee
 
+## VPC Endpoints
 
+### Gateway Endpoints
+
+- Provide private access to supported services: S3 and DynamoDB
+- They allow a private only resource inside a VPC. They allow any resource in a private only VPC to access S3/DynamoDB
+- We crate a gateway endpoint per service per region and associate it to one or more subnets in a VPC
+- We we allocate a gateway endpoint to a subnet a *Prefix List* is added to the route table for the subnet
+- Any traffic targeted to S3/DynamoDB will go through the gateway endpoint and not the internet gateway
+- Gateway endpoints are highly available across all AZs in a region, they are not directly inside a VPC/subnet
+- Endpoint policy: allows what can be connected to the endpoint (example: a particular subset of S3 buckets)
+- Gateway endpoints can be used to access services in the same region only
+- Gateway endpoints allow private only S3 buckets: S3 buckets can be set to private allowing only access from the gateway endpoint. This will help prevent *Leaky Buckets*
+- Gateway endpoints are logical gateway objects, can be only accessed from inside the assigned VPC
+
+### Interface Endpoints
+
+- Interface endpoints provide private access to AWS public services similar to gateway endpoints
+- Historically they have been used to provide access to services other than S3 and DynamoDB, recently AWS allowed interface endpoints to provide access to S3 as well
+- Difference between gateway endpoints and gateway endpoints is that interface endpoints are not HA. Interface endpoints are added to subnets as an ENI
+- In order to have HA, we have to add an interface endpoint to every subnet per AZ inside of a VPC
+- Interface endpoints are able to have security groups assigned to them (gateway endpoints do not allow SGs)
+- We can also use endpoints policies, similar to gateway endpoints
+- Interface endpoints support TCP only over IPv4
+- Interface endpoints use PrivateLink behind the scene
+- Gateway endpoints use prefix lists, interface endpoints use DNS. Interface endpoints provide a new DNS name for every service they are meant communicate with
+- Interface endpoints are given a number of DNS names:
+    - Endpoint Region DNS
+    - Endpoint Zonal DNS
+    - PrivateDNS overrides the default service DNS with a new version pointing to interface endpoint
+
+### VPC Endpoints Policies
+
+- Endpoints policies don't grant access to any AWS services in isolation
+- Identities accessing resources still need they permissions to access resources
+- An endpoint policy only limits access if the service is accessed to the specific endpoint
+- The endpoint policy contains a policy and conditions (who has access to what)
+- Policies are commonly used to limit what private VPCs can access
+
+### Advanced VPC DNS and DNS Endpoints
+
+- In every VPC the VPC.2 IP address is reserved for the DNS
+- In every subnet the .2 is reserved for Route53 resolver
+- Via this address VPC resources can access R53 Public and associated private hosted zones
+- Route53 resolver is only accessible from the VPC, hybrid network integration is problematic both inbound and outbound
+![Isolated DNS Environments](images/Route53Endpoints1.png)
+- Solution to the problem before Route53 endpoints were introduced:
+![Before Route53 Endpoints](images/Route53Endpoints2.png)
+- Route53 endpoints:
+    - Are deliver as VPC interfaces (ENIs) which can be accessed over VPN or DX
+    - 2 different type of endpoints:
+        - Inbound: on-premises can forward request to the R53 resolver
+        - Outbound: interfaces in multiple subnets used to contact on-premises DNS
+        - Rules control what requests are forwarded
+        - Outbound endpoints have IP addresses assigned which can be whitelisted on-prem
+- Route53 endpoint architecture:
+![Route53 Endpoints Architecture](images/Route53Endpoints3.png)
