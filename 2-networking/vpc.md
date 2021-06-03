@@ -81,17 +81,17 @@
 - Site-to-Site VPN: it is a logical connections between a VPC and an on-premise network running over the public internet. The connection is encrypted using IPSec
 - Can be fully HA if it is implemented correctly
 - It is quick to provision, it can be provisioned in less than an hour (contrast to DX)
-- Virtual Private Gateway (VGW): it is a gateway object which can be the target of one or more rules in a Route Tables. It can be associated to a single VPC
-- Customer Gateway (CGW): can refer to 2 different things:
-    - Ofter is referred to the logical configuration in AWS
+- **Virtual Private Gateway (VGW)**: it is a gateway object which can be the target of one or more rules in a Route Tables. It can be associated to a single VPC
+- **Customer Gateway (CGW)**: can refer to 2 different things:
+    - Often is referred to the logical configuration in AWS
     - Physical on-premises router which the VPN connects to
 - VPN Connection: the connection linking the VGW from the AWS to the CGW
 - Static vs Dynamic VPN:
-    - Dynamic VPN uses BGP protocol, if customer router does not support BGP, we can not use dynamic VPNs
-    - Static VPN uses static network configuration: static routes are added to the route tables AWS side, static networks has to be identified on the VPN connection on-premise side. It is simple, it just uses IPSec, works anywhere, having limitation on terms of HA
+    - **Dynamic VPN** uses BGP protocol, if customer router does not support BGP, we can not use dynamic VPNs
+    - **Static VPN** uses static network configuration: static routes are added to the route tables AWS side, static networks has to be identified on the VPN connection on-premise side. It is simple, it just uses IPSec, works anywhere, having limitation on terms of HA
     - Dynamic VPN uses BGP. Allows routing on the fly, allows multiple links to be used at once between the same locations. Allows using HA available architectures.
         - Route propagation: if enabled means that routes are added ro the Route Table automatically
-- Speed Limitation for VPN: 1.25 Gbps, AWS limitation
+- Speed Limitation for VPN: *1.25 Gbps*, AWS limitation
 - Latency considerations: inconsistent, traffic goes through the public internet
 - Cost: hourly cost for outgoing traffic
 - VPN can be used for Direct Connect backup or they can be used over the Direct Connect for adding a layer of encryption
@@ -210,3 +210,19 @@
         - Outbound endpoints have IP addresses assigned which can be whitelisted on-prem
 - Route53 endpoint architecture:
 ![Route53 Endpoints Architecture](images/Route53Endpoints3.png)
+
+## IPv6 Capability in VPCs
+
+- IPv6 addresses are all publicly routable
+- NAT is not used for IPv6, IPv6 does not need network address translation simply because of the huge number of available IPv6 addresses
+- IPv6 needs to be manually enabled on a VPC. We can either bring our own IP address in a VPC or utilize an AWS provided range
+- In case of AWS provided IPv6 addresses, AWS will allocate an uniq /56 range to the VPC. This range will be entirely uniq and all addresses will be publicly routable
+- If we chose to allocate an IP range for a VPC, AWS will use a hex pair to uniquely allocate IP addresses to the subnets
+- Routing is handled separately for the IPv6 addresses, we will have IPv4 routes and IPv6 routes
+- Egress only internet gateway: similar to NAT gateway, allows outbound traffic denying inbound traffic in case of IPv6 addressing. NAT gateways or instances do not support IPv6!
+- We can have both internet gateway and egress only internet gateway associated to the same subnet
+![IPv6 Architecture](IPv6EOIGW.png)
+- IPv6 can be set up while creating a VPC/subnet or we can migrate an existing VPC to IPv6
+- We can enable IPv6 on specific subnets only
+- We can point IPv6 traffic to internet gateway and egress only internet gateways as well
+- Not every service in AWS supports IPv6!

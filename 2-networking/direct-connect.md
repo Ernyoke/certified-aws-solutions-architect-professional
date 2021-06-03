@@ -43,6 +43,7 @@
 - With direct connect we do not share any data cap with internet providers
 - No transit over the internet, which means low and consistent latency
 - DX offers cheaper data transfers and faster speeds compared to other methods
+- VPC endpoints can not be accessed through Private VIFs!
 
 ## Direct Connect Resilience and HA
 
