@@ -18,6 +18,8 @@
     - [AWS Global Accelerator](2-networking/global-accelerator.md)
     - [DX - Direct Connect](2-networking/direct-connect.md)
     - [Route53](2-networking/route53.md)
+3. Storage Services
+    - [FSx](3-storage/fsx.md)
 
 ## Exam Description
 
