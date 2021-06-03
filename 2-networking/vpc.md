@@ -220,9 +220,20 @@
 - If we chose to allocate an IP range for a VPC, AWS will use a hex pair to uniquely allocate IP addresses to the subnets
 - Routing is handled separately for the IPv6 addresses, we will have IPv4 routes and IPv6 routes
 - Egress only internet gateway: similar to NAT gateway, allows outbound traffic denying inbound traffic in case of IPv6 addressing. NAT gateways or instances do not support IPv6!
-- We can have both internet gateway and egress only internet gateway associated to the same subnet
+- We can have both internet gateway and egress only interne t gateway associated to the same subnet
 ![IPv6 Architecture](IPv6EOIGW.png)
 - IPv6 can be set up while creating a VPC/subnet or we can migrate an existing VPC to IPv6
 - We can enable IPv6 on specific subnets only
 - We can point IPv6 traffic to internet gateway and egress only internet gateways as well
 - Not every service in AWS supports IPv6!
+
+## Advanced VPC Structure - Subnets and Tiers
+
+- Public subnets can be configured to not give public IP addresses to all instances by default. We can explicitly allocate public IP addresses to some resources
+- If no public IP is addressed to a resource in a public subnet, it wont be accessible from the outside
+- Security groups: we can restrict inbound traffic by allowing traffic from only selected instances
+- How many subnets does an app need:
+    - We don't need public and private subnets for addressing and security. This can be configured within one subnet. Exception to this: filter traffic using a NACL
+    - We need different subnets for different routing
+    - Internet-facing load balancers can communicates with private instances. Internet facing load balancer needs to run in a public subnet
+    - Number of subnets needed: number of subnets needed for the APP * AZs
