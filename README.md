@@ -20,6 +20,7 @@
     - [Route53](2-networking/route53.md)
 3. Storage Services
     - [FSx](3-storage/fsx.md)
+    - [EFS - Elastic File System](3-storage/efs.md)
 
 ## Exam Description
 
