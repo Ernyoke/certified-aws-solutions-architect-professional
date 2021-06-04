@@ -24,3 +24,17 @@
 - Is a managed implementation of the Lustre file system, designed for HPC - Linux clients (POSIX file system)
 - Lustre is designed for machine learning, big data, financial modelling
 - Can scale to 100's GB/s throughput and offers sub millisecond latency
+- Can be provisioned using 2 different deployment types:
+    - Persistent: provides HA in one AZ only, provides self-healing, recommended for long term data storage
+    - Scratch: highly optimized for short term solutions, no replication is provided
+- FSx is available over VPN or DX for on-premises
+- S3 repository: files are stored in S3 and they are lazily loaded into FSx for Lustre file system at first usage
+- Sync changes between the file system and S3: `hsm_archive` command. The file system and the S3 bucket are not automatically in sync
+- Lustre file system:
+    - MST - Metadata stored on Metadata Targets
+    - OST - Objects are stored on object storage targets, each can be up to 1.17 TiB
+- Baseline performance of the file system is based on the size:
+    - Size: min 1.2 TiB  and then we can use increments of 2.4 TiB
+    - Scratch: base 200 MB/s per TiB of storage
+    - Performance offers: 50 MB/s, 100 MB/s and 200 MB/s per TiB storage
+    - For both types we can burst up to 1300 MB/s per TiB using credits
