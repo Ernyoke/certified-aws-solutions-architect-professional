@@ -1,0 +1,39 @@
+# EBS and Instance Store
+
+## EBS Volume Types
+
+- **General Purpose SSD (GP2/GP3)**:
+    - GP2 is the default storage type for EC2, GP3 is the newer version
+    - A GP2 volume can be as small as 1GB or as large as 16TB
+    - IO Credit:
+        - An IO is 16 KB of data
+        - 1 IOPS is 1 IO in 1 second
+        - 1 IO credit = 1 IOPS
+    - If we have no credits for the volume, we can not perform any IO
+    - The IO bucket has 5.4 million of credits, it refills based at rate based on the baseline performance of the storage
+    - The baseline performance for GP2 is based on the volume size, we get 3 IO credits per second, per GB of volume size
+    - By default GP2 can burst up to 3000 IOPS
+    - If we consume more credits than the bucket is refilling, than we are depleting the bucket
+    - We have to ensure the buckets are replenishing and not depleting down to 0, otherwise the storage will be unusable
+    - Volume larger than 1TB will exceed the burst rate of 3000 IOPS, they will always achieve the baseline performance as standard, they wont use the credit system
+    - Max IO 16000 IO credits per second, any volume larger than 5.33 TB will achieve this maximum rate constantly
+    - GP2 can be used for boot volumes
+    - GP3 is similar to GP2, but it removes the credit system for a simpler way of working:
+        - Every GP3 volume starts at a standard 3000 IOPS and 125 MiB/s regardless of volume size
+    - Base price for GP3 is 20% cheaper than GP2
+    - For more performance we can pay extra cost for up to 16000 IOPS or 1000 MiB/s throughput
+- **Provisioned IOPS SSD (IO1/2)**:
+    - There are 3 types of provisioned IOPS storage options: IO1 and its successor IO2 and IO2 BlockExpress (currently in preview)
+    - Fir this storage category the IOPS value can be configured independently of the storage size
+    - Provisioned IOPS storages are recommended for usage where consistent low latency and high throughput is required
+    - Max IOP per volume is 64000 IOPS per volume and 1000 MB/s throughput, while with BlockExpress we can achieve 256000 IOPS per volume and 4000 MB/s throughput
+    - Volume size ranges from 4 GB up to 16 GP for IO2/IO3 and up to 64 TiB for BlockExpress
+    - We can allocate IOPS performance values independently of the size of the volume, there is a maximum IOPS value per size:
+        - IO1 50 IOPS / GB MAX
+        - IO2 500 IOPS / GB MAX
+        - Block Express 1000 IOPS / GB MAX
+    - Per instance performance: maximum performance between EBS service and EC2. Usually this implies more than one volume in order to be saturated. Max values:
+        - IO1 260_000 IOPS and 7500 MB/s (4 volumes to saturate)
+        - IO2 160_000 IOPS and 4750 MB/s 
+        - Block Express 260_000 IOPS and 7500 MB/s
+    - Use cases: smaller volumes and super high performance

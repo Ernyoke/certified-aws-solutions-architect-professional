@@ -22,6 +22,7 @@
     - [FSx](3-storage/fsx.md)
     - [EFS - Elastic File System](3-storage/efs.md)
     - [S3](3-storage/s3.md)
+    - [EBS and Instance Store](3-storage/ebs.md)
 
 ## Exam Description
 
