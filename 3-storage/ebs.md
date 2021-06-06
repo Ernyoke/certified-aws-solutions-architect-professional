@@ -37,3 +37,20 @@
         - IO2 160_000 IOPS and 4750 MB/s 
         - Block Express 260_000 IOPS and 7500 MB/s
     - Use cases: smaller volumes and super high performance
+- HDD based volume types:
+    - There are 2 types of HDD based storages: ST1 Throughput Optimized, SC1 Cold HDD
+    - **ST1**:
+        - Cheaper than SSD based volumes, ideal for larger volumes of data
+        - Recommended for sequential data, applications when throughput is more important than IOPS
+        - Volume size can be between 125 GB and 16 TB
+        - Offers maximum 500 IOPS, data is measured in blocks of 1 MB => max throughput of 500 MB/s
+        - Works similar as GP2 with a credit system
+        - Offer a base performance of 40 MB/s per TB of volume size with bursting to 250 MB/s per TB
+        - Designed for frequently accessed sequential data at lower cost
+    - **SC1**:
+        - SC1 is cheaper than ST1, has significant trade-offs
+        - Geared towards maximum economy when we want to share a lot of data without caring about performance
+        - Offers a maximum of 250 IOPS, 250 MB/S throughput
+        - Offer a base performance of 12 MB/s per TB of volume size with bursting to 80 MB/s per TB
+        - Volume size can be between 125 GB and 16 TB
+        - It is the lower cost EBS storage available
