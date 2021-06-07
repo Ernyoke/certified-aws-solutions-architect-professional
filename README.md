@@ -23,6 +23,8 @@
     - [EFS - Elastic File System](3-storage/efs.md)
     - [S3](3-storage/s3.md)
     - [EBS and Instance Store](3-storage/ebs.md)
+4. Compute, Scaling and Load Balancing
+    - [Regional and Global AWS Architecture](4-compute/aws-architecture.md)
 
 ## Exam Description
 
