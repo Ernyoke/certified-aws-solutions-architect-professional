@@ -54,3 +54,40 @@
         - Offer a base performance of 12 MB/s per TB of volume size with bursting to 80 MB/s per TB
         - Volume size can be between 125 GB and 16 TB
         - It is the lower cost EBS storage available
+
+## Instance Store Volumes
+
+- Provide block storage devices, raw volumes which can be mounted to a system
+- They are similar to EBS, but they are local drives instead of being presented over the network
+- This volumes are physically connected to the EC2 host
+- Instances on the host can access these volumes
+- Provides the highest storage performance in AWS
+- Instance storages are included in the price of EC2 instances with which they come with
+- Instance stores have to be attached at launch time, they can not be added afterwards
+- If an EC2 instance moves between hosts the instance store volume loses all its data
+- Instances are moving between hosts for many reasons: instance are stopped and restarted, maintenance reasons, hardware failure, etc.
+- **Instance store volumes are ephemeral volumes!**
+- One of the primary benefit of instance stores is performance, ex: D3 instance provides 4.6 GB/s throughput, I3 volumes provide 16 GB/s of sequential throughput with NVMe SSD
+- Instance store considerations:
+    - Instance store can be added only at launch
+    - Data is lost on an instance stores in case the instance is moved, resized or there is a hardware failure
+    - Instance stores provide high performance
+    - For instance store volumes we pay for it with the EC2 instance
+    - Instance store volumes are temporary!
+
+## Choosing between Instance Store and EBS
+
+- Fer persistence storage we should default to EBS
+- For resilience storage we should avoid instance store an default to EBS
+- If the storage should be isolated from EC2 instance lifecycle we should use EBS
+- Resilience with in-built replication - we can use both, it depends on the situation
+- For high performance needs -  we can also use both, it depends on the situation
+- Fos super high performance we should use instance store
+- If cost is a primary concern we can use instance store if it comes with the EC2 instance
+- Cost consideration: cheaper volumes: ST1 or SC1
+- Throughput or streaming: ST1
+- Boot volumes: HDD based volumes are not supported (no ST1 or SC1)
+- GP2/3 - max performance up to 16000 IOPS
+- IO1/2 - up to 64000 IOPS (BlockExpress: 256000)
+- RAID0 + EBS: up to 260000 IOPS (maximum possible on an EC2 instance)
+- For more than 260000 IOPS - use instance store
