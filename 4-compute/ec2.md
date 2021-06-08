@@ -1,0 +1,49 @@
+# EC2
+
+## EC2 Purchase Options (Launch Types)
+
+- **On-Demand (default)**:
+    - Average of anything, no specific cons of pros
+    - On-demand instances are isolated but multiple customer instances run on a shared hardware
+    - Multiple instance types (different sizes) can run on the same EC2 hosts, consuming a different allocation of resources
+    - Billing: per-second billing while an instance is running, if a system is shut down, we don't get billed for that
+    - Associated resources such as storage consume capacity, we will be billed regardless the instance is running or it is stopped
+    - We should always start the evaluation process using on-demand
+    - With on-demand there are no interruptions. We start an instance and it should run as long as we don't decide to shut it down
+    - In case of resource shortage the reserved instances receive highest priority, consider them instead of on-demand in case of business critical systems
+    - On-demand offers predictable pricing without any discount options
+- **Spot instances**:
+    - Cheapest way to get EC2 compute capacity
+    - Spot pricing is selling EC2 capacity at lower price in order make use of spare EC2 capacity on the host machines
+    - If the spot price goes above selected maximum price, our instances are terminated
+    - We should never use the spot instances for workloads which can't tolerate interruptions
+    - Anything which can tolerate interruptions and can be re-triggered is good for spot
+- **Reserved Instances**:
+    - On-demand is generally used for unknown or short term usage, reserved is for long term consistent usage of EC2
+    - Reservations:
+        - They are commitments that we will use a instance/set of instances for a longer amount of time
+        - The effect of a reservation is to reduce the per second cost or remove it entirely
+        - Reservation needs to be planned in advance
+        - We pay for unused reservations
+        - Reservations can be bought for a specific type of instances. They can be region and AZ locked
+        - Az locked instances reserve EC2 capacity
+        - Reservations can have a partial effects in a sense the we can get discounts for larger instances compared to which the reservation was purchased
+        - We can commit to reservations of 1 year of 3 years
+        - Payment structures:
+            - No upfront: we pay per second a lower amount of fee compared to on-demand. We pay even if the instance is not used
+            - All upfront: the whole cost of the 1 or 3 years. No second per fee payment will be required. Offer the greatest discount
+            - Partial upfront: we pay a reduced fee upfront for smaller per second usage
+    - Reserved instances are good for components which have known usage, require consistent access for compute for a long term basis
+- **Dedicated Hosts**:
+    - They are EC2 hosts allocated to a customer entirely
+    - They are hosts designed for specific instances, ex. A, C, R, etc.
+    - Hosts come with all of the resources we expected from a physical machine: number of cores and CPUs, memory, local storage and connectivity
+    - We have a capacity for a dedicated hosts, we can launch different sizes of instances based on the available capacity
+    - Reasons for dedicated hosts: we want to use software which is licensed for number of cores or number of sockets
+    - Host affinity: links instances to hosts, if we stop and start the instance, it will remain on the same host
+- **Dedicated Instances**:
+    - Our instances run on an EC2 host with other instances of ours. The host is not shared with other AWS customers
+    - We don't pay for the host, nor do we share the host
+    - Extra fees:
+        - One of hourly fee for any regions in which we are using dedicated instances
+        - There is a fee for the dedicated instances themselves

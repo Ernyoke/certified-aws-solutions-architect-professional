@@ -25,6 +25,7 @@
     - [EBS and Instance Store](3-storage/ebs.md)
 4. Compute, Scaling and Load Balancing
     - [Regional and Global AWS Architecture](4-compute/aws-architecture.md)
+    - [EC2](4-compute/ec2.md)
 
 ## Exam Description
 
