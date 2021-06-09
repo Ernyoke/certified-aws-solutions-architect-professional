@@ -91,3 +91,16 @@
 - IPv6 addresses are always visible to the OS
 - Source/destination checks: each ENI has a flag which can be disabled
 - By default source/destination check is enabled, if disabled the ENI can process traffic which was not created by the EC2 instances or traffic for which the EC2 instance is not the destination
+
+## Bootstrapping and AMI Baking
+
+- Bootstrapping:
+    - Is a way of building EC2 instances in a flexible way
+    - Flexible, automated building of EC2 instances
+    - We provision EC2 instances and add a scrip to the user data
+    - CloudInit runs the script on the instance when the instance is launched
+    - This process can longer time, although it is very flexible
+- AMI Baking:
+    - We front-load the time and effort required to configure an instance
+    - We launch an EC2 instance and perform the necessary tasks from which we can create an AMI
+    - We can use the AMI to deploy many instances quickly
