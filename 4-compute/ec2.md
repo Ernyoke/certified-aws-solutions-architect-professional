@@ -18,7 +18,7 @@
     - If the spot price goes above selected maximum price, our instances are terminated
     - We should never use the spot instances for workloads which can't tolerate interruptions
     - Anything which can tolerate interruptions and can be re-triggered is good for spot
-- **Reserved Instances**:
+- **Standard Reserved Instances**:
     - On-demand is generally used for unknown or short term usage, reserved is for long term consistent usage of EC2
     - Reservations:
         - They are commitments that we will use a instance/set of instances for a longer amount of time
@@ -34,6 +34,10 @@
             - All upfront: the whole cost of the 1 or 3 years. No second per fee payment will be required. Offer the greatest discount
             - Partial upfront: we pay a reduced fee upfront for smaller per second usage
     - Reserved instances are good for components which have known usage, require consistent access for compute for a long term basis
+- **Scheduled Reserved Instances**:
+    - Great for long term requirements which does not run constantly, ex. batch processing running 5 hours/day
+    - For scheduled reserved instances we specify a time window. The capacity can be used only during the time window
+    - Minimum purchase per year is 1200 hours, minimum commitment is 1 year
 - **Dedicated Hosts**:
     - They are EC2 hosts allocated to a customer entirely
     - They are hosts designed for specific instances, ex. A, C, R, etc.
@@ -47,3 +51,24 @@
     - Extra fees:
         - One of hourly fee for any regions in which we are using dedicated instances
         - There is a fee for the dedicated instances themselves
+
+## Capacity Reservations
+
+- AWS prioritizes any scheduled commitment for delivering EC2 capacity
+- After scheduled instances on-demand is prioritized
+- The leftover capacity can be used for spot instances
+- Capacity reservation is different compared to reserved instances
+- Regional reservation provides a billing discount for valid instances launched in any AZ in that region
+- While this is flexible, region reservation don't reserve capacity within az AZ - risky if the capacity is limited during a major fault
+- Zonal reservation: same billing discount as for region reservation, but the reservation applies only to specific AZs
+- Regional/zonal reservation commitment is 1 or 3 years
+- On-Demand capacity reservation: can be booked to ensure we always have access to capacity in an AZ when we need it but at full on-demand price. No term limits, but we pay regardless if we consume the reservation or not
+
+## EC2 Savings Plan
+
+- A hourly commitment for 1 or 3 years term
+- Saving Plan can be 2 different types:
+    - General compute dollar amounts: we can save up to 66% version on-demand
+    - EC2 Saving Plan: up to 72% saving for EC2
+- General compute savings plan currently apply to EC2, Fargate and Lambda
+- Resource usage consumes savings plan commitment at the reduced saving plans rate, beyond commitment on-demand billing is used
