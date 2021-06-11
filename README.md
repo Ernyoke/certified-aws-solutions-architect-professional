@@ -26,6 +26,7 @@
 4. Compute, Scaling and Load Balancing
     - [Regional and Global AWS Architecture](4-compute/aws-architecture.md)
     - [EC2](4-compute/ec2.md)
+    - [ELB - Elastic Load Balancer](4-compute/elb.md)
 
 ## Exam Description
 
