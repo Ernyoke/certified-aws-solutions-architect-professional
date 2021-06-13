@@ -30,6 +30,7 @@
     - [ASG - Auto Scaling Groups](4-compute/asg.md)
 5. Monitoring, Logging and Cost Management
     - [CloudWatch](5-monitoring/cloudwatch.md)
+    - [CloudTrail](5-monitoring/cloudtrail.md)
 
 ## Exam Description
 
