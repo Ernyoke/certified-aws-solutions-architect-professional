@@ -32,6 +32,7 @@
     - [CloudWatch](5-monitoring/cloudwatch.md)
     - [CloudTrail](5-monitoring/cloudtrail.md)
     - [AWS X-Ray](5-monitoring/xray.md)
+    - [Cost Allocation Tags](5-monitoring/cost-allocation-tags.md)
 
 ## Exam Description
 
