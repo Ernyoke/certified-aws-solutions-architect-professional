@@ -28,6 +28,8 @@
     - [EC2](4-compute/ec2.md)
     - [ELB - Elastic Load Balancer](4-compute/elb.md)
     - [ASG - Auto Scaling Groups](4-compute/asg.md)
+5. Monitoring, Logging and Cost Management
+    - [CloudWatch](5-monitoring/cloudwatch.md)
 
 ## Exam Description
 
