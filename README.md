@@ -33,6 +33,7 @@
     - [CloudTrail](5-monitoring/cloudtrail.md)
     - [AWS X-Ray](5-monitoring/xray.md)
     - [Cost Allocation Tags](5-monitoring/cost-allocation-tags.md)
+    - [AWS Trusted Advisor](5-monitoring/trusted-advisor.md)
 
 ## Exam Description
 
