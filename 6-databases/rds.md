@@ -36,3 +36,22 @@
     - Manual failover
     - Instance type change
     - Software patching
+
+## RDS Backups and Restores
+
+- RPO (Recovery Point Objective): time between the last working backup and the failure. Lower the RPO value, usually the more expensive the solution
+- RTO (Recovery Time Objective): time between the failure and system being dully recovered. Can be reduced with spare hardware, predefined processes, etc. Lower the RTO value, the system is usually more expensive
+- RDS backup types:
+    - Manual snapshots:
+        - Have to be run manually
+        - First snapshot is full content of the DB, incremental onward
+        - When any snapshot occures, there is brief interruption in the flowing of data
+        - Manual snapshots do not expire
+        - When we delete an RDS instance, AWS offers to make one final snapshot
+    - Automatic backups:
+        - Snapshots which occure automatically, first being full snapshot, incremental afterwards
+        - Every 5 minute transaction logs are written to S3
+        - Automatic backups are not retained, we can set the retention period between 0 and 35 days
+        - Automatic backups can be retained after a DB is deleted, by they still expire after the retention period
+- Backups are stored in AWS manages S3 buckets
+- When we create a restore, RDS creates a new instance
