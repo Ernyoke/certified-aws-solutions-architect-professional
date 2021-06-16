@@ -55,3 +55,19 @@
         - Automatic backups can be retained after a DB is deleted, by they still expire after the retention period
 - Backups are stored in AWS manages S3 buckets
 - When we create a restore, RDS creates a new instance
+
+## RDS Read-Replicas
+
+- Provide 2 main benefits: performance and availability
+- Read replicas are read-only replicas of an RDS instance
+- Read replicas can be used for reading only data
+- The primary instance and read replica is kept sync using asynchronous replication
+- There can be a small amount of lag in case of replication
+- Read replicas can be created in a different AZ or different region (CRR - Cross-Region Replication)
+- We can 5 direct read-replicas per DB instance
+- Each read-replica provides an additional instance of read performance
+- Read-replicas can also have read-replicas, but lag starts to be a problem in this case
+- Read-replicas can provide global performance improvements
+- Snapshots and backups improve RPO but not RTO. Read-replicas offer near 0 RPO
+- Read-replicas can be promoted to primary in case of a failure. This offers low RTO as well (lags of minutes)
+- Read-replicas can replicate data corruption
