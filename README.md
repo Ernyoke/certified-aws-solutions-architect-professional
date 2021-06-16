@@ -34,6 +34,8 @@
     - [AWS X-Ray](5-monitoring/xray.md)
     - [Cost Allocation Tags](5-monitoring/cost-allocation-tags.md)
     - [AWS Trusted Advisor](5-monitoring/trusted-advisor.md)
+6. Databases
+    - [RDS - Relational Database Service](6-databases/rds.md)
 
 ## Exam Description
 
