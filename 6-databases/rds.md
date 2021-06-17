@@ -71,3 +71,17 @@
 - Snapshots and backups improve RPO but not RTO. Read-replicas offer near 0 RPO
 - Read-replicas can be promoted to primary in case of a failure. This offers low RTO as well (lags of minutes)
 - Read-replicas can replicate data corruption
+
+## Data Security
+
+- With all the RDS engines we can use encryption in transit (SSL/TLS). THis can be set to be mandatory
+- For encryption at rest RDS supports EBS volume encryption using KMS which is handled by the host EBS and it is invisible for the database engine
+- We can use customer managed or AWS generated CMK data keys for encryption at rest
+- Storage, logs and snapshots will be encrypted with the same customer master key
+- Encryption can not be removed after it is activated
+- In addition to encryption at rest MSSQL and Oracle support TDE (Transparent Data Encryption) - encryption at the database engine level
+- Oracle supports TDE with CloudHSM, offering much stronger encryption
+- IAM authentication with RDS:
+    - Normally login is controlled with local database users (username/password)
+    - We can configure RDS to allow IAM authentication (only authentication, not authorization, authorization is handled internally!):
+    ![ASG Lifecycle Hooks](images/RDSIAMAuthentication.png)
