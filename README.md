@@ -36,6 +36,7 @@
     - [AWS Trusted Advisor](5-monitoring/trusted-advisor.md)
 6. Databases
     - [RDS - Relational Database Service](6-databases/rds.md)
+    - [DynamoDB](6-databases/dynamodb.md)
 
 ## Exam Description
 
