@@ -38,6 +38,7 @@
     - [RDS - Relational Database Service](6-databases/rds.md)
     - [DynamoDB](6-databases/dynamodb.md)
     - [AWS ElasticSearch - ES](6-databases/elasticsearch.md)
+    - [Amazon Athena](6-databases/athena.md)
 
 ## Exam Description
 
