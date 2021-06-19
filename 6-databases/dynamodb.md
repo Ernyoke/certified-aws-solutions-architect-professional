@@ -83,3 +83,34 @@
         ROUND UP (ITEM SIZE / 4 KB) => 1
         MULT by average read ops per second (10) => Strongly consistent reads = 10, Eventually consistent reads => 5
         ```
+
+## DynamoDB Indexes
+
+- Are way to improve efficiency of data retrieval from DynamoDB
+- Indexes are alternative views on table data, allowing the query operation to work in ways that it couldn't otherwise
+- Local Secondary Indexes allow to create a view using different sort key, Global Secondary Indexes allow to create create different partition and sort key
+
+### Local Secondary Indexes (LSI)
+
+- **Must be created with the base table!**
+- We can have at max 5 LSIs per base table
+- LSIs are alternative sort key, same partition key
+- They share the same RCU and WCU with the main table
+- Attributes which can be projected into LSIs: `ALL`, `KEYS_ONLY`, `INCLUDE` (we can specifically pick which attribute to be included)
+- Indexes are sparse: only items which have a value in the index alternative sort key are added to the index
+
+### Global Secondary Indexes (GSI)
+
+- They can be created at any time
+- It is a default limit of 20 GSIs per base table
+- We cane define different partition and sort keys
+- GSIs have their own RCU and WCU allocations
+- Attributes projected into the index: `ALL`, `KEYS_ONLY`, `INCLUDE`
+- GSIs are also sparce, only items which have values in the new PK and optional SK are added to the index
+- GSIs are always eventually consistent, the data is replicated from the main table
+
+### LSI and GSI Considerations
+
+- We have to be careful with the projection, more capacity is consumed if we project unnecessary attributes
+- If we don't project a specific attribute and require that when querying the index, it will fetch the data from the main table, the query becoming inefficient
+- AWS recommends using GSIs as default, LSI only when strong consistency is required
