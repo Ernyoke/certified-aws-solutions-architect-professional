@@ -114,3 +114,55 @@
 - We have to be careful with the projection, more capacity is consumed if we project unnecessary attributes
 - If we don't project a specific attribute and require that when querying the index, it will fetch the data from the main table, the query becoming inefficient
 - AWS recommends using GSIs as default, LSI only when strong consistency is required
+
+## DynamoDB Streams and Triggers
+
+- A stream is a time ordered list of item changes in a DynamoDB table
+- A stream is a 24H rolling window
+- Streams has to be enabled per table basis
+- Streams record inserts, updates and deletes
+- We can create different view types influencing what is in the stream
+- Available view types:
+    - `KEYS_ONLY`: the stream will only record the partition key and available sort keys for items which did change
+    - `NEW_IMAGE`: stores the entire item with the new state after the change
+    - `OLD_IMAGE`: stores the entire state of the item before the change
+    - `NEW_AND_OLD_IMAGE`: stores the before/after states of the items in case of a change
+- In some cases the new/old states recorded can be empty, example in case of a deletion the new state of an item is blank
+- Streams are the foundation for database triggers
+- An item change inside a table generate an event, which contains the data which changed
+- An action is taken using that data in case of event
+- We can use streams and Lambda in case of changes and events
+- Streams and triggers are useful for data aggregation, messaging, notifications, etc.
+
+## DynamoDB Accelerator (DAX)
+
+- It is an in-memory cache directly integrated with DynamoDB
+- DAX operates within a VPC, designed to be deployed in multiple AZs in a VPC
+- DAX is a cluster service, nodes are placed in different AZs. There a primary nodes from which data is replicated into replica nodes
+- DAX maintains 2 different caches:
+    - Items cache: holds results of (`Batch`)`GetItem` calls
+    - Query cache: holds the collection of items based on query/scan parameters
+- DAX is accessed via an endpoint. This endpoint load balances across nodes
+- Cache hits are returned in microseconds, cache misses in milliseconds
+- When writing data to DynamoDB, DAX uses write-through caching, the data is written at the same time to the cache as it is written to the DB
+- DAX is not suitable for applications requiring strongly consistent reads
+
+## DynamoDB Global Tables
+
+- Global tables provide multi-master cross-region replication
+- Tables are created in multiple regions and added to the same global table (becoming replicate tables)
+- DynamoDB utilizes last writer wins in conflict resolution
+- We can read and write to any region, updates are replicated generally sub-second
+- Strongly consistent reads are only supported in the same region as writes
+- Global tables provide global HA and global DR/BC
+
+## DynamoDB TTL
+
+- TTL = Time-to-Live
+- In order to use TTL we have to enable it on a table and select a specific attribute for the TTL
+- The attribute should contain a number representing an epoch (number of seconds)
+- A per-partition process periodically runs for checking the current time to the value in the TTL attribute
+- Items where the TTL attribute is older than the current time are set to expired
+- Another per-partition background process scans for expired items and removes them from tables and indexes, adding a delete event to the streams is enabled
+- These processes run on the background without affecting the performance of the table and without any additional charge
+- We can create a dedicated stream linked to the TTL processes, having 24h rolling window for deletes
