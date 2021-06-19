@@ -39,6 +39,8 @@
     - [DynamoDB](6-databases/dynamodb.md)
     - [AWS ElasticSearch - ES](6-databases/elasticsearch.md)
     - [Amazon Athena](6-databases/athena.md)
+    - [Amazon Neptune](6-databases/neptune.md)
+    - [Amazon Quantum Ledger Database - QLDB](6-databases/quantum-ledger.md)
 
 ## Exam Description
 
