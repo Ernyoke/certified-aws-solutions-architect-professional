@@ -43,6 +43,7 @@
     - [Amazon Quantum Ledger Database - QLDB](6-databases/quantum-ledger.md)
 7. Data Analytics
     - [Kinesis](7-data-analytics/kinesis.md)
+    - [EMR - Elastic Map Reduce](7-data-analytics/emr.md)
 
 ## Exam Description
 
