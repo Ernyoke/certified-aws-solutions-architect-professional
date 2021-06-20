@@ -44,6 +44,7 @@
 7. Data Analytics
     - [Kinesis](7-data-analytics/kinesis.md)
     - [EMR - Elastic Map Reduce](7-data-analytics/emr.md)
+    - [Amazon Redshift](7-data-analytics/redshift.md)
 
 ## Exam Description
 
