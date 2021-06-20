@@ -41,6 +41,8 @@
     - [Amazon Athena](6-databases/athena.md)
     - [Amazon Neptune](6-databases/neptune.md)
     - [Amazon Quantum Ledger Database - QLDB](6-databases/quantum-ledger.md)
+7. Data Analytics
+    - [Kinesis](7-data-analytics/kinesis.md)
 
 ## Exam Description
 
