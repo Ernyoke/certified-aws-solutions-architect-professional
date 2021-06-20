@@ -45,6 +45,7 @@
     - [Kinesis](7-data-analytics/kinesis.md)
     - [EMR - Elastic Map Reduce](7-data-analytics/emr.md)
     - [Amazon Redshift](7-data-analytics/redshift.md)
+    - [AWS Batch](7-data-analytics/aws-batch.md)
 
 ## Exam Description
 
