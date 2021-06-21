@@ -50,6 +50,7 @@
 8. App Services, Containers and Serverless
     - [ECS - Elastic Container Service](8-containers-and-serverless/ecs.md)
     - [SNS - Simple Notification Service](8-containers-and-serverless/sns.md)
+    - [SQS - Simple Queue Service](8-containers-and-serverless/sqs.md)
 
 ## Exam Description
 
