@@ -47,6 +47,8 @@
     - [Amazon Redshift](7-data-analytics/redshift.md)
     - [AWS Batch](7-data-analytics/aws-batch.md)
     - [AWS Quicksight](7-data-analytics/quicksight.md)
+8. App Services, Containers and Serverless
+    - [ECS - Elastic Container Service](8-containers-and-serverless/ecs.md)
 
 ## Exam Description
 
