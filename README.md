@@ -49,6 +49,7 @@
     - [AWS Quicksight](7-data-analytics/quicksight.md)
 8. App Services, Containers and Serverless
     - [ECS - Elastic Container Service](8-containers-and-serverless/ecs.md)
+    - [SNS - Simple Notification Service](8-containers-and-serverless/sns.md)
 
 ## Exam Description
 
