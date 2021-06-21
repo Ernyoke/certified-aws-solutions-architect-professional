@@ -26,4 +26,31 @@
     - The order of the delivery is guaranteed to be the same as the messages were sent
     - Performance is limited: 3000 messages per second with batching or up to 300 messages per second without batching
     - There is also available a high throughput mode for FIFO queues
-    - FIFO queues have to have `.fifo` suffix in order to be valid FIFO queues 
+    - FIFO queues have to have `.fifo` suffix in order to be valid FIFO queues
+
+## SQS Extended Client Library
+
+- SQS has a message size limit of 256KB
+- Extended Client Library can be used when we want to send messages larger than this size
+- It can process large payloads and have the bulk of the payloads stored in S3
+- When we send a message using `SendMessage` API, the library uploads the content to S3 and stores a link to this content in the message
+- When receiving a message, the library loads the payload from S3 and replaces the link with the payload in the message
+- When deleting a message from a queue, the large S3 payload will also be deleted
+- The Extended Client Library has an implementation in Java
+
+## SQS Delay Queues
+
+- Delay queues allow us to postpone the delivery of messages in SQS queues
+- For a delay queue we configure a `DelaySeconds` value. Messages added to the queue will be invisible for the amount of `DelaySeconds`
+- The default value of `DelaySeconds` is 0, the max value is 15 minutes. In order for a queue to be delay queue, the value should be set to be greater than 0
+- Message times allow a per-message basis invisibility to be set, overriding the queue setting. Min/max values are the same. Per message setting is not supported for FIFO queues
+
+## SQS Dead Letter Queues (DLQ)
+
+- Dead Letter Queues are designed to help handle reoccurring failures while processing messages from a queue
+- Every time a message is received, the `ReceiveCount` is incremented. In order to not process the same message over and over again, we define a `maxReceiveCount` and a DLQ for a queue. After the number of retries is greater than the `maxReceiveCount`, the message is pushed into the DLQ
+- Having a DLQ, we can define alarms to get notified in case of a failure
+- Messages in DLQ can be further analyzed
+- Every queue (including DLQ) have a retention period for messages. Every message has an `mq-timestamp` which represents when was the message was added to the queue. In case a message is moved into a DLQ, this timestamp is not altered
+- Generally the retention period for a DLQ should be longer compared to normal queues
+- A single DLQ can be used for multiple sources
