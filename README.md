@@ -52,6 +52,7 @@
     - [SNS - Simple Notification Service](8-containers-and-serverless/sns.md)
     - [SQS - Simple Queue Service](8-containers-and-serverless/sqs.md)
     - [Amazon MQ](8-containers-and-serverless/mq.md)
+    - [AWS Lambda](8-containers-and-serverless/lambda.md)
 
 ## Exam Description
 
