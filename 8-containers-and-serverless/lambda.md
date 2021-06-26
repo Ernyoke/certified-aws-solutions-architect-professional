@@ -98,3 +98,21 @@
     - INVOKE: runs the function handler (cold start)
     - NEXT INVOKE(s): warm start using the same environment
     - SHUTDOWN: execution environment is terminated
+
+## Lambda Versions
+
+- Unpublished functions can be changed and deployed
+- `$LATEST` version of the Lambda code can be edited and deployed
+- We can take the current state of the function and publish it which will create an immutable version
+- If the function is published, the code, dependencies, runtime settings and env. variables in the version created can not be edited
+- Each version gets an uniq ARN (Qualified ARN)
+- Unqualified ARN points at the function without a specific version (`$LATEST`)
+
+## Lambda Aliases
+
+- An alias is a pointer to a function version
+- Example: PROD => function:1, BETA => function:2
+- Each alias has an unique ARN
+- Aliases can be updated, changing which version they reference
+- Useful for PROD/DEV, BLUE/GREEN deployments, A/B testing
+- We can also use alias routing: sending a certain percentage of request to v1 and other percentage to v2. Both versions need the same role, same DLQ will be used and both versions need to be published
