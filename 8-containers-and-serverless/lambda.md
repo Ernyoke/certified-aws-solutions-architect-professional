@@ -116,3 +116,46 @@
 - Aliases can be updated, changing which version they reference
 - Useful for PROD/DEV, BLUE/GREEN deployments, A/B testing
 - We can also use alias routing: sending a certain percentage of request to v1 and other percentage to v2. Both versions need the same role, same DLQ will be used and both versions need to be published
+
+## Lambda Environment Variables
+
+- Key and value pairs for associated with Lambda functions
+- By default they are associated with `$LATEST` - can be edited
+- If they are publishes, they can not be edited
+- They can be accessed within the execution environment
+- The environment variables can be encrypted with KMS
+- They allow code execution to be adjusted based on variables
+
+## Lambda Layers
+
+- Used to split off libraries and dependencies from Lambda functions
+- Reduces the size of the deployment package
+- Layers can be reused by multiple Lambda functions
+- Libraries in layers are extracted in the `/opt` folder
+- Layers allow new runtimes which are not explicitly supported by AWS
+
+## Lambda Container Images
+
+- Until recently Lambda was considered to be a Function as a Service (FaaS) product, which means creation of a function, uploading code and executing it
+- Many organizations use containers and CI/CD processes built for containers
+- Lambda is now capable to use containers images
+- It is an alternative way of packaging the function code and using it with the Lambda product
+- Lambda Runtime API - has to be included with the container images
+- AWS Lambda Runtime Interface Emulator (RIE): used for local Lambda testing
+
+## Lambda and ALB
+
+- Multi-Value headers: 
+    - Example: `http://function.io?&search=roffle&search=winkie
+    - Without multi-value headers the Lambda receives the following:
+        ```
+        "queryStringParameters": {
+            "search": "winkie"
+        }
+        ```
+    - If the multi-value headers are enabled, we get this delivered to Lambda:
+        ```
+        "multiValueQueryStringParameters": {
+            "search": ["roffle", "winkie"]
+        }
+        ```
