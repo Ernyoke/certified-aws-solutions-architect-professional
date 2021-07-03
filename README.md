@@ -59,6 +59,8 @@
     - [SWF - Simple Workflow Service](8-containers-and-serverless/swf.md)
     - [Amazon Mechanical Turk](8-containers-and-serverless/mechanical-turk.md)
     - [Elastic Transcoder and AWS Elemental MediaConvert](8-containers-and-serverless/mediaconvert.md)
+    - [AWS IOT](8-containers-and-serverless/iot.md)
+    - [AWS Greengrass](8-containers-and-serverless/greengrass.md)
 
 ## Exam Description
 
