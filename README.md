@@ -55,6 +55,8 @@
     - [AWS Lambda](8-containers-and-serverless/lambda.md)
     - [CloudWatch Events and EventBridge](8-containers-and-serverless/eventbridge.md)
     - [API Gateway](8-containers-and-serverless/api-gateway.md)
+    - [AWS Step Functions](8-containers-and-serverless/step-functions.md)
+    - [Simple Workflow Service](8-containers-and-serverless/swf.md)
 
 ## Exam Description
 
