@@ -56,7 +56,9 @@
     - [CloudWatch Events and EventBridge](8-containers-and-serverless/eventbridge.md)
     - [API Gateway](8-containers-and-serverless/api-gateway.md)
     - [AWS Step Functions](8-containers-and-serverless/step-functions.md)
-    - [Simple Workflow Service](8-containers-and-serverless/swf.md)
+    - [SWF - Simple Workflow Service](8-containers-and-serverless/swf.md)
+    - [Amazon Mechanical Turk](8-containers-and-serverless/mechanical-turk.md)
+    - [Elastic Transcoder and AWS Elemental MediaConvert](8-containers-and-serverless/mediaconvert.md)
 
 ## Exam Description
 
