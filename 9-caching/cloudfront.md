@@ -4,7 +4,7 @@
 - Its job is to improve the delivery of content from its original location to the viewers of the content
 - It is accomplishing this by caching and by using an efficient global network
 
-## CloudFrom Terms and Architecture
+## CloudFront Terms and Architecture
 
 - **Origin**: the source location of the content, can be S3 or custom origin (publicly routable IPv4 address)
 - **Distribution**: unit of configuration within CloudFront, which gets deployed out to the CloudFront network. Almost everything is configured within the distribution
