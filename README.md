@@ -60,6 +60,8 @@
     - [Amazon Mechanical Turk](8-containers-and-serverless/mechanical-turk.md)
     - [Elastic Transcoder and AWS Elemental MediaConvert](8-containers-and-serverless/mediaconvert.md)
     - [AWS IOT](8-containers-and-serverless/iot.md)
+9. Caching, Delivery and Edge
+    - [CloudFront](9-caching/cloudfront.md)
 
 ## Exam Description
 

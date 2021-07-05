@@ -40,7 +40,7 @@
 ## RDS Backups and Restores
 
 - RPO (Recovery Point Objective): time between the last working backup and the failure. Lower the RPO value, usually the more expensive the solution
-- RTO (Recovery Time Objective): time between the failure and system being dully recovered. Can be reduced with spare hardware, predefined processes, etc. Lower the RTO value, the system is usually more expensive
+- RTO (Recovery Time Objective): time between the failure and system being fully recovered. Can be reduced with spare hardware, predefined processes, etc. Lower the RTO value, the system is usually more expensive
 - RDS backup types:
     - Manual snapshots:
         - Have to be run manually
