@@ -93,3 +93,107 @@
 - CloudFront SSL/SNI architecture:
     ![SSL/SNI architecture](images/CloudFrontSSLSNI.png)
 - For S3 origin, we don't need to apply certificates for the origin protocol. For ALB/EC2/on-prem we can have to apply public certificates which needs to match the DNS name of the origin
+
+## Origin Types and Architecture
+
+- Origins are the locations from where CF goes to get content
+- If there is a cache miss in case of a request, than an origin fetch occurs
+- Origin groups allow us to add resiliency. We can group origins together an have an origin group used by the behavior
+- Categories of origins:
+    - Amazon S3 buckets
+    - AWS media package channel endpoint
+    - AWS media store container endpoint
+    - everything else (web-servers) - custom origins
+- If S3 is configured to be used as a web-server, CF views it as a custom origin
+- S3 origin configurations:
+    - Origin Path: use a path instead of the top level of the bucket
+    - Origin Access Identity: allows to give CF a virtual identity and use this to access the bucket
+    - Origin Custom Headers
+    - Viewer protocol policy is also used for the origin protocol
+- Custom origin configurations:
+    - Origin Path: point to an origin but use a sub-path
+    - Minimum Origin SSL Protocol: best practice always to select the latest
+    - Origin Protocol Policy: HTTP, HTTPS or Match Viewer
+    - HTTP/HTTPS Port: we can use arbitrary port instead of 80 or 443
+    - Origin Custom Headers: can be used for security to restrict access only from CF
+
+## Caching Performance and Optimization
+
+- Cache Hit: object is available in the cache in the ede location
+- Cache Miss: object is not available in the cache, origin fetch is required
+- Content retrieval techniques:
+    - When we require an object from CF, we usually request it using its name
+    - We can use query string parameters as well, example `index.html&lang=en`
+    - Cookies
+    - Request Headers
+- When using CF all of this data reaches CloudFront first and than can be forwarded to the origin
+- We can configure CF to cache data based on some or all of these request properties
+- When using CF forward only the headers needed by the application and cache data based only on what can change the object
+- The more things are involved in caching, the less efficient the process is
+
+## CloudFront Security
+
+### OAI and Custom Origins
+
+- S3 origins:
+    - OAI - Origin Access Identity: is a type of identity, it can be associated with CloudFront distributions
+    - Essentially the CloudFront distributions "becomes" the OAI, meaning that this identity can be used it S3 bucket policies
+    - Common pattern is to lock the S3 bucket to be only accessible to CloudFront
+    - The edge location gain the attached OAI identity, meaning they will be able to access the bucket
+    - Direct access from the end-user to the bucket content can be disabled
+- Custom origins:
+    - We can not use OAI to control access
+    - We can utilize custom headers, which will be protected by the HTTPS protocol. CloudFront will be configured to send this custom header
+    - Other way to handle CloudFront security from custom origins is to determine the IP ranges from which the request is coming from. CloudFront IP ranges are publicly available
+
+### Private Distributions
+
+- CloudFront can run in 2 different modes:
+    - Public: can be accessed by any viewer
+    - Private: requests to CloudFront needs to be made with a signed url or cookie
+- If the CloudFront distribution has only 1 behavior the whole distribution is considered to be either public or private
+- In case of multiple behaviors: each behavior can be either public or private
+- In order to enable private distribution of content, we need to create a **CloudFront Key** by an Account Root User. That account is added as a **Trusted Signer**
+- Signed URLs provide access to one particular object. They are also used for legacy RTMP distributions which can not use cookies
+- Signed cookies can provide access to groups of objects or all files of a particular type
+
+### CloudFront Geo Restriction
+
+- Gives a way to restrict content to a particular location
+- They are 2 types of restriction:
+    - CloudFront Geo Restriction:
+        - Whitelist or Blacklist countries
+        - Only works with countries!
+        - Uses a GeoIP database with 99.8% accuracy
+        - Applies to the entire distribution
+    - 3rd Party Geolocation:
+        - Completely customizable, can be used to filter on lots of other attributes, example: username, user attributes, etc.
+        - Requires an application server in front of CloudFront, which controls weather the customer has access to the content or not
+        - The application generates a signed url/cookie which is returned to the browser. This can be sent to CloudFront for authorization
+
+### Field-Level Encryption
+
+- Field-Level encryption happens at the edge
+- We can configure encryption using a public key for certain fields from the request
+- Field-Level encryption happens separately from the HTTPS tunnel
+- A private key is needed to decrypt individual fields
+- Field-Level encryption architecture:
+    ![Field-Level encryption architecture](images/FieldLevelEncryption2.png)
+
+## Lambda@Edge
+
+- Lambda@Edge allows us to run lightweight Lambda functions at the edge locations
+- These Lambda functions allow us to adjust data between the viewer and the origin
+- They don't have the full Lambda feature set:
+    - Currently only NodeJS and Python are supported
+    - Functions don't have access to any resources in a VPC, they run in AWS Public Space
+    - Lambda Layers are not supported
+- They have different size and duration limits compared to classic Lambda functions:
+    - Viewer side: 128MB/5seconds
+    - Origin side: same as classic Lambda/30seconds
+- Lambda@Edge use cases:
+    - A/B testing - viewer request function
+    - Migration between S3 origins - origin request function
+    - Different objects based on the type of device - origin request function
+    - Content displayed by country - origin request
+    - More examples: [https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html#lambda-examples-redirecting-examples](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html#lambda-examples-redirecting-examples)
