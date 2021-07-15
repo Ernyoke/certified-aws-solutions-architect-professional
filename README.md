@@ -62,6 +62,7 @@
     - [AWS IOT](08-containers-and-serverless/iot.md)
 9. Caching, Delivery and Edge
     - [CloudFront](09-caching/cloudfront.md)
+    - [ElastiCache](09-caching/elasticache.md)
 
 ## Exam Description
 
