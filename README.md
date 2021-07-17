@@ -65,6 +65,7 @@
     - [ElastiCache](09-caching/elasticache.md)
 10. Migrations and Extensions
     - [The 6R's of Cloud Migrations](10-migrations/6r.md)
+    - [DMS - Database Migration Service](10-migrations/dms.md)
 
 ## Exam Description
 
