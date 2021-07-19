@@ -43,3 +43,19 @@
 - A Storage Gateway can handle at max 1PB ot data across 1500 virtual tapes
 - When virtual tapes are not used, they can be exported in the backup software marking them not being in the library (equivalent of ejecting them and moving them to the offsite storage)
 - When exported, the virtual tape is archived in the Virtual Shelf which is backed by Glacier
+
+## File Mode
+
+- Storage Gateway manages files in File Mode
+- File Gateway bridges on-premises file storage and S3
+- With File Gateway we create one or more mount points (shares) available via NFS or SMB
+- File Gateways maps directly onto on S3 bucket above which we have visibility from the AWS console
+- File Mode uses Read an Write Caching ensuring LAN-like performance
+- File Gateway architecture:
+    ![File Gateway architecture](images/StorageGatewayFile.png)
+- For Windows environments we can use AD authentication to access the File Gateway
+- File Mode can be used for multiple contributors (multiple shares on-premises)
+- `NotifyWhenUploaded`: API to notify other gateways when objects are changed
+- File Gateway does not support any kind of object locking!
+- The bucket backing the File Gateway can be used with CRR
+- The lifecycle policies can also be used for files to be moved automatically between classes
