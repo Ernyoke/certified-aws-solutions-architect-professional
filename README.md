@@ -68,6 +68,7 @@
     - [DMS - Database Migration Service](10-migrations/dms.md)
     - [VM Migrations AWS <=> On-Premises](10-migrations/vm-migration.md)
     - [Storage Gateway](10-migrations/storage-gateway.md)
+    - [Snowball and Snowmobile](10-migrations/snow.md)
 
 ## Exam Description
 
