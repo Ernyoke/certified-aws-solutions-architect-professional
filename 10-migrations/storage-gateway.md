@@ -28,3 +28,18 @@
         - We can create EBS volumes out of the data
         - Cached Mode allows for an architecture know as datacenter extension
         ![Cached Mode architecture](images/StorageGatewayVolumeCached.png)
+
+## Tape - VTL Mode
+
+- VTL - Virtual Tape Library
+- Examples of tape backups: LTO-9 Media which can hold 24TB raw data per tape
+- Tape Loader (Robot): robot arm can insert/remove/swap tapes
+- A Library is 1 ore more drives, 1 or more loaders and slots
+- Traditional tape backup architecture:
+    ![Traditional tape backup architecture](images/TraditionalTapeBackup.png)
+- Storage Gateway Tape (VTL) Mode architecture:
+    ![Storage Gateway Tape (VTL) Mode architecture](images/StorageGatewayVTL.png)
+- A Virtual tape can be from 100 GiB to 5 TiB
+- A Storage Gateway can handle at max 1PB ot data across 1500 virtual tapes
+- When virtual tapes are not used, they can be exported in the backup software marking them not being in the library (equivalent of ejecting them and moving them to the offsite storage)
+- When exported, the virtual tape is archived in the Virtual Shelf which is backed by Glacier

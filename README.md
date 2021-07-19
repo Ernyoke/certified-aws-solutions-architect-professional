@@ -67,6 +67,7 @@
     - [The 6R's of Cloud Migrations](10-migrations/6r.md)
     - [DMS - Database Migration Service](10-migrations/dms.md)
     - [VM Migrations AWS <=> On-Premises](10-migrations/vm-migration.md)
+    - [Storage Gateway](10-migrations/storage-gateway.md)
 
 ## Exam Description
 
