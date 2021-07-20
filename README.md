@@ -70,6 +70,8 @@
     - [Storage Gateway](10-migrations/storage-gateway.md)
     - [Snowball and Snowmobile](10-migrations/snow.md)
     - [AWS DataSync](10-migrations/datasync.md)
+11. Security and Configuration Management
+    - [AWS GuardDuty](11-security-and-config/guard-duty.md)
 
 ## Exam Description
 
