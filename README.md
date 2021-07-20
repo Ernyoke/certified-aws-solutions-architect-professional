@@ -72,6 +72,8 @@
     - [AWS DataSync](10-migrations/datasync.md)
 11. Security and Configuration Management
     - [AWS GuardDuty](11-security-and-config/guard-duty.md)
+    - [AWS Config](11-security-and-config/config.md)
+    - [AWS Inspector](11-security-and-config/inspector.md)
 
 ## Exam Description
 
