@@ -69,6 +69,7 @@
     - [VM Migrations AWS <=> On-Premises](10-migrations/vm-migration.md)
     - [Storage Gateway](10-migrations/storage-gateway.md)
     - [Snowball and Snowmobile](10-migrations/snow.md)
+    - [AWS DataSync](10-migrations/datasync.md)
 
 ## Exam Description
 
