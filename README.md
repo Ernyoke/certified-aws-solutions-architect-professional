@@ -74,6 +74,8 @@
     - [AWS GuardDuty](11-security-and-config/guard-duty.md)
     - [AWS Config](11-security-and-config/config.md)
     - [AWS Inspector](11-security-and-config/inspector.md)
+    - [Encryption and KMS](11-security-and-config/kms.md)
+    - [CloudHSM](11-security-and-config/cloudhsm.md)
 
 ## Exam Description
 
