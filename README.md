@@ -76,6 +76,7 @@
     - [AWS Inspector](11-security-and-config/inspector.md)
     - [Encryption and KMS](11-security-and-config/kms.md)
     - [CloudHSM](11-security-and-config/cloudhsm.md)
+    - [AWS Certificate Manager - ACM](11-security-and-config/acm.md)
 
 ## Exam Description
 
