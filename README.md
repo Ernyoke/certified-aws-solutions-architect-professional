@@ -80,6 +80,7 @@
     - [AWS Systems Manager Parameter Store](11-security-and-config/parameter-store.md)
     - [AWS Secrets Manager](11-security-and-config/secrets-manager.md)
     - [VPC Flow Logs](11-security-and-config/vpc-flow-logs.md)
+    - [AWS Shield and Web Application Firewall (WAF)](11-security-and-config/waf-shield.md)
 
 ## Exam Description
 
