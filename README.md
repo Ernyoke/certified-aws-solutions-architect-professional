@@ -77,6 +77,8 @@
     - [Encryption and KMS](11-security-and-config/kms.md)
     - [CloudHSM](11-security-and-config/cloudhsm.md)
     - [AWS Certificate Manager - ACM](11-security-and-config/acm.md)
+    - [AWS Systems Manager Parameter Store](11-security-and-config/parameter-store.md)
+    - [AWS Secrets Manager](11-security-and-config/secrets-manager.md)
 
 ## Exam Description
 
