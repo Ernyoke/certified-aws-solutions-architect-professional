@@ -48,6 +48,8 @@
 - EFS:
     - EFS file systems are replicated across multiple AZs
     - They are by default regionally resilient - failure of a region means failure of EFS volumes
+- DR Architecture - Storage:
+    ![DR Architecture - Storage](images/DRArchitectureStorage.png)
 
 ## DR Architecture - Compute
 
@@ -65,3 +67,42 @@
     - By default runs in public mode
     - In VPC mode (private) Lambdas are injected in VPCs. If an AZ fails, Lambda can be automatically injected in another subnet in a different AZ
     - It will take the failure if a region in order for Lambda to be impacted
+- DR Architecture - Compute:
+    ![DR Architecture - Compute](images/DRArchitectureCompute.png)
+
+## DR Architecture - Databases
+
+- Running databases on EC2 should be done in certain cases only!
+- DynamoDB:
+    - Data is replicated between multiple nodes in different AZs
+    - Failure can occur only if the entire region fails
+- RDS:
+    - Requires creation of a subnet group which specifies which subnet can be used in a VPC for a DB
+    - Normal RDS (not Aurora) involves a single instance or primary and standby instance running in different AZs
+    - Data is stored in local storage for each instance, data is replicated asynchronously to the standby
+    - If the primary instance fails, automatic fallback is done to the standby
+    - In case of Aurora, we can have one or more replicas in each AZs
+    - Aurora uses a cluster storage architecture, storage is shared between running DB instances
+    - Aurora can resist failures up to the entire region failure (not using Aurora Global)
+- Global Databases:
+    - DynamoDB Global Table: multi master replication between regional replicas.
+    - Aurora Global Databases: read-write cluster in one region, secondary read cluster in other regions. Replication happens at the storage layer, no additional load placed on the DB
+    - Cross Region Read Replicas for RDS: asynchronous replication but not done on the storage layer
+- DR Architecture - Databases:
+    ![DR Architecture - Databases](images/DRArchitectureDatabases.png)
+
+## DR Architecture - Networking
+
+- Networking at local level:
+    - VPC are regionally resilient
+    - Certain gateway objects like VPC Router and IGW are also regionally resilient
+    - Subnets are tied to AZ they are located in, if the AZ fails, the subnet fails as well
+    - LB: regional services, nodes are deployed into each AZ we select
+    - By using a LB we can route traffic to AZs which are healthy
+- Interface endpoint:
+    - Are tied to an AZ
+    - Multiple interface endpoints can be deployed into different AZs
+- DR Architecture - Networking:
+    ![DR Architecture - Networking](images/DRArchitectureNetworking.png)
+- Global Networking:
+    - Route53 can route globally to different regions (failover routing)
