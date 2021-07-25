@@ -83,6 +83,8 @@
     - [AWS Shield and Web Application Firewall (WAF)](11-security-and-config/waf-shield.md)
 12. Disaster Recovery and Business Continuity in AWS
     - [DR/BC Architecture](12-disaster-recovery/dr.md)
+13. Infrastructure as Code
+    - [CloudFormation](13-iac/cloudformation.md)
 
 ## Exam Description
 
