@@ -71,3 +71,62 @@
             Value: !Join['', 'https://', !GetAtt Instance.DNSName]
     ```
 
+## Conditions
+
+- Allows stack to react to certain conditions and change infrastructure based on those
+- They declared in an optional section named `Conditions`
+- We can declare many conditions, each of them being evaluated to `TRUE` or `FALSE`
+- Conditions are evaluated before resources are created
+- Conditions use other intrinsic functions: `AND`, `EQUALS`, `IF`, `NOT`, `OR`
+- Any resource can have associated a condition which will define if the resource will be created or not
+- Examples: we can have conditions which evaluate based on the environment (dev, test, prod) in which the template is executed
+- Condition example:
+    ```
+    Conditions:
+        IsProd: !Equals
+            - !Ref EnvType
+            - `prod`
+    ```
+- Conditions can be nested
+
+## DependsOne
+
+- Allows us to establish dependencies between resources
+- CF tried to be efficient by creating/updating/deleting resources in parallel
+- Also, it tries to determine a dependency order (example: VPC => SUBNET => EC2) by using references or functions
+- Dependency can be defined using the `DependsOn` property specify the resource on which we depend on
+- `DependsOn` can accept a single resource or a list of resources
+
+## Creation Policies, Wait Conditions and cfn-signal
+
+- Creation Policies, Wait Conditions and cfn-signals provide a few ways to notify CF with details signals on completion or not of creation of resources
+- We can configure CF to wait for a certain number of success signals
+- We also configure a timeout within which the signals are received (max 12H)
+- The the number of success signals are received within the timeout, CF stacks moves to `CREATE_COMPLETE`
+- `cfn-signal` is an utility running on the EC2 instances sending success/failure signals to CF
+- If the timeout is reached and the number of success signals are not met, the stack will fail creation
+- For provisioning EC2 and ASG, we should us a `CreationPolicy`
+- For other requirements we might chose to use a `WaitCondition`
+- A `WaitCondition` is defined as a logical resource, meaning it can have `DependsOn` property. It can be used as a general progress gait in the template
+- A `WaitCondition` relies on a `WaitHandle`, which is another logical resource. Its job is to generate a presigned url which can be used to send signals to `WaitCondition`
+- With `WaitHandle` we can pass back data to the template. This data can be retrieved using the `!GetAtt WaitCondition.Data` function
+
+## Nested Stacks
+
+- Most simple projects will generally utilise a CF stack
+- Stacks can have limits:
+    - Resource limit: 500 resources per stack
+    - We can't easily reuse resources, example reference a VPC
+- There are 2 ways to architect multi-stack projects:
+    - Nested Stacks
+    - Cross-Stack References
+- Nested Stacks:
+    - Root Stack: the stack which is created first, created manually or using some automation
+    - A Parent Stack is the parent of any stack which it immediately creates
+    - A root stack can create nested stacks having several parent stacks
+    - A root stack can have parameters and outputs (just like a normals stack)
+- A stack can have another CF stack as a resource using `AWS::CloudFormation::Stack` type which needs an url to the template
+- We can provide input values to the nested stacks. We need to supply values to any parameters from a nested stack if the parameter does not have a default value defined
+- Any outputs of a nested stack are returned to the root stack which can be referenced as `NESTEDStack.Outputs.XXX`
+- Benefits of a nested stack is to reuse the same template, not the actual stack created
+- We should use nested stacks when we want to link the lifecycles of different stacks
