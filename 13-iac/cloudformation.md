@@ -38,3 +38,36 @@
     - `Fn::Base64` and `Fn::Sub`: encode strings to base64, substitute replacement on variables in the text
     - `Fn:Cidr`: build CIDR blocks
 - `Fn::GetAZs` - returns the available AZs in region. If the region has a default VPC configured, it return the AZs which are available in the default VPC
+
+## Mappings
+
+- Templates can contain a `Mappings` objects which can contain keys to values objects
+- Mappings can have one level or tep and second level keys
+- Mappings use another intrinsic function `Fn::FindInMap`
+- Mappings are used to improve template portability
+- Example:
+    ```
+    Mappings:
+        RegionMap:
+            us-east-1:
+                HVM64: 'ami-xxx'
+                HVMG2: 'ami-yyy'
+            us-east-2:
+                HVM64: 'ami-zzz'
+                HVMG2: 'ami-vvv'
+    ```
+
+## Outputs
+
+- The `Outputs` section in a template is optional
+- We can declare values in this section which will be visible as output in the CLI/Console
+- Output will be accessible from a parent stack when using nesting
+- Outputs can be exported allowing cross-stack references
+- Example:
+    ```
+    Outputs:
+        WordPressUrl:
+            Description: 'description text'
+            Value: !Join['', 'https://', !GetAtt Instance.DNSName]
+    ```
+
