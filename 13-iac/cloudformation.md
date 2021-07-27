@@ -92,18 +92,18 @@
 ## DependsOne
 
 - Allows us to establish dependencies between resources
-- CF tried to be efficient by creating/updating/deleting resources in parallel
+- CFN tried to be efficient by creating/updating/deleting resources in parallel
 - Also, it tries to determine a dependency order (example: VPC => SUBNET => EC2) by using references or functions
 - Dependency can be defined using the `DependsOn` property specify the resource on which we depend on
 - `DependsOn` can accept a single resource or a list of resources
 
 ## Creation Policies, Wait Conditions and cfn-signal
 
-- Creation Policies, Wait Conditions and cfn-signals provide a few ways to notify CF with details signals on completion or not of creation of resources
-- We can configure CF to wait for a certain number of success signals
+- Creation Policies, Wait Conditions and cfn-signals provide a few ways to notify CFN with details signals on completion or not of creation of resources
+- We can configure CFN to wait for a certain number of success signals
 - We also configure a timeout within which the signals are received (max 12H)
-- The the number of success signals are received within the timeout, CF stacks moves to `CREATE_COMPLETE`
-- `cfn-signal` is an utility running on the EC2 instances sending success/failure signals to CF
+- The the number of success signals are received within the timeout, CFN stacks moves to `CREATE_COMPLETE`
+- `cfn-signal` is an utility running on the EC2 instances sending success/failure signals to CFN
 - If the timeout is reached and the number of success signals are not met, the stack will fail creation
 - For provisioning EC2 and ASG, we should us a `CreationPolicy`
 - For other requirements we might chose to use a `WaitCondition`
@@ -113,7 +113,7 @@
 
 ## Nested Stacks
 
-- Most simple projects will generally utilise a CF stack
+- Most simple projects will generally utilise a CFN stack
 - Stacks can have limits:
     - Resource limit: 500 resources per stack
     - We can't easily reuse resources, example reference a VPC
@@ -125,8 +125,83 @@
     - A Parent Stack is the parent of any stack which it immediately creates
     - A root stack can create nested stacks having several parent stacks
     - A root stack can have parameters and outputs (just like a normals stack)
-- A stack can have another CF stack as a resource using `AWS::CloudFormation::Stack` type which needs an url to the template
+- A stack can have another CFN stack as a resource using `AWS::CloudFormation::Stack` type which needs an url to the template
 - We can provide input values to the nested stacks. We need to supply values to any parameters from a nested stack if the parameter does not have a default value defined
 - Any outputs of a nested stack are returned to the root stack which can be referenced as `NESTEDStack.Outputs.XXX`
 - Benefits of a nested stack is to reuse the same template, not the actual stack created
 - We should use nested stacks when we want to link the lifecycles of different stacks
+
+## Cross-Stack References
+
+- CFN stacks are designed to be isolated and self-contained
+- With nested stacks we can reuse code only, with cross-stack references we can reference resources created by other stacks
+- Outputs are normally not visible from other stacks, exception being nested stacks which can reference them
+- Outputs of a template can be exported making them visible from other stacks
+- Exports must have unique names in the region
+- To use the exported resources we can use `Fn::ImportValue` intrinsic function
+- Cross-region or cross-account is not supported for cross-stack references
+
+## StackSets
+
+- Allows to create/update/delete infrastructure across many regions or many accounts
+- StackSets are containers in an admin account (account where the StackSet is applied, it does not have to be any special account)
+- StackSets contain stack instances (containers for individual stacks) which reference stacks
+- Stack instances and stacks are created in target accounts
+- Each stack created by a StackSet is a stack created in one region in one account
+- Security: we can use self-managed roles or service-managed roles (everything handled by the product). CFN will assume a role to interact with the target accounts
+- Terminology:
+    - Concurrent Accounts: a value specifying how in how many accounts can we deploy at the same time
+    - Failure Tolerance: amount of individual deployments which can fail before declaring the StackSet itself as failed
+    - Retain Stacks: remove stack instances from a StackSet but retain the infrastructure
+- StackSet use cases:
+    - Crate AWS Config Rules
+    - Create IAM Roles for cross-account access
+
+## DeletionPolicy
+
+- If we delete a logical resource from a template, by default the physical resource will be deleted by CFN
+- With certain type of resources this can cause data loss
+- With deletion policy, we can define on each resource to **Delete** (default), **Retain** or **Snapshot** (if supported)
+- Supported resources for snapshot are: EBS volumes, ElastiCache, Neptune, RDS, Redshift
+- With snapshot before the physical resource is deleted, a snapshot is taken
+- Deletion policies only apply to delete operation, NOT replace operation!
+
+## Stack Roles
+
+- By default CFN uses the permissions of the identity who initiates the stack creation
+- CFN stack roles is feature where CFN can assume a role to gain permissions to create resources from a stack without the need for the initiator to have the necessary permissions
+- The identity creating the stack does not need resource permissions, only `PassRole`
+
+## `AWS::CloudFormation::Init` and `cfn-init`
+
+- CloudFormationInit is a simple configuration management system
+- Configuration directive are stored in the template
+- `AWS::CloudFormation::Init` is part of EC2 instance logical resource. With this we can specify configurations which will be applied to the created EC2 instance
+- User Data is procedural (HOW should things to be done) / `cfn-init` is a desired state (WHAT we want to occur)
+- `cfn-init` can be cross-platform and idempotent
+- Accessing the CFN init data is done with the `cfn-init` helper script which should be installed on the instance
+
+## `cfn-hup`
+
+- `cfn-init` is a helper tool running once as part of bootstrapping (user data)
+- If the `AWS::CloudFormation::Init` is updated, `cfn-init` is not rerun
+- `cfn-hup` is a helper tool which can be installed on EC2 instances
+- It will detect changes in the resources metadata
+- When change is detected, it can run configurable actions. It might rerun `cfn-init` if necessary
+
+## Change Sets
+
+- Change Sets let us preview the changes that will happen after we update a stack
+- We can have multiple change sets and preview each of them
+- We can chose which change set we want to apply by executing it
+
+## Custom Resources
+
+- CloudFormation doesn't support everything in AWS
+- Custom Resources let CFN integrate with anything it does not yet support or wont support at all
+- With Custom Resources we can extend CFN to do things which it does not natively support (example: fet configuration from a third party)
+- Architecture of custom resources:
+    - CFN sends data to an endpoint defined in the custom resource
+    - This endpoint might be a Lambda function or an SNS topic
+    - When a custom resources is created/update/deleted, CFN sends events to this endpoint containing the operation and any additional property information
+    - The compute (Lambda function) can respond to this custom data, letting it know of the success/failure of its execution
