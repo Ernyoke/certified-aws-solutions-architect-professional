@@ -85,6 +85,8 @@
     - [DR/BC Architecture](12-disaster-recovery/dr.md)
 13. Infrastructure as Code
     - [CloudFormation](13-iac/cloudformation.md)
+14. Deployment and Management
+    - [Service Catalog](14-deployment/service-catalog.md)
 
 ## Exam Description
 
