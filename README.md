@@ -87,6 +87,7 @@
     - [CloudFormation](13-iac/cloudformation.md)
 14. Deployment and Management
     - [Service Catalog](14-deployment/service-catalog.md)
+    - [CI/CD](14-deployment/cicd.md)
 
 ## Exam Description
 
