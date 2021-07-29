@@ -50,3 +50,70 @@
     - Not automatically supported by EB
     - Requires manual CNAME swap between 2 environments
     - Provides full control in terms of when we would want to switch to the new environment
+
+## EB and RDS
+
+- In order to access an RDS instance from EB we can create an RDS instance within an EB environment
+- If we do this, the RDS is linked to the environment
+- If we delete the environment, the database will also be deleted
+- If we link a database to an environment, we get access to the following environment properties:
+    - `RDS_HOSTNAME`
+    - `RDS_PORT`
+    - `RDS_DB_NAME`
+    - `RDS_USERNAME`
+    - `RDS_PASSWORD`
+- Other alternative is to create the RDS instance outside of the EB
+- The environment properties above are not automatically provided in this case, we can create them manually
+- With this method the RDS lifecycle is not tied to the EB environment
+- Decoupling an existing RDS from an EB environment:
+    1. Create a Snapshot
+    2. Enable Delete Protection
+    3. Create a new EB environment with the same app version
+    4. Ensure new environment can connect to the DB
+    5. Swap environment (CNAME or DNS)
+    6. Terminate the old environment -  this will try to terminate the RDS instance
+    7. Locate the `DELETE_FAILED` stack in CFN, manually delete the stack and pick to retain stuck resources
+
+## Customizing via `.ebextensions`
+
+- We can include directive to customize EB environments using `.ebextensions` folder
+- Anything added in this folder as YAML or JSON format ending in `.config` is regarded to be configuration file
+- This files has to be formatted as CloudFormation files
+- EB will use CFN to create additional resources within the environment specified in the `.config` files
+- This files can have also a number of config elements:
+    - `option_settings`: allows us to set options for resources
+    - `Resources`: allows us to create new resources using CFN elements
+    - packages, sources, files, users, groups, commands, container_commands and services
+
+## EB with HTTPS
+
+- To use HTTPS with EB we need to apply an SSL certificate to the load balancer
+- We can do this using the EB console or we can use the `.ebextensions/securelistener-[alb|nlb].config` feature
+- We can configure the security group as well to allow SSL connections
+
+## Environment Cloning
+
+- Cloning allows to create new EB environment by cloning existing environments
+- By cloning an environment we don't have to manually configure options, env. variables, resources and other settings
+- A clone does copy any RDS instance defined, but the data is not copied by default
+- EB cloning does not include any un-managed changes to resources from the environment
+- To clone an environment from the eb command line we can use `eb clone <ENV>` command
+
+## EB and Docker
+
+### Single Container Mode
+
+- We can only run one container in one Docker host
+- This mode uses EC2 with Docker, not ECS
+- In order to use this mode we have to provide a few configurations:
+    - `Dockerfile`: used to create a new container image from this file
+    - `Dockerrun.aws.json` (version 1): to use an existing docker image. We can configure ports, volumes and other Docker attributes
+    - `Docker-compose.yml`: if we want to use Docker compose
+
+### Multi-Container Mode
+
+- Elastic Beanstalk uses ECS to create a cluster
+- ECS uses EC2 instances provisioned in the cluster and an ELB for HA
+- EB takes care of ECS tasks, cluster creation, task definition and task execution
+- We need to provide an `Dockerrun.aws.json` (version 2) file in the application source bundle (root level)
+- Any images need to be stored in a container registry such as ECR
