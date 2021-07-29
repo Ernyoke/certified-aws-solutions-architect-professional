@@ -89,6 +89,7 @@
     - [Service Catalog](14-deployment/service-catalog.md)
     - [CI/CD](14-deployment/cicd.md)
     - [Elastic Beanstalk - EB](14-deployment/eb.md)
+    - [AWS OpsWorks](14-deployment/opsworks.md)
 
 ## Exam Description
 
