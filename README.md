@@ -90,6 +90,7 @@
     - [CI/CD](14-deployment/cicd.md)
     - [Elastic Beanstalk - EB](14-deployment/eb.md)
     - [AWS OpsWorks](14-deployment/opsworks.md)
+    - [AWS Systems Manager (SSM)](14-deployment/ssm.md)
 
 ## Exam Description
 
