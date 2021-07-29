@@ -24,3 +24,29 @@
 - Each environment is running a specific version at any given time
 - Each environment has its own CNAME, a CNAME SWAP can be done to exchange to environment DNS
 
+## Deployment Policies
+
+- **All at once**: 
+    - Deploy to all instances at once
+    - It is quick and simple, but it will cause a brief outage
+    - Recommended for testing and development environments
+- **Rolling**:
+    - Application code is deployed in rolling batches
+    - It is safer, since the deployment will continue only if the previous batch is healthy
+    - The application will encounter loss in capacity
+- **Rolling with additional batch**:
+    - Same as rolling deployment, with the addition of having a new batch in order to maintain capacity during the deployment process
+    - Recommended for production environment with real load
+- **Immutable**:
+    - New temporary ASG is created with the newer version of the application
+    - Once the validation is complete, the older stack is removed
+    - It is easier to roll back
+- **Traffic Splitting**:
+    - Fresh instances are created in a similar way as in case of immutable deployment
+    - Traffic will be split between the older and the newer version
+    - Allows to perform A/B testing on the application
+    - It does not have capacity drops, but it will come with an additional cost
+- **Blue/Green**:
+    - Not automatically supported by EB
+    - Requires manual CNAME swap between 2 environments
+    - Provides full control in terms of when we would want to switch to the new environment
