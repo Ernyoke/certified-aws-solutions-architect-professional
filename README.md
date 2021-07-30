@@ -93,6 +93,7 @@
     - [AWS Systems Manager (SSM)](14-deployment/ssm.md)
 15. Everything Else
     - [Amazon Lex and Amazon Connect](15-other/lex.md)
+    - [AWS Rekognition](15-other/rekognition.md)
 
 ## Exam Description
 
