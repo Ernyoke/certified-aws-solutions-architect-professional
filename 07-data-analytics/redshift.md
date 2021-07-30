@@ -33,3 +33,9 @@
 - We can copy snapshots to another region where a new cluster can be provisioned
 - Copied snapshots also can have retention periods
 ![Redshift Resilience and Recovery](images/RedshiftDR.png)
+
+## Amazon Redshift Workload Management (WLM) 
+
+- Enables users to flexibly manage priorities within workloads so that short, fast-running queries won’t get stuck in queues behind long-running queries
+- Amazon Redshift WLM creates query queues at runtime according to service classes, which define the configuration parameters for various types of queues, including internal system queues and user-accessible queues
+- From a user perspective, a user-accessible service class and a queue are functionally equivalent
