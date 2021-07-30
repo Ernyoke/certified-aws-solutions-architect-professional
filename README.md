@@ -91,6 +91,8 @@
     - [Elastic Beanstalk - EB](14-deployment/eb.md)
     - [AWS OpsWorks](14-deployment/opsworks.md)
     - [AWS Systems Manager (SSM)](14-deployment/ssm.md)
+15. Everything Else
+    - [Amazon Lex and Amazon Connect](15-other/lex.md)
 
 ## Exam Description
 
