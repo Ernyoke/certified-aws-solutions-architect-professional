@@ -23,6 +23,20 @@
 - Redshift architecture:
     ![Redshift architecture](images/RedshiftArchitecture.png)
 
+## Redshift Components
+-  **Cluster**: a set of nodes, which consists of a leader node and one or more compute nodes
+    - Redshift creates one database when we provision a cluster. This is the database we use to load data and run queries on your data
+    - We can scale the cluster in or out by adding or removing nodes. Additionally, we can scale the cluster up or down by specifying a different node type
+    - Redshift assigns a 30-minute maintenance window at random from an 8-hour block of time per region, occurring on a random day of the week. During these maintenance windows, the cluster is not available for normal operations
+    - Redshift supports both the EC2-VPC and EC2-Classic platforms to launch a cluster. We create a cluster subnet group if you are provisioning our cluster in our VPC, which allows us to specify a set of subnets in our VPC
+- **Redshift Nodes**:
+    - The leader node receives queries from client applications, parses the queries, and develops query execution plans. It then coordinates the parallel execution of these plans with the compute nodes and aggregates the intermediate results from these nodes. Finally, it returns the results back to the client applications
+    - Compute nodes execute the query execution plans and transmit data among themselves to serve these queries. The intermediate results are sent to the leader node for aggregation before being sent back to the client applications
+    - Node Type:
+        - Dense storage (DS) node type – for large data workloads and use hard disk drive (HDD) storage
+        - Dense compute (DC) node types – optimized for performance-intensive workloads. Uses SSD storage
+- **Parameter Groups**: a group of parameters that apply to all of the databases that we create in the cluster. The default parameter group has preset values for each of its parameters, and it cannot be modified
+
 ## Redshift Resilience and Recovery
 
 - Redshift can use S3 for backups in the form a snapshots

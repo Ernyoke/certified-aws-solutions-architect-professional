@@ -36,19 +36,19 @@
 
 ## CloudWatch Logs
 
-- CloudWatch Logs has to side of a product: ingestion and subscription
+- CloudWatch Logs provides two type of functionalities: ingestion and subscription
 - CloudWatch Logs is a public service designed to store, monitor and provide access logging data
-- Can provide logging ingestion for AWS products natively, but also for on-premises, IOT ar any application
+- Can provide logging ingestion for AWS products natively, but also for on-premises, IOT or any application
 - CloudWatch Agent: used to provide ingestion for custom applications
-- CloudWatch can also ingest log stream from VPC Flow Logs or CloudTrail (account events and AWS API calls)
-- CloudWatch Logs is regional service, certain global services send their logs to us-east-1
+- CloudWatch can also ingest log streams from VPC Flow Logs or CloudTrail (account events and AWS API calls)
+- CloudWatch Logs is regional service, certain global services send their logs to `us-east-1`
 - Log events consist of 2 parts:
-    - Timestamp
-    - Raw message
-- Log events can be collected into Log Streams. Log streams are sequence of log events sharing the same source
+    - **Timestamp**
+    - **Raw message**
+- Log Events can be collected into Log Streams. Log Streams are sequence of log events sharing the same source
 - Log Groups: are collection of Log Streams. We can set retention, permissions and encryption on the log groups. By default log groups store data indefinitely
-- Metric Filter: can be defined on the log group and will look for pattern in the log events. Essentially creates a metric from the log streams by looking at occurrences of certain patterns defined by us (example: failed SSH log in events)
+- Metric Filter: can be defined on the log group and will look for pattern in the log events. Essentially creates a metric from the log streams by looking at occurrences of certain patterns defined by us (example: failed SSH logs in events)
 - Export logs from CloudWatch:
-    - S3 Export: we can create  an export task (`Create-Export-Task`) which will take up to 12 hours
-    - Subscription: deliver logs real time. We should create a subscription filter for the following destination: Kinesis Data Firehose (near real time), Elastic Search using Lambda or custom Lambda, Kinesis Data Streams (any KCL consumer)
+    - **S3 Export**: we can create an export task (`Create-Export-Task`) which will take up to 12 hours
+    - **Subscription**: deliver logs in real time. We should create a subscription filter for the following destination: Kinesis Data Firehose (near real time), Elastic Search using Lambda or custom Lambda, Kinesis Data Streams (any KCL consumer)
 - Subscription filters can be used to create a logging aggregation architecture

@@ -24,9 +24,9 @@
     - For more performance we can pay extra cost for up to 16000 IOPS or 1000 MiB/s throughput
 - **Provisioned IOPS SSD (IO1/2)**:
     - There are 3 types of provisioned IOPS storage options: IO1 and its successor IO2 and IO2 BlockExpress (currently in preview)
-    - Fir this storage category the IOPS value can be configured independently of the storage size
+    - For this storage category the IOPS value can be configured independently of the storage size
     - Provisioned IOPS storages are recommended for usage where consistent low latency and high throughput is required
-    - Max IOP per volume is 64000 IOPS per volume and 1000 MB/s throughput, while with BlockExpress we can achieve 256000 IOPS per volume and 4000 MB/s throughput
+    - Max IOPS per volume is 64_000 IOPS per volume and 1000 MB/s throughput, while with BlockExpress we can achieve 256_000 IOPS per volume and 4000 MB/s throughput
     - Volume size ranges from 4 GB up to 16 GP for IO2/IO3 and up to 64 TiB for BlockExpress
     - We can allocate IOPS performance values independently of the size of the volume, there is a maximum IOPS value per size:
         - IO1 50 IOPS / GB MAX
@@ -57,15 +57,14 @@
 
 ## Instance Store Volumes
 
-- Provide block storage devices, raw volumes which can be mounted to a system
+- Provides block storage devices, raw volumes which can be mounted to a system
 - They are similar to EBS, but they are local drives instead of being presented over the network
-- This volumes are physically connected to the EC2 host
-- Instances on the host can access these volumes
+- These volumes are physically connected to the EC2 host, instances on the host can access these volumes
 - Provides the highest storage performance in AWS
-- Instance storages are included in the price of EC2 instances with which they come with
+- Instance stores are included in the price of EC2 instances with which they come with
 - Instance stores have to be attached at launch time, they can not be added afterwards
 - If an EC2 instance moves between hosts the instance store volume loses all its data
-- Instances are moving between hosts for many reasons: instance are stopped and restarted, maintenance reasons, hardware failure, etc.
+- Instances can move between hosts for many reasons: instance are stopped and restarted, maintenance reasons, hardware failure, etc.
 - **Instance store volumes are ephemeral volumes!**
 - One of the primary benefit of instance stores is performance, ex: D3 instance provides 4.6 GB/s throughput, I3 volumes provide 16 GB/s of sequential throughput with NVMe SSD
 - Instance store considerations:
