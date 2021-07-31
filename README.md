@@ -95,6 +95,8 @@
     - [Amazon Lex and Amazon Connect](15-other/lex.md)
     - [AWS Rekognition](15-other/rekognition.md)
     - [Kinesis Video Streams](15-other/kinesis-video-streams.md)
+    - [AWS Glue](15-other/glue.md)
+    - [AWS Device Farm](15-other/device-farm.md)
 
 ## Exam Description
 
