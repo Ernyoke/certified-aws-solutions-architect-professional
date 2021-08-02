@@ -23,7 +23,7 @@
     - Once created option sets can not be changed
     - Can be associated with 0 or more VPCs
     - Each VPC can have a max of 1 option set associated
-    - We we change a DHCP option set associated to the VPC, the change is immediate, but any new setting will only affect anything once a DHC renew occurs
+    - We we change a DHCP option set associated to the VPC, the change is immediate, but any new setting will only affect anything once a DHCP renew occurs
     - What we can configure in an option set:
         - DNS server (Route 53 resolver) what we can use in the VPC
         - NTP server
