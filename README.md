@@ -34,6 +34,7 @@
     - [AWS X-Ray](05-monitoring/xray.md)
     - [Cost Allocation Tags](05-monitoring/cost-allocation-tags.md)
     - [AWS Trusted Advisor](05-monitoring/trusted-advisor.md)
+    - [AWS Billing and Cost Management](05-monitoring/billing.md)
 6. Databases
     - [RDS - Relational Database Service](06-databases/rds.md)
     - [DynamoDB](06-databases/dynamodb.md)
