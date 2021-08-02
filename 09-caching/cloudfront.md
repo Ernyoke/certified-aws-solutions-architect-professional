@@ -69,7 +69,7 @@
 - Each CF distribution receives a default domain name (CNAME)
 - HTTPS can be enabled by default for this address
 - CF allows alternate domain names (CNAME)
-- In case of HTTPS we have to add our own matching certificate to CF. 
+- In case of HTTPS we have to add our own matching certificate to CF
 - In case of HTTP, CF should be able to verify that we own the DNS, which is accomplished by also adding an SSL certificate
 - SSL certificates are imported using ACM (AWS Certificate Manager). ACM is a regional service, because of this the certificate for global services (such as CF) needs to be imported in *us-east-1* region
 - Handling HTTP and HTTPS:
@@ -163,7 +163,7 @@
 - They are 2 types of restriction:
     - CloudFront Geo Restriction:
         - Whitelist or Blacklist countries
-        - Only works with countries!
+        - **Only works with countries!**
         - Uses a GeoIP database with 99.8% accuracy
         - Applies to the entire distribution
     - 3rd Party Geolocation:
@@ -186,7 +186,7 @@
 - These Lambda functions allow us to adjust data between the viewer and the origin
 - They don't have the full Lambda feature set:
     - Currently only NodeJS and Python are supported
-    - Functions don't have access to any resources in a VPC, they run in AWS Public Space
+    - Functions don't have access to any resources in a VPC, they run in AWS public space
     - Lambda Layers are not supported
 - They have different size and duration limits compared to classic Lambda functions:
     - Viewer side: 128MB/5seconds
