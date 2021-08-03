@@ -150,3 +150,39 @@
 - We can launch as many instances as we need in a partition group
 - Use cases for partition groups: HDFS, HBase, Cassandra, topology aware applications
 - Instances can be placed in a specific partition or we can let AWS to decide
+
+## EC2 Spot Instances
+
+- Can get a discount of up to 90% compared to On Demand instances
+- We can define a max spot price and get he instance of our price is bigger than the current price
+- If the current spot price goes beyond our max price, we can choose to stop or terminate the instance within 2 minutes grace period
+- If we don't want our spot instance to be reclaimed by AWS, we can use a **Spot Block**
+    - We can block a spot instance during a specified time frame (1 to 6 hours) without interruptions
+    - In rare situations the instance may be reclaimed
+- Use cases for spot instances: batch jobs or workloads that are resilient to failure
+- We can launch spot instances with a spot request. A spot request contains the following information:
+    - Maximum price
+    - Desired number of instances
+    - Launch specification
+    - Request type: on-time, persistent
+    - Valid from, valid until
+- Request types:
+    - One time request: as soon as the request is fulfilled, the request will go away
+    - Persistent request: the number of instances is attempted to be kept even if some instances are reclaimed, meaning that the request will not go away as soon as it is completed first time
+- Canceling a spot instances: in order ot cancel a spot instance, it has to be in an **open**, **active** or **disabled** state
+- Spot instance states:
+    ![Spot instance states](images/spot_request_states.png)
+- Cancelling a spot request, it will not terminate the instances themselves. In order to terminate instances, first we have to terminate the spot request, if there is one active
+
+## Spot Fleets
+
+- Spot Fleet - set of spot instances + (optional) on-demand instances
+- The spot fleet will try to meet the target capacity with price constraints
+- A launch pool can have the following can have different instance types, OS, AZ
+- We can have multiple launch pools, so the fleet can choose the best
+- Spot fleet will stop launching instances the target capacity is reached
+- Strategies to allocate spot instances:
+    - **lowestPrice**: the spot fleet will launch instances from the pool with the lowest price
+    - **diversified**: distribute instances across all pools
+    - **capacityOptimized**: launch instances based on the optimal capacity for the number of instances
+- Spot fleets allow us to automatically request spot instances with the lowest price
