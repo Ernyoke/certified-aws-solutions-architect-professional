@@ -1,8 +1,8 @@
 # AWS Lambda
 
-- Lambda is a Function-as-a-Service (FaaS) product. We provide specialized short running a focused code for Lambda and it will take care running it and billing us for only what we consume
-- Every Lambda function uses a supported runtime, example: Python 3.8
-- Every Lambda function is loaded into an executed ina runtime environment
+- Lambda is a Function-as-a-Service (FaaS) product. We provide specialized short running focused code for Lambda and it will take care running it and billing us for only what we consume
+- Every Lambda function uses a supported runtime, example: Python 3.8, Java 8, NodeJS
+- Every Lambda function is loaded into an executed in a runtime environment
 - When we create a function we define the resources the function will use. We define the memory directly and CPU usage allocation indirectly (based on the amount of memory)
 - We are only billed for the duration the function is running based on the number of invocations and the resources specified
 - Lambda is a key part of serverless architectures in AWS
@@ -52,15 +52,15 @@
     - **Synchronous invocation**:
         - Command line or API directly invoking the function
         - The CLI or API will wait until the function returns
-        - API Gateway will also invoke lambdas synchronously, use case for many serverless applications
-        - Any errors or retries have to handled in the client side
+        - API Gateway will also invoke Lambdas synchronously, use case for many serverless applications
+        - Any errors or retries have to be handled on the client side
     - **Asynchronous invocation**:
         - Used typically when AWS services invoke the function (example: S3 events)
         - The service will not wait for the response (fire and forget)
         - Lambda is responsible for any failure. Reprocessing will happen between 0 and 2 times
         - The function should be idempotent in order to be rerun
         - Lambda can be configured to send events to a DLQ in case of the processing did not succeed after the number of retries
-        - Destination: events processed by Lambdas can be delivered to destinations like SQS, SNS, other Lambda, EventBride). Success and failure events can be sent to different destinations
+        - Destination: events processed by Lambdas can be delivered to destinations like SQS, SNS, other Lambda, EventBride. Success and failure events can be sent to different destinations
     - **Event Source mapping**:
         - Typically used on streams or queues which don't generate events (Kinesis, DynamoDB streams, SQS)
         - Event Source mappers polls these streams and retrieves batches. These batches can be broken in pieces and sent to multiple Lambda invocations for processing

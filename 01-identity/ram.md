@@ -9,10 +9,10 @@
 
 ## Availability Zone IDs
 
-- A region in AWS has multiple availability zones, example: us-east-1a, us-east-1b, etc.
-- AWS rotates the name of the AZs depending on the AWS account, meaning that us-east-1a may not be the same AZ if we compare 2 accounts
+- A region in AWS has multiple availability zones, example: `us-east-1a`, `us-east-1b`, etc.
+- AWS rotates the name of the AZs depending on the AWS account, meaning that `us-east-1a` may not be the same AZ if we compare 2 accounts
 - If a failure happens on the hardware level, two accounts may see the issue being in different AZ, this may introduce a challenge in troubleshooting
-- AWS provides AZ IDs to overcome this challenge. Example of IDs: use1-az1, use1-az2
+- AWS provides AZ IDs to overcome this challenge. Example of IDs: `use1-az1`, `use1-az2`
 - AZ IDs are consistent across multiple accounts
 
 ## RAM Concepts

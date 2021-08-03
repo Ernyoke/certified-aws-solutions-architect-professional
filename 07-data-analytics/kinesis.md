@@ -18,7 +18,7 @@
 
 ## SQS vs Kinesis Data Streams
 
-- Is it about ingestion (Kinesis) of data or about decoupling, worker pools (SQS)?
+- Is it about ingestion (Kinesis) of data or about decoupling, worker pools (SQS)
 - SQS usually has 1 production group, 1 consumption group
 - SQS is designed for decoupling and asynchronous communication
 - SQS does not have the concept of persistence, no window for persistence
@@ -60,5 +60,5 @@
 - Kinesis Data Analytics use cases:
     - Anything using stream data which needs real-time SQL processing
     - Time-series analytics: election data, e-sports
-    - Real-time dashboards: leaderboards for games
-    - Real0time metrics
+    - Real-time dashboards: leader boards for games
+    - Real-time metrics
