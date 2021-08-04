@@ -1,4 +1,4 @@
-# certified-aws-solutions-architect-professional
+# AWS Certified Solutions Architect – Professional (SAP-C01) Notes
 
 ## Table of Contents
 
@@ -121,7 +121,7 @@ It validates an examinee's ability to:
 - Number of questions: 75
 - Time: 190 minutes to complete the exam (with a possibility to request 30 minutes extra for non-native english speakers)
 
-### Exam Content
+## Exam Content
 
 | **Domain**                                              | **% of Examination** |
 |---------------------------------------------------------|----------------------|
@@ -131,3 +131,15 @@ It validates an examinee's ability to:
 | Domain 4: Cost Control                                  | 12.5%                |
 | Domain 5: Continuous Improvement for Existing Solutions | 29%                  |
 | **Total**                                               | **100%**             |
+
+## Credits
+
+- These notes are based on the [AWS Certified Solutions Architect - Professional course](https://learn.cantrill.io/p/aws-certified-solutions-architect-professional) by Adrian Cantrill and on [Ultimate AWS Certified Solutions Architect Professional 2021](https://www.udemy.com/course/aws-solutions-architect-professional/) by Stephane Maarek
+- All images present in the notes are taken from Adrian Cantrill's GitHub [repository](https://github.com/Ernyoke/aws-sa-pro) for his course
+
+## My other AWS Certification Notes
+
+- [AWS Certified Developer – Associate (DVA-C01)](https://github.com/Ernyoke/certified-aws-developer-associate-notes)
+- [AWS Certified Solutions Architect – Associate (SAA-C02)](https://github.com/Ernyoke/certified-aws-solutions-architect-associate)
+- [AWS Certified SysOps – Associate (SOA-C01)](https://github.com/Ernyoke/certified-aws-sysops-associate)
+- [AWS Certified DevOps Engineer – Professional (DOP-C01)](https://github.com/Ernyoke/certified-aws-devops-professional)
