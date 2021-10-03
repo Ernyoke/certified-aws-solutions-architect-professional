@@ -105,13 +105,13 @@
     - We launch an EC2 instance and perform the necessary tasks from which we can create an AMI
     - We can use the AMI to deploy many instances quickly
 
-## Placement Groups
+## EC2 Placement Groups
 
 - Allow us to influence EC2 instance placements, insuring that instances are closed together or not
 - There are 3 types of placements groups in AWS:
-    - Cluster: any instances in a single placement groups are physically close
-    - Spread: instances are all using different underlying hardware
-    - Partition: groups of instances which are spread apart
+    - **Cluster**: any instances in a single placement groups are physically close
+    - **Spread**: instances are all using different underlying hardware
+    - **Partition**: groups of EC2 instances which are spread apart (different hardware)
 
 ### Cluster Placement Groups
 
@@ -119,15 +119,16 @@
 - Best practice is to launch all of the instances at the same time which will be part of the placement group. This ensures that AWS allocates capacity in the same location
 - Cluster placement groups are located in the same AZ, when the first instance is launched, the AZ is locked
 - Ideally the instances in a cluster placement group are located on the same rack, often on the same EC2 host
-- All instances have fast bandwidth between each other (max 10 Gbps)
+- All instances have fast bandwidth between each other (max 10Gbps vs 5Gbps which can be achieved normally)
 - They offer the lowest latency possible and max PPS possible in AWS
-- Cluster placement group should be used for highest performance. They offer no HA and very little resilience
+- To achieve these levels of performance we need to use instances with high performant networking: instances with more bandwidth and with Enhanced Networking
+- Cluster placement groups should be used for highest performance. They offer no HA and very little resilience
 - Considerations for cluster placement groups:
     - We can not span AZs, the AZ is locked when the first instance is launching
     - We can span VPC peers, but this will impact performance negatively
-    - Cluster placement groups are not supported for every instance
-    - Recommended: use the same type of instances and launch them at the same time
-    - They offer 10 Gbps for single stream performance
+    - Cluster placement groups are not supported for every instance type
+    - *Recommended*: use the same type of instances and launch them at the same time
+    - Cluster placement groups offer 10 Gbps for single stream performance
 
 ### Spread Placement Groups
 
@@ -143,14 +144,13 @@
 ### Partition Placement Groups
 
 - Similar to spread placement groups
-- Are designed when we need more than 7 instances per AZ but we still need separation
-- Can be created across multiple AZ in a region
+- They are designed for situations when we need more than 7 instances per AZ but we still need separation
+- Can be created across multiple AZs in a region
 - At creation we specify the number of partition per AZ (max 7 per AZ)
 - Each partition has its own rack with isolated power and networking
 - We can launch as many instances as we need in a partition group
 - Use cases for partition groups: HDFS, HBase, Cassandra, topology aware applications
 - Instances can be placed in a specific partition or we can let AWS to decide
-
 ## EC2 Spot Instances
 
 - Can get a discount of up to 90% compared to On Demand instances
