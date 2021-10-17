@@ -143,31 +143,33 @@
 
 ## Route53 Geolocation Routing
 
-- It is similar to latency-based routing
-- The location of customer and the location of the resource are used to influence resolution decisions
-- When a record is created, it is tagged with a location (country, continent or default)
-- Subdivision: in America we can tag records with a state
-- Geolocation does not return the closest record, it will return the relevant record
-- Geolocation record matching:
+- Geolocation routing is similar to latency-based routing, only instead of latency the location of customer and resources is used to determine the resolution decisions
+- When we create records, we tag the records with a location
+- This location is generally a country (ISO2 code), continent or default. There can be also a subdivision, in USA we can tag records with a state
+- When the user does a query, an IP checks verifies the location is the user
+- Geolocation does not return the closest record, it returns relevant records: when the resolution happens, the location of the user is cross-checked with the location specified for the records and the matching on is returned
+- Order of the cross-checks is the following:
     1. R53 checks the state (US only)
     2. R53 checks the country
     3. R53 checks the continent
     4. Returns default if not previous match
+- If no match is detected, the a `NO ANSWER` is returned
 - Geolocation is ideal for restricting content based on the location of the user
-- Can be used to load balance based on the user location or deliver language based content
+- It can be used for load-balancing based on user location as well
 
 ## Route53 Geoproximity Routing
 
-- Geoproximity aims to provides records as closer to the customer as possible
-- Aims to calculate the distance to the customer and returns the record closer to the customer
-- Records can be tagged with an AWS Region or latitude an longitude coordinates
-- We can define a bias value: plus or minus value altering the effective area of the resource
-- Bias can be used to redirect more (or less) traffic to a given resource
+- Geoproximity aims to provide records as close to the customer as possible, aims to calculated the distance between to record and customer and return the record with the lower one
+- When using geoproximity, we define rules:
+    - Region the resource is created in if it is an AWS resource
+    - Lat/lon coordinate for external resources
+    - Bias
+- Geoproximiy allows defining a bias: it can be a `+` or `-` bias, increasing or decreasing the region size. We can influence the routing distance based on this bias
 
 ## Route53 Interoperability
 
 - Route53 acts as a domain registrar and as a domain hosting
-- We can also register domain using other external services
+- We can also register domains using other external services
 - Steps happening when we register a domain using R53:
     - R53 accepts the registration fee
     - Allocates 4 Name Servers
