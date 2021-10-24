@@ -9,6 +9,5 @@
 - ACM can only deploy certificates to supported services (services in AWS which are integrated with ACM)
 - Not all services all supported, essentially only CloudFront and ALBs are supported. EC2, for example, is not supported
 - ACM is a regional service
-- Certificates cannot leave the region they are generated or imported in
-- To use a certificate within an ALB in ap-southeast-2, the certificate needs to be in ACM in ap-southeast-2 (ACM is a regional service!!!) !
-- Global Services such as CloudFront, certificates should be stored in **us-east-1** !
+- Certificates cannot leave the region they are generated or imported in, to use a certificate within an ALB in ap-southeast-2, the certificate needs to be in ACM in ap-southeast-2 (ACM is a regional service!!!)
+- For global Services such as CloudFront, certificates should be stored in **us-east-1** !
