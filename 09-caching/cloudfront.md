@@ -7,16 +7,15 @@
 ## CloudFront Terms and Architecture
 
 - **Origin**: the source location of the content, can be S3 or custom origin (publicly routable IPv4 address)
-- **Distribution**: unit of configuration within CloudFront, which gets deployed out to the CloudFront network. Almost everything is configured within the distribution
-- **Edge Location**: pieces of global infrastructure where the content is cached. They are smaller than AWS regions, but there are way more in number. Can be used to distribute static data only
-- **Regional Edge Cache**: larger version of an edge location. Provides another layer of caching
+- **Distribution**: unit of configuration within CloudFront, which gets deployed out to the CloudFront network. Almost everything is configured within the distribution directly or indirectly
+- **Edge Location**: pieces of global infrastructure where the content is cached. They are smaller than AWS regions, but they are way bigger in number and more widely distributed. Can be used to distribute static data only
+- **Regional Edge Cache**: larger version of an edge location, but there are fewer of them. Provides another layer of caching
 - CloudFront Architecture:
     ![CloudFront Architecture](images/CloudFrontArchitecture1.png)
-- If we are using S3 origins, the region edge location is not used if there is a cache miss for an edge location. Only custom origin can use the regional edge cache!
+- If we are using S3 origins, the region edge location is not used in case there is a cache miss for the edge location. Only custom origin can use the regional edge cache!
 - **Origin fetch**: the content is fetched from the origin in case of a cache miss on the edge location
 - **Behavior**: it is configuration within a distribution. Origins are directly linked to behaviors, behaviors are linked to distributions
     ![CloudFront Behavior](images/CloudFrontArchitecture2.png)
-
 ## CloudFront Behaviors
 
 - Distributions are units of configuration in CF, lots of high level options are configured on the distribution level:
@@ -45,9 +44,9 @@
 
 ![TTL and Invalidations](images/CloudFrontTTL.png)
 - And edge location views an object as not expired when it is within its TTL period
-- More frequent cache hits = lower origin load
+- More frequent cache hits = lower origin loads
 - Default validity period of an object (TTL) is 24 hours. This is defined in the behavior
-- Minimum TTL, maximum TTL: set lower or upper values which an individual object can have
+- Minimum TTL, maximum TTL: set lower or upper values which an individual object's TTL can have
 - Object specific TTL values can be set by the origins using different headers:
     - Cache-Control `max-age` (seconds): TTL value in seconds for an object
     - Cache-Control `s-maxage` (seconds): same as `max-age`
@@ -66,33 +65,35 @@
 
 ## CloudFront and SSL
 
-- Each CF distribution receives a default domain name (CNAME)
+- Each CFN distribution receives a default domain name (CNAME)
 - HTTPS can be enabled by default for this address
 - CF allows alternate domain names (CNAME)
-- In case of HTTPS we have to add our own matching certificate to CF
-- In case of HTTP, CF should be able to verify that we own the DNS, which is accomplished by also adding an SSL certificate
+- Process of adding alternate domain names:
+    - If we use HTTP, we need a certificate attached to the distribution which matches the alternate name
+    - Even if we don't want to use HTTPS, we need a way verifying that we onw and control the domain. This is accomplished by adding an SSL certificate which matches the alternate domain name
+    - The result is we need to add an SSL certificate wether we are using or not HTTPS
 - SSL certificates are imported using ACM (AWS Certificate Manager). ACM is a regional service, because of this the certificate for global services (such as CF) needs to be imported in *us-east-1* region
-- Handling HTTP and HTTPS:
+- Option we can set on a CFN behavior for handling HTTP and HTTPS:
     - We can allow both HTTP and HTTPS on a distribution
     - We can redirect HTTP to HTTPS
     - We can restrict to only allow HTTPS (any HTTP will fail)
-- There are two sets of connections when using CF:
-    - Viewer => CF (viewer protocol)
-    - CF => Origin (origin protocol)
+- There are two sets of connections when using CFN:
+    - Viewer => CFN (viewer protocol)
+    - CFN => Origin (origin protocol)
 - Both connections need valid public certificates (self-signed certificates will not work)
 
 ## CloudFront and SNI
 
 - Historically every SSL enabled site needed its own IP
 - Encryption for HTTP/HTTPS happens on the TCP connection level
-- Host header happens after that at Layer 7. Allows to specify to which application we want to connect in case multiple applications run on the same server
-- TLS encryption happens before deciding which application to access
-- 2003 extension was added to TLS: SNI - allowing to specify which host to be used
-- Older browser do not necessary support SNI. CF needs to allocate dedicated IP addresses for these users, charging extra from us
-- CF can be used in SNI mode (free) or allocating extra IP addresses ($600 per month)
+- Host header happens after that at Layer 7. It allows to specify to which application we want to connect in case multiple applications run on the same server
+- TLS encryption happens before deciding which application we want to access
+- In 2003 an extension was added to TLS: SNI - allowing to specify which domain we want to be access
+- Older browser do not necessary support SNI. CFN needs to allocate dedicated IP addresses for these users, at extra charge
+- CFN can be used in SNI mode (free) or allocating extra IP addresses ($600 per month)
 - CloudFront SSL/SNI architecture:
     ![SSL/SNI architecture](images/CloudFrontSSLSNI.png)
-- For S3 origin, we don't need to apply certificates for the origin protocol. For ALB/EC2/on-prem we can have to apply public certificates which needs to match the DNS name of the origin
+- For S3 origin, we don't need to apply certificates for the origin protocol. For ALB/EC2/on-prem we can have public certificates which needs to match the DNS name of the origin
 
 ## Origin Types and Architecture
 
@@ -119,16 +120,16 @@
 
 ## Caching Performance and Optimization
 
-- Cache Hit: object is available in the cache in the ede location
+- Cache Hit: object is available in the cache in the edge location
 - Cache Miss: object is not available in the cache, origin fetch is required
 - Content retrieval techniques:
-    - When we require an object from CF, we usually request it using its name
+    - When we require an object from CFN, we usually request it using its name
     - We can use query string parameters as well, example `index.html&lang=en`
     - Cookies
     - Request Headers
-- When using CF all of this data reaches CloudFront first and than can be forwarded to the origin
-- We can configure CF to cache data based on some or all of these request properties
-- When using CF forward only the headers needed by the application and cache data based only on what can change the object
+- When using CFN all of this data reaches CloudFront first and than can be forwarded to the origin
+- We can configure CFN to cache data based on some or all of these request properties
+- When using CFN forward only the headers needed by the application and cache data based only on what can change the object
 - The more things are involved in caching, the less efficient the process is
 
 ## CloudFront Security
@@ -137,9 +138,9 @@
 
 - S3 origins:
     - OAI - Origin Access Identity: is a type of identity, it can be associated with CloudFront distributions
-    - Essentially the CloudFront distributions "becomes" the OAI, meaning that this identity can be used it S3 bucket policies
+    - Essentially the CloudFront distributions "becomes" the OAI, meaning that this identity can be used in S3 bucket policies
     - Common pattern is to lock the S3 bucket to be only accessible to CloudFront
-    - The edge location gain the attached OAI identity, meaning they will be able to access the bucket
+    - The edge location gains the attached OAI identity, meaning they will be able to access the bucket
     - Direct access from the end-user to the bucket content can be disabled
 - Custom origins:
     - We can not use OAI to control access
