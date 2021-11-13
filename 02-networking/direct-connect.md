@@ -47,7 +47,7 @@
 
 ## Direct Connect Resilience and HA
 
-- Improve resilience:
+- To improve resilience:
     - Order 2 DX ports instead of one => 2 cross connects, 2 customer DX routes connecting to 2 on-premises routes
     - Connect to 2 DX locations, have to customer routers and 2 on-premises routers in different buildings (geographically separated)
 - Not resilient DX architecture:
@@ -62,7 +62,7 @@
 ## Direct Connect Link Aggregation Groups (LAG)
 
 - LAG: allows to take multiple physical connections and configure them to act as one
-- From speed perspective: the speed is increases linearly depending on the number of connections
+- From speed perspective: the speed increases linearly depending on the number of connections
 - LAG do provide resilience, although AWS does not market them as such. They do not provide any resilience regarding hardware failure or the failure of entire location
 - LAGs use an Active/Active architecture, maximum 4 connection can be part of the LAG
 - All connections must have the same speed and terminate at the same DX location
