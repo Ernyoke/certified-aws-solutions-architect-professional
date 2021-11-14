@@ -12,7 +12,7 @@
     - Stored Mode:
         - The VM appliance presents volumes over iSCI to servers
         - Servers can create files system on and use it in a normal way
-        - This volumes consume capacity on-premises
+        - These volumes consume capacity on-premises
         - Storage gateway has local storage, used as primary storage, everything is stored locally
         - Upload buffer: any data written to the local storage is also copied in the upload buffer and it will be uploaded to the cloud asynchronously via the storage gateway endpoint
         - The upload data is copied into S3 as EBS snapshots which can be converted into EBS volumes
@@ -26,7 +26,7 @@
         - The data will be stored in AWS managed area of S3, meaning it wont be visible using the AWS console. It can be viewed from the storage gateway console
         - The data is stored in raw block state
         - We can create EBS volumes out of the data
-        - Cached Mode allows for an architecture know as datacenter extension
+        - Cached Mode allows for an architecture know as data center extension
         ![Cached Mode architecture](images/StorageGatewayVolumeCached.png)
 
 ## Tape - VTL Mode
