@@ -4,9 +4,9 @@
 
 - FSx for Windows are fully managed native Windows file servers/file shares
 - Designed for integration with Windows environments
-- Integrates with Directory Service or Self-Managed AD
-- Resilient and highly available service. Can be deployed in single or multi-AZ within a VPC
-- We can perform on-demand and scheduled backups using FSx
+- Integrates with AWS managed Directory Service or Self-Managed AD
+- Resilient and highly available service. Can be deployed in single or multi-AZ within a VPC. Even in a single-AZ deployment the backend of the service uses replications to ensure that is resilient to hardware failure
+- It can perform a full range of different kind of backups, including client-side and AWS-side features. On the AWS-side, it can perform automatic and on-demand backups
 - FSx can be accessed over VPC peering, VPN and DX
 - FSx supports de-duplication, scaling through Distributed File System (DFS), KMS at rest encryption and enforced encryption in transit
 - Allows for volumes shadow copies, we can initiate previous versions for a file

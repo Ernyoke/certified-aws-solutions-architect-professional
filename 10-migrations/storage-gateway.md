@@ -11,7 +11,7 @@
 - Offers 2 different types of operation:
     - Stored Mode:
         - The VM appliance presents volumes over iSCI to servers
-        - Servers can create files system on and use it in a normal way
+        - Servers can create files systems on top of these volumes and use it in a normal way
         - These volumes consume capacity on-premises
         - Storage gateway has local storage, used as primary storage, everything is stored locally
         - Upload buffer: any data written to the local storage is also copied in the upload buffer and it will be uploaded to the cloud asynchronously via the storage gateway endpoint
