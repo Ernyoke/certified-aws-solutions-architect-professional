@@ -2,10 +2,12 @@
 
 ## Table of Contents
 
+0. Advanced Permissions and Accounts
+    - [AWS Organizations](00-accounts/organizations.md)
+    - [STS](00-accounts/sts.md)
 1. Permissions, Identity and Federation
     - [MFA](01-identity/mfa.md)
     - [IAM](01-identity/iam.md)
-    - [STS](01-identity/sts.md)
     - [AWS Resource Access Manager - RAM](01-identity/ram.md)
     - [AWS Service Quotas](01-identity/service-quotas.md)
     - [SAML 2.0 Identity Federation](01-identity/saml.md)
