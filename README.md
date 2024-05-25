@@ -5,6 +5,7 @@
 0. Advanced Permissions and Accounts
     - [AWS Organizations](00-accounts/organizations.md)
     - [STS](00-accounts/sts.md)
+    - [Policies](00-accounts/policies.md)
 1. Permissions, Identity and Federation
     - [MFA](01-identity/mfa.md)
     - [IAM](01-identity/iam.md)
