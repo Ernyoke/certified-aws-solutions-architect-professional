@@ -42,6 +42,16 @@
     - We can never restrict a root user from an account, but we can restrict the account itself, hence these restrictions will apply to the root user as well
 - **SCPs don't grant any permissions!** This are just a boundary to limit what is and is not allowed in an account
 - SCPs can be used in two ways:
-    - Allow list: block by default and allow certain services
     - Deny list (default): allow by default and block access to certain services
-        - `FullAWSAccess`: policy applied by default to the org an all OUs when we enable SCPs. This policy means by default nothing is restricted
+        - `FullAWSAccess`: policy applied by default to the org an all OUs when we enable SCPs. This policy means tha by default nothing is restricted
+        - SCPs don't grant permissions, but when they are enabled, there is a default deny for everything. This is why the `FullAWSAccess` policy is needed
+        - SCP priority rules:
+            1. Explicit Deny
+            2. Allow
+            3. Default (implicit) deny
+        - Benefits of deny lists is that as AWS is extends the list of service offerings, new services will be available for accounts (low admin overhead)
+    - Allow list: block by default and allow certain services
+        - To implement allow lists:
+            1. Remove the `FullAWSAccess` policy
+            2. Add any services which should be allowed in a new policy
+        - Allow lists are more secure, but they require more admin overhead
