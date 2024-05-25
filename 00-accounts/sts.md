@@ -2,8 +2,14 @@
 
 - Allows to assume roles across different accounts or same accounts
 - Generates temporary credentials (`sts:AssumeRole*`)
-- Temporary credentials are similar to access key. They expire and they don't belong to the identity
+- Temporary credentials are similar to access key. They expire and they don't directly belong to the identity which assumes the role
+- Temporary credentials usually provide limited access
 - Temporary credentials are requested by another identity (AWS or external - identity federation)
+- Temporary credentials include the following:
+    - `AccessKeyId`: unique ID of the credentials
+    - `Expiration`: date and time of credential expiration
+    - `SecretAccessKey`: used to sign the requests to AWS
+    - `SessionToken`: unique token which must be passed with all the requests to AWS
 - STS allows us to enable identity federation
 
 ## Assume a Role with STS
