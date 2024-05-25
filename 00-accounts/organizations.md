@@ -19,11 +19,29 @@
 - Using consolidated billing we get a single monthly bill. This covers the Management Account and all the Member Accounts of the Organization
 - When using organization reservation benefits and discounts are pooled, meaning the organization can benefit as a whole for the spending of each AWS account within the org
 
-## SCP - Service Control Policies
-
-- Is a feature of AWS Organizations that lets us restrict what can accounts do in an organization
-
 ## Best Practices
 
 - Have a single account into which users can log into and assume IAM roles in order to access other accounts from the org
 - The account with all the identities may be the Management Account or it can be another Member Account (*Login Account*)
+
+## `OrganizationAccountAccessRole`
+
+- This is an IAM role used to access the newly added/created account in an organization
+- This role will be created automatically if we create the account from an existing organization
+- This role has to be created manually in the member account if the account was invited into the organization
+
+# Service Control Policies (SCP)
+
+- They are a feature of AWS Organizations used to restrict AWS accounts
+- They are JSON documents
+- They can be attached to the root of the organization, to one or more OUs or to individual AWS accounts
+- SCPs inherit down through the organization tree
+- The Management Account is special: even if it has SCPs attached (directly or through an OU) it wont be affected by the SCP
+- SCPs are account permission boundaries:
+    - They limit what the account (including the root user of the account) can do
+    - We can never restrict a root user from an account, but we can restrict the account itself, hence these restrictions will apply to the root user as well
+- **SCPs don't grant any permissions!** This are just a boundary to limit what is and is not allowed in an account
+- SCPs can be used in two ways:
+    - Allow list: block by default and allow certain services
+    - Deny list (default): allow by default and block access to certain services
+        - `FullAWSAccess`: policy applied by default to the org an all OUs when we enable SCPs. This policy means by default nothing is restricted
