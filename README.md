@@ -6,11 +6,11 @@
     - [AWS Organizations](00-accounts/organizations.md)
     - [STS](00-accounts/sts.md)
     - [Policies](00-accounts/policies.md)
+    - [AWS Resource Access Manager - RAM](00-accounts/ram.md)
+    - [AWS Service Quotas](00-accounts/service-quotas.md)
 1. Permissions, Identity and Federation
     - [MFA](01-identity/mfa.md)
     - [IAM](01-identity/iam.md)
-    - [AWS Resource Access Manager - RAM](01-identity/ram.md)
-    - [AWS Service Quotas](01-identity/service-quotas.md)
     - [SAML 2.0 Identity Federation](01-identity/saml.md)
     - [AWS Single Sing-On - SSO](01-identity/sso.md)
     - [Amazon Cognito](01-identity/cognito.md)
