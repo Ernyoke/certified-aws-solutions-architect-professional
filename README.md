@@ -3,16 +3,16 @@
 ## Table of Contents
 
 1. Advanced Permissions and Accounts
+    - [MFA](01-accounts/mfa.md)
+    - [IAM](01-accounts/iam.md)
     - [AWS Organizations](01-accounts/organizations.md)
     - [STS](01-accounts/sts.md)
     - [Policies](01-accounts/policies.md)
     - [AWS Resource Access Manager - RAM](01-accounts/ram.md)
     - [AWS Service Quotas](01-accounts/service-quotas.md)
 2. Advanced Identities and Federation
-    - [MFA](02-identity/mfa.md)
-    - [IAM](02-identity/iam.md)
     - [SAML 2.0 Identity Federation](02-identity/saml.md)
-    - [AWS Single Sing-On - SSO](02-identity/sso.md)
+    - [IAM Identity Center (Successor to AWS Single Sing-On - SSO)](02-identity/identity-center.md)
     - [Amazon Cognito](02-identity/cognito.md)
     - [Amazon Workspaces](02-identity/workspaces.md)
 3. Networking and Hybrid
