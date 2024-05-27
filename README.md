@@ -8,7 +8,7 @@
     - [Policies](01-accounts/policies.md)
     - [AWS Resource Access Manager - RAM](01-accounts/ram.md)
     - [AWS Service Quotas](01-accounts/service-quotas.md)
-2. Permissions, Identity and Federation
+2. Advanced Identities and Federation
     - [MFA](02-identity/mfa.md)
     - [IAM](02-identity/iam.md)
     - [SAML 2.0 Identity Federation](02-identity/saml.md)
