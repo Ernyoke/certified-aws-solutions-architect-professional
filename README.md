@@ -15,6 +15,7 @@
     - [IAM Identity Center (Successor to AWS Single Sing-On - SSO)](02-identity/identity-center.md)
     - [Amazon Cognito](02-identity/cognito.md)
     - [Amazon Workspaces](02-identity/workspaces.md)
+    - [AWS Control Tower](02-identity/control-tower.md)
 3. Networking and Hybrid
     - [VPC - Virtual Private Cloud](03-networking/vpc.md)
     - [BGP - Border Gateway Protocol](03-networking/bgp.md)
