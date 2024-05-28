@@ -10,4 +10,7 @@
         - Unauthenticated Identities: identity pools can provides access to AWS services for guest users (unauthenticated users)
         - Federated Identities: authorize users to temporarily access AWS resources after they authenticated with Google, Facebook, Twitter, SAML 2.0 and event Cognito User Pools
 
+## Cognito concepts
+
+![Cognito Concepts](images/CognitoConcepts.png)
 
