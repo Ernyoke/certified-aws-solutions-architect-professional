@@ -16,13 +16,13 @@
 - Once discovered a DHCP server and a DHCP clients communicate, meaning that the client will get in the end an IP address, a Subnet Mask and Default Gateway address (L3 configuration)
 - DHCP also configures which DNS server should a resource use in a VPC
 - Also configures NTP servers, NetBios Name Servers and Node types
-- For DNS server we can explicitly provide values or we can use `AmazonProvidedDNS`
+- When we are setting which DNS service to use in a VPC we can either explicitly provide values or we can set `AmazonProvidedDNS`
 - We also get allocated 1 or 2 DNS names for the services in the VPC. One can be public if the instance has a public IP address allocated
-- Custom DNS names: we can give custom DNS names to EC2 instances if we use our own custom DNS servers
+- Custom DNS names: we can give custom DNS names to EC2 instances if we use our own custom DNS servers. To accomplish these we can use DHCP option sets
 - DHCP options sets:
     - Once created option sets can not be changed
     - Can be associated with 0 or more VPCs
-    - Each VPC can have a max of 1 option set associated
+    - Each VPC can have a max of 1 option set associated (it can have 0)
     - We we change a DHCP option set associated to the VPC, the change is immediate, but any new setting will only affect anything once a DHCP renew occurs
     - What we can configure in an option set:
         - DNS server (Route 53 resolver) what we can use in the VPC
@@ -65,57 +65,34 @@
     3. Traffic is allowed/denied based on the rule
 - Last rule is an implicit deny in every NACL, if no rule before that applies, traffic will be denied
 - Default NACL: when a VPC is created, a default NACL is attached to it. The default NACL is allowing all traffic
-- Custom NACL: we can create them and attach them to subnets. The default NACL denies by default all traffic. Can be associated with many different subnet, however each subnet can have only one NACL associated to it at any time
+- Custom NACLs: 
+    - We can create them and attach them to subnets
+    - Each NACL has a default rule that denies all traffic. This has the lowest priority
+- NACLs can be associated to many different subnet, however each subnet can have only one NACL associated to it at any time
 - NACL are not aware af any logical resources within a VPC, they are aware of IPs, CIDRs and protocols
 
 ## SG - Security Groups
 
-- Security Groups are stateful firewalls, meaning they detect response traffic to a request and they automatically allow traffic
+- Security Groups are stateful firewalls, meaning they detect response traffic to a request and they automatically allow that traffic
 - SGs do not have explicit **DENY** rules, they can be used to block bad actors (use NACLs for this)
 - SGs support IP/CIDR rules and also allow to reference logical resources
 - SGs are attached to Elastic Network Interfaces (ENI), when we attach a SG to an EC2, the SG will be attached to the primary ENI
 - SGs are capable to reference logical resources, ex. other security groups or self referencing
 
-## AWS Site-to-Site VPN
+## AWS Local Zones
 
-- A Site-to-Site VPN is a logical connections between a VPC and an on-premise network running over the public internet. The connection is encrypted using IPSec
-- Can be fully HA if it is implemented correctly
-- It is quick to provision, it can be provisioned in less than an hour (contrast to DX)
-- Components involved in creating a VPN connection:
-    - **VPC**
-    - **Virtual Private Gateway (VGW)**: it is a gateway object which can be the target of one or more rules in a Route Tables. It can be associated to a single VPC
-    - **Customer Gateway (CGW)**: can refer to 2 different things:
-        - Often is referred to the logical configuration in AWS
-        - Physical on-premises router which the VPN connects to
-    - **VPN Connection** itself: the connection linking the VGW from the AWS to the CGW
-- Static vs Dynamic VPN:
-    - **Dynamic VPN** uses BGP protocol, if customer router does not support BGP, we can not use dynamic VPNs
-    - **Static VPN** uses static network configuration: static routes are added to the route tables AWS side, static networks has to be identified on the VPN connection on-premise side. It is simple, it just uses IPSec, works anywhere, having limitation on terms of HA
-    - Dynamic VPN uses BGP: allows routing on the fly, allows multiple links to be used at once between the same locations. Allows using HA available architectures.
-        - Route propagation: if enabled means that routes are added ro the Route Table automatically
-- Considerations for VPN:
-    - Speed Limitation for VPN: *1.25 Gbps*, AWS limitation
-    - Latency considerations: inconsistent, traffic goes through the public internet
-    - Cost: hourly cost for outgoing traffic
-    - VPN can be used for Direct Connect backup or they can be used over the Direct Connect for adding a layer of encryption
-
-## AWS Transit Gateway
-
-- It is a network transit hub which connects VPCs to each other and to on-premise networks using Site-to-Site VPNs and Direct Connects
-- It is designed to reduce the network architecture complexity in AWS
-- It is a network gateway object, it is HA and scalable
-- Attachments: we create attachments in order for the TGW to connect to VPCs and on-premise networks. Valid attachments are:
-    - VPC attachments
-    - Site-to-Site VPN attachments
-    - Direct Connect Gateway attachments
-- Attachments are configured in each subnet of the connected VPCs
-- We can also peer transit gateways across cross regions and/or cross accounts
-- We can also attach transit gateways to the DX connections
-- Transit Gateway Considerations:
-    - Supports transitive routing: single transit gateway with multiple attachments using route tables
-    - Can be used to create global networks with peering
-    - We can share transit gateways using AWS RAM
-    - Transit Gateways offer less complex architectures compared to VPC peering solutions
+- Parent Region: regular AWS region
+- Local Zones are attached to parent regions and they operate in the same geographical region
+- Local Zone naming: `us-east-las-1` - < parent region > - < Local Zone identifier (international city code) >. Examples: `us-west-2-lax-1a`, `us-west-2-lax-1b`
+- We can have multiple Local Zones in the same city
+- Local Zones operate as their own independent points, they have their own independent connection to the internet
+- Generally, they support Direct Connect
+- A VPC in a parent region can be extended with subnets from a Local Zone. In these subnets we create our resources as normal
+- These resources will benefit from super low latencies (in case we want to access them from a business premises nearby)
+- Some things within a Local Zone will still utilize the parent region: for example Local Zones will have private networking with the parent region, however if we create backups for an EBS in the Local Zone, this will utilize the S3 from the parent region
+- Local Zones can be considered as one additional AZ (but near our location => lower latency), they don't have builtin AZ
+- Not all AWS products support Local Zones. From the ones which do support, many of them are opt-in an also many of them have limitations
+- Local Zones should be used when we need the highest performance
 
 ## Advanced VPC Routing
 
@@ -146,15 +123,6 @@
 - The security appliance is sitting in the public subnet which has a RT assigned to it. This RT sends all unmatched traffic out through the IGW and anything for the corporate network through the VGW
 - Ingress routing allows to assign route tables to gateways (Gateway route tables). **Gateway route tables** can be attached to internet gateways or virtual gateways and can be used to take action on inbound traffic (route to a security instance for assessment)
 ![Ingress Routing](images/AdvancedRouting5.png)
-
-## Accelerated Site-to-Site VPN
-
-- Performance enhancement for AWS Site-to-Site VPN that uses the AWS global network, the same network used for Global Accelerator and CloudFront
-- Using a classic Site-to-Site VPN, the traffic goes through the public internet. In order to avoid this, some companies use a Site-to-Site VPN over Direct Connect. Direct Connect offers more better performance, but at a higher cost. Since DX is not an option for everybody, accelerated Site-to-Site VPN was created to improve performance compared to classic Site-to-Site VPNs
-- Accelerated Site-to-Site VPN architecture:
-![Accelerated Site-to-Site VPN](images/AcceleratedS2SVPN1.png)
-- Acceleration can be enabled when creating a Transit Gateway attachment only! Not compatible with VPNs using virtual gateways (VGW)
-- Accelerated Site-to-Site VPN has a fixed accelerator cost fee and a transfer fee
 
 ## VPC Endpoints
 

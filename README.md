@@ -18,6 +18,8 @@
     - [AWS Control Tower](02-identity/control-tower.md)
 3. Networking and Hybrid
     - [VPC - Virtual Private Cloud](03-networking/vpc.md)
+    - [AWS Site-to-Site VPN](03-networking/site-to-site-vpn.md)
+    - [AWS Transit Gateway](03-networking/transit-gateway.md)
     - [BGP - Border Gateway Protocol](03-networking/bgp.md)
     - [AWS Global Accelerator](03-networking/global-accelerator.md)
     - [DX - Direct Connect](03-networking/direct-connect.md)
