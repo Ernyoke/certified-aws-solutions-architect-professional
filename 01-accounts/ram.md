@@ -6,6 +6,7 @@
 - Services can be shared with principals: accounts, OU's and ORG
 - Shared resources can be accessed natively
 - There is no cost by using RAM, only the service cost may apply
+- AWS RAM for sharing resources in an organization can be enabled with `enable-sharing-with-aws-organizations` CLI command. This operation creates a service-linked role called `AWSServiceRoleForResourceAccessManager` that has the IAM managed policy named `AWSResourceAccessManagerServiceRolePolicy` attached. This role permits RAM to retrieve information about the organization and its structure. This lets us share resources with all of the accounts
 
 ## Availability Zone IDs
 
