@@ -97,7 +97,7 @@
 ## Advanced VPC Routing
 
 - **Subnets are associated with 1 route table (RT) only, no more noe less!**
-- This route tables is either the main route table from the VPC or a custom route table
+- This route table is either the main route table from the VPC or a custom route table
 - In case of a custom route table association with a subnet, the main route table is disassociated. In case the custom RT is removed, the main RT is associated again with the subnet
 - RT can associated with an internet gateway (IGW) or virtual private gateway (VGW)
 - IPv4/6 are handled separately within a RT
@@ -115,7 +115,7 @@
         1. DX
         2. VPN Static
         3. VPN BGP
-        4. AS_PATH (distance within two logical systems)
+        4. AS_PATH (BPG term used to represent the path between two ASNs; it is the distance within two different autonomous systems): routes with a shorter AS_PATH would win over the longer AS_PATH ones
 
 ## Ingress Routing
 
