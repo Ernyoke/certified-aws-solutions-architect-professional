@@ -60,5 +60,23 @@
 - Using a classic Site-to-Site VPN, the traffic goes through the public internet. In order to avoid this, some companies use a Site-to-Site VPN over Direct Connect. Direct Connect offers more better performance, but at a higher cost. Since DX is not an option for everybody, accelerated Site-to-Site VPN was created to improve performance compared to classic Site-to-Site VPNs
 - Accelerated Site-to-Site VPN architecture:
 ![Accelerated Site-to-Site VPN](images/AcceleratedS2SVPN1.png)
-- Acceleration can be enabled when creating a Transit Gateway attachment only! Not compatible with VPNs using virtual gateways (VGW)
-- Accelerated Site-to-Site VPN has a fixed accelerator cost fee and a transfer fee
+- Acceleration can be enabled when creating a Transit Gateway attachment only! Not compatible with VPNs using Virtual Private Gateways (VGW)
+- Accelerated Site-to-Site VPN has a fixed accelerator cost fee and a data transfer fee
+
+## Client VPN
+
+- Site-to-Site VPN is generally used for one or more business premisses to connect to AWS VPCs. ClientVPN is similar, but instead of sites connecting to AWS, we have individual clients
+- A ClientVPN is a managed implementation of OpenVPN
+- Any client device which can use the OpenVPN software is supported
+- Architecturally we connect to a Client VPN endpoint which can be associated with one VPC and with one ore more Target Networks (high availability)
+- Client VPN billing is based on network association and hourly fee for usage
+- Client VPN setup:
+    - We crate a Client VPN Endpoint and associate it with a VPC and one or more subnets from the VPC
+    - This association places an ENI into the subnets associated
+    - We can only pick one subnet per AZ
+- Client VPN can use many different methods of authentication (certificates, Cognito User Pool, Federated Identities,  AWS Directory Service)
+- We associate a route table to the Client VPN Endpoint in order to set up routing and connectivity (to internet via NAT Gateways, other VPCs with peering, etc.)
+- This route table is pushed to any client which connects to the Client VPN Endpoint
+- The default behavior is the Client VPN route table replaces any local routes on the client, meaning the client devices can not access anything locally on their local network without having communication going through the Client VPN Endpoint
+- We can use split tunnel VPN, meaning that any routes from the Client VPN Endpoint are added to local client route tables. This solves the problem with the default behavior
+- Split tunnel is not the default behavior. It must be enabled by the user, otherwise all the data (including connection to the public internet) will go via the tunnel
