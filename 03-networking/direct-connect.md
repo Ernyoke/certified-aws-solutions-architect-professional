@@ -125,7 +125,7 @@
     - We chose the interface owner (this account or another)
     - Chose VLAN - 802.1Q, which needs to match the customer configuration
     - Chose the customer side BGP ASN (ideally this is public ANS for full functionality offered by public VIFs)
-    - Configure authentication and select optional peering IP addresses
+    - Configure MD5 authentication and select optional peering IP addresses
     - We have to select which prefixes we want to advertise
 - Private VIFs architecture:
 ![Public VIFs Architecture](images/DXPublicVIFS.png)
@@ -142,26 +142,39 @@
 - A VPN can be provided immediately, can be used while DX is provisioned and/or as a DX backup
 ![VPN over DX](images/DXPublicVIFVPN.png)
 
-## Direct Connect Types
+## Direct Connect Gateways
 
-- There are a few ways to get a DX:
-    - Get the connection directly from AWS
-        - Offers to speed options 1 Gbps, 10 Gbps amd 100 Gbps
-        - We get a port at a DX location, from which we have to arrange to connection to our location
-        - We can run 50 VIFs + 1 transit VIF
-    - Get the connection via partner
-        - Offers wider range of speeds from 50Mbps up to 10Gbps
-        - Hosted Connection: DX connection hosted an managed by the partner with **one VIF**
-        - Hosted VIF individually: less ideal than a hosted connection, no dedicated bandwidth allocated
+- Direct Connect is a regional service
+- Once a DX connection is up, we can use public VIFs to access all AWS Public Services in all AWS regions
+- Private VIFs can only access VPCs in the same AWS regions via VGWs
+- Direct Connect Gateway is a global network device: it is accessible in all regions
+- We integrate with it on the on-premises side by creating a private VIF and associate this with a DX Gateway instead of the Virtual Private Gateway (VGW). This integrates the on-premises router with the DX Gateway
+- On the AWS side we create VGW associations in any VPC in any AWS regions
+- DX gateways allow to route through them to the on-premises environments and vice-versa. They don't allow VPCs connected to the gateway to communicate with each other
+- We can have 10 VGW attachments per DX Gateway
+- 1 DX connection can have up to 50 private VIFs, each of which support 1 DX gateway and 1 DX gateway supports 10 VGW association => we can connect up to 500 VPCs
+- DX gateway don't have a cost, we have cost for data transit only
+![DX Gateway Architecture](images/DirectConnectGateway3.png)
+- Cross-account DX Gateways: multiple account can create association proposal for a DX gateway
 
-## Direct Connect - Other Notes
+## Transit VIFs and TGW
 
-- Direct Connect offers no end-to-end encryption!
-- To overcome this: create a public VIF and establish a Site-to-Site VPN over it
-- With direct connect we do not share any data cap with internet providers
-- No transit over the internet, which means low and consistent latency
-- DX offers cheaper data transfers and faster speeds compared to other methods
-- VPC endpoints can not be accessed through Private VIFs!
+- A DX Gateway does not route between the associated VPCs to that gateway, it only routes from on-premises to AWS side or vice-versa
+- Transit Gateways are regionals, it is possible to peer TGWs allowing connections between regions
+- Transit Gateways are hub-and-spoke architecture, anything associated with a TGW is able to communicate with anything other associated to that TGW
+- This architecture also works within peered TGWs
+- DX-TGW Architecture:
+   ![DX-TGW Architecture](images/DXGateway4.png)
+- A DX supports up to 50 public and private VIFs and only 1 Transit VIF
+- We can connect up to 3 Transit Gateways to a Direct Connect Gateway
+- An individual DX gateway can be used with VPCs and private VIFs or with Transit Gateways and transit VIFs, **NOT BOTH** at the same time!
+- Consideration:
+    - DX gateway does not route between its attachments, this is why the peering connection between TGWs is required
+    - Each TGW can be attached up to 20 DX gateways
+    - Each TGW supports up 5000 attachments, up to 50 peering attachments
+- DX Gateway routing problems:
+    - DX gateway only allows communications from a private VIF to any associated virtual private gateways
+    - With a transit gateway we can solve this, if we connect the DX gateway to a transit gateway (works only in one region)
 
 ## Direct Connect Resilience and HA
 
@@ -186,23 +199,3 @@
 - All connections must have the same speed and terminate at the same DX location
 - `MinimumLinks`: the LAG is active as long as the number of working connections is greater or equal to this value
 ![DX LAG](images/DirectConnectLAG.png)
-
-## Direct Connect Gateway and Transit VIFs
-
-- Direct Connect is a regional service
-- It is a link from a customer premises to one or more DX locations
-- Public VIFs can be used to access public services in all public AWS regions
-- Private VIFs can only connect to VPCs in the same region by default via VGWs
-- Direct Connect Gateway:
-    - It is a global network device accessible in all regions
-    - Direct Connect integrates with a Direct Connect Gateway using a private VIF. This VIF is associated with the Direct Connect Gateway (not with the VGWs from the VPC)
-    - On the AWS side we create VGW associations in any VPC in any regions. This connects those VPCs to the DX gateway and onwards using the private VIF into on-premises network
-    - Direct Connect Gateway does not allow VPCs to communicate with each other, it allows only on-prem network to communicate with AWS VPCs
-- We can have 10 VGW attachments per DX Gateway
-![DX Gateway Architecture](images/DirectConnectGateway3.png)
-- Integrate DX Gateways with Transit Gateways:
-    - Transit Gateways can be integrated with DX Gateways using a transit VIF
-    - We can have 1 transit VIF per DX connections
-    - Transit VIF is associated with DX gateway and allows associations between the DX gateways and 3 transit gateways
-    - Transit gateways can be peered
-![DX Transit Gateway Architecture](images/DirectConnectGateway4.png)
