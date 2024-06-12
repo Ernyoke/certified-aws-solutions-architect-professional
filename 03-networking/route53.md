@@ -35,18 +35,17 @@
 
 - DNS as a service
 - Let's us create and manage zone files
-- Zone files are hosted on four managed nameservers
-- A hosted zone can be public, accessible for the public internet, part of the public DNS system
-- It can be private, linked to a VPC(s)
+- Zone files are hosted on 4 AWS managed nameservers
+- A hosted zone can be public, accessible for the public internet, part of the public DNS system, or it can be private, linked to one or more VPC(s)
 - A hosted zone stores DNS records (recordsets)
 
 ## DNS Record Types
 
-- Nameserver (NS): allow delegation to occur in DNS
+- Name server (NS): allow delegation to occur in DNS
 - A and AAAA records: map host names to IP addresses. A records maps a host name to IPv4, AAAA maps the host to IPv4 addresses
 - CNAME (canonical name): maps host to host records, example ftp, mail, www can reference different servers. CNAME can not point directly to IP addresses, they can point to other names only
-- MX records: used for sending emails. Can have 2 parts: priority and value
-- TXT (text) records: arbitrary text to domain. Commonly used to prove ownership
+- MX records: used for sending emails. Can have 2 parts: priority and value. If we include a dot (.) in the end of the domain to which the record points, that will co considered as a FQDN (Fully Qualified Domain Name)
+- TXT (text) records: arbitrary text to domain. Commonly used to prove domain ownership
 
 ## DNS TTL - Time To Live
 
@@ -54,10 +53,10 @@
 - Resolver server will store the records for the amount of time specified by the TTL in seconds
 - TTL is a balance: low values means less queries to the server, high values mean less flexibility when the records are changed
 
-## Route53 Public Hosted Zones
+## Public Hosted Zones
 
 - A hosted zone is DNS database for a given section of the global DNS database
-- Hosted zones are created automatically when a domain is registered in R53, they can be created separately as well
+- Hosted zones are created automatically when a domain is registered in R53, they can be created separately as well (we will have to update the name severs values after that)
 - There is a monthly fee for each running hosted zone
 - A hosted zone hosts DNS records, example A, AAAA, MX, NS, TXT etc.
 - Hosted zones are authoritative for a domain
@@ -65,13 +64,13 @@
 - We use NS records to point at these name servers to be able to connect to the global DNS
 - Externally registered domains can point to R53 public zone
 
-## Route53 Private Hosted Zones
+## Private Hosted Zones
 
 - Similar to a public hosted zone except it can not be accessed from the public internet
-- It is associated with VPCs from AWS and it only can be accessed from VPCs from the account. Cross account access is possible
-- Split-view: it is possible to create split-view (split-horizon) DNS for public and internal use with the same zone name. Useful for accessing systems from the private network without accessing the public internet
+- They are associated with VPCs from AWS and it only can be shared with VPCs from the account. Cross account access is possible
+- Split-view (Split Horizon) DNS: it is possible to create split-view (split-horizon) DNS for public and internal use with the same zone name. Useful for accessing systems from the private network without accessing the public internet
 
-## CNAME vs ALIAS Records
+## CNAME vs Alias Records
 
 - The problem with CNAME:
     - An A record maps a NAME to an IP Address
@@ -79,9 +78,9 @@
     - We can not have a CNAME record for an APEX/naked domain name
     - Many AWS services use DNS Name (example: ELBs)
 - For the APEX domain to point to another domain, we can use ALIAS records
-- An ALIAS record maps a NAME to an AWS resource
+- An alias record maps a NAME to an AWS resource
 - Can be used for both apex and normal records
-- There is no additional charge for ALIAS requests pointing at AWS resources
+- There is no additional charge for alias requests pointing at AWS resources
 - An alias is a subtype, we can have an A record alias and a CNAME record alias
 
 ## Route53 Simple Routing
@@ -99,13 +98,14 @@
 - Health checks are performed by a fleet of health checkers distributed globally
 - Health checks are not just limited to AWS targets, can be any service with an IP address
 - Health checkers check every 30s (or 10s at extra cost)
-- Health checks can be TCP, HTTP, HTTPS, HTTP(S) with String Matching. A TPC connections should be completed in 4s and endpoint should respond with a 2xx or 3xx status code within 2s after connections
+- Health checks can be TCP, HTTP, HTTPS, HTTP(S) with String Matching. A TCP connections should be completed in 4s and endpoint should respond with a 2xx or 3xx status code within 2s after connections. After the status code is received, the response body should also be received within 2 seconds
 - In case of string matching the text should be present entirely in the first 5120 characters of the request body or the endpoint fails the health check
 - Based on the health checks the service can be categorized as `Healthy` or `Unhealthy`
 - Health checks can be of 3 types:
-    - Endpoint
-    - CloudWatch Alarm
-    - Calculated (status of other health checks)
+    - Endpoint: assess the health of an endpoint we specify
+    - CloudWatch Alarm Checks: they react to CloudWatch alarms
+    - Calculated Checks: checks of other checks
+- If 18%+ of the health checkers report the target as healthy, the target is considered healthy
 
 ## Route53 Failover Routing
 
