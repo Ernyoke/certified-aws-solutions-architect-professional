@@ -193,9 +193,12 @@
 ## Direct Connect Link Aggregation Groups (LAG)
 
 - LAG: allows to take multiple physical connections and configure them to act as one
-- From speed perspective: the speed increases linearly depending on the number of connections
+- From speed perspective a LAG can have:
+    - 2 ports, each 100 Gbps
+    - 4 ports, the speed of each being less than 100 Gbps
+- We can create a LAG with the maximum speed of 200 Gbps
 - LAG do provide resilience, although AWS does not market them as such. They do not provide any resilience regarding hardware failure or the failure of entire location
 - LAGs use an Active/Active architecture, maximum 4 connection can be part of the LAG
 - All connections must have the same speed and terminate at the same DX location
-- `MinimumLinks`: the LAG is active as long as the number of working connections is greater or equal to this value
+- A LAG has an attribute called `minimumLinks`: the LAG is active as long as the number of working connections is greater or equal to this value
 ![DX LAG](images/DirectConnectLAG.png)
