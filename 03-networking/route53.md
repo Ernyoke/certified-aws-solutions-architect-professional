@@ -83,7 +83,7 @@
 - There is no additional charge for alias requests pointing at AWS resources
 - An alias is a subtype, we can have an A record alias and a CNAME record alias
 
-## Route53 Simple Routing
+## Simple Routing
 
 - With simple routing with can create one record per name
 - Each record can have multiple values
@@ -91,7 +91,7 @@
 - The client choses one of the values an connects to the server
 - Limitations: does not support health checks!
 
-## Route53 Health Checks
+## Health Checks
 
 - Health checks are separate from, but used by records in Route53
 - They are created separately and they can be used by records in Route53
@@ -107,14 +107,14 @@
     - Calculated Checks: checks of other checks
 - If 18%+ of the health checkers report the target as healthy, the target is considered healthy
 
-## Route53 Failover Routing
+## Failover Routing
 
 - We can add 2 records of the same name (a primary and a secondary)
 - Health checks happen on the primary record
 - If the primary record fails the health checks, the address of the secondary record is returned
 - Failover routing should be used when we configure active-passive failover
 
-## Route53 Multi Value Routing
+## Multi Value Routing
 
 - Multi Value Routing is mixture to simple and failover routing
 - With multi value routing we can create many records with the same name
@@ -124,24 +124,24 @@
 - Any records which fails the health checks won't be returned when queried
 - Multi value routing is not a substitute for an actual load balancer
 
-## Route53 Weighted Routing
+## Weighted Routing
 
 - Weighted Routing can be used when looking for a simple form of load balancing or when we want to test new versions of an API
 - With weighted routing we can specify a weight for each record
 - For a given name the total of weight is calculated. Each record is returned depending on the percentage of the record compared to the total weight
-- Setting a weight to 0, the record will not be returned
+- Setting a weight to 0, the record will not be returned. If every record is set to 0, all of them will be returned
 - Weighted routing can be combined with health checks. Health checks don't remove records from the calculation of the total weight. If a record is selected, but it is unhealthy, another selection will be made until a healthy record is selected
 
-## Route53 Latency-Based Routing
+## Latency-Based Routing
 
 - Should be used when we trying to optimize for performance and better user experience
 - For each record we can specify an region
 - AWS maintains a list of latencies for each region from the world (source - destination latency)
 - When a request comes in, it will be directed to the lowest latency destination based on the location from where the request is coming from
 - Latency-based routing can be combined with health checks. If the lowest latency record fails, the second lowest latency record will be returned to the client
-- The database maintained by AWS is not updated in real time
+- The latency database maintained by AWS is not updated in real time
 
-## Route53 Geolocation Routing
+## Geolocation Routing
 
 - Geolocation routing is similar to latency-based routing, only instead of latency the location of customer and resources is used to determine the resolution decisions
 - When we create records, we tag the records with a location
@@ -157,13 +157,13 @@
 - Geolocation is ideal for restricting content based on the location of the user
 - It can be used for load-balancing based on user location as well
 
-## Route53 Geoproximity Routing
+## Geoproximity Routing
 
-- Geoproximity aims to provide records as close to the customer as possible, aims to calculated the distance between to record and customer and return the record with the lower one
+- Geoproximity aims to provide records as close to the customer as possible, aims to calculated the distance between to resource and customer and return the record with the lower one
 - When using geoproximity, we define rules:
-    - Region the resource is created in if it is an AWS resource
+    - Region the resource is created in, if it is an AWS resource
     - Lat/lon coordinate for external resources
-    - Bias
+    - Bias: adjust how R53 calculates the distance between the user and the resource
 - Geoproximiy allows defining a bias: it can be a `+` or `-` bias, increasing or decreasing the region size. We can influence the routing distance based on this bias
 
 ## Route53 Interoperability
@@ -181,3 +181,21 @@
 - Using Route53 for hosting only:
     - Generally used for existing domains. The domain is registered at third party
     - We create a hosted zone inside R53 and provide the address of the name servers to the third party
+
+# Implementing DNSSEC with Route53
+
+- DNSSEC can be enabled form the console and from the CLI
+- Once initiated, the process starts with KMS, an asymmetric key pair is required/created within KMS
+- The key-signing keys (KSK) is created from this KMS key, both the public and private ones which will be used by R53
+- These keys need to be in us-east-1
+- Next, R53 creates the zone-signing keys (ZSK) internally
+- Next, R53 adds the KSK and zone-signing key public parts into a DNS key record within the hosted zone, this tells every DNSSEC resolver which public keys to use to verify signatures on any other records
+- The private key signing key used to sign those DNS key records and create the RRSIG and DNSKEY records
+- At this point signing is configured (step 1)
+- Next, R53 has to establish the chain of trust with the parent zone
+- The parent zone needs ot add a DS record, which is hash of the public part of the KSK
+- If the domain was registered with R53, the AWS console or the CLI can be used to make this change. R53 will liaise with the appropriate top-level domain and add the delegated sign record
+- If the domain was created externally, we will have to add this record manually
+- Once done, the top level domain will trust this domain with the delegated sign record (DS)
+- The domain zone will sign each record either with the KSK or with the ZSK
+- When enabling DNSSEC we should make sure we configure CloudWatch Alarms, specifically create alarms for `DNSSECInternalFailure` and `DNSSECKeySigningKeyNeedingAction`, both of these need urgent intervention
