@@ -182,7 +182,7 @@
     - Generally used for existing domains. The domain is registered at third party
     - We create a hosted zone inside R53 and provide the address of the name servers to the third party
 
-# Implementing DNSSEC with Route53
+## Implementing DNSSEC with Route53
 
 - DNSSEC can be enabled form the console and from the CLI
 - Once initiated, the process starts with KMS, an asymmetric key pair is required/created within KMS
@@ -199,3 +199,25 @@
 - Once done, the top level domain will trust this domain with the delegated sign record (DS)
 - The domain zone will sign each record either with the KSK or with the ZSK
 - When enabling DNSSEC we should make sure we configure CloudWatch Alarms, specifically create alarms for `DNSSECInternalFailure` and `DNSSECKeySigningKeyNeedingAction`, both of these need urgent intervention
+
+## Advanced VPC DNS and DNS Endpoints
+
+- In every VPC the VPC.2 IP address is reserved for the DNS
+- In every subnet the .2 is reserved for Route53 resolver
+- Via this address VPC resources can access R53 Public and associated private hosted zones
+- Route53 resolver is only accessible from the VPC, hybrid network integration is problematic both inbound and outbound
+![Isolated DNS Environments](images/Route53Endpoints1.png)
+- Solution to the problem before Route53 endpoints were introduced:
+![Before Route53 Endpoints](images/Route53Endpoints2.png)
+- Route53 endpoints:
+    - Are deliver as VPC interfaces (ENIs) which can be accessed over VPN or DX
+    - 2 different type of endpoints:
+        - Inbound: on-premises can forward request to the R53 resolver
+        - Outbound: interfaces in multiple subnets used to contact on-premises DNS
+        - Rules control what requests are forwarded
+        - Outbound endpoints have IP addresses assigned which can be whitelisted on-prem
+- Route53 endpoint architecture:
+![Route53 Endpoints Architecture](images/Route53Endpoints3.png)
+- Route53 endpoints are delivered as a service
+- They are HA and they scale automatically based on load
+- They can handle around 10k queries per second per endpoint

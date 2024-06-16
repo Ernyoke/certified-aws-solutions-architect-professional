@@ -24,6 +24,7 @@
     - [AWS Global Accelerator](03-networking/global-accelerator.md)
     - [DX - Direct Connect](03-networking/direct-connect.md)
     - [Route53](03-networking/route53.md)
+    - [AWS PrivateLink](03-networking/privatelink.md)
 4. Storage Services
     - [FSx](04-storage/fsx.md)
     - [EFS - Elastic File System](04-storage/efs.md)
