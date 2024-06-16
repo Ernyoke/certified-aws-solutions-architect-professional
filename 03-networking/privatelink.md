@@ -5,7 +5,7 @@
 - In both cases these services are presented in our VPC as private IP address ans ENIs
 - AWS PrivateLink is the technical basis for Interface Endpoints
 - For HA we should make sure we deploy multiple endpoint. Recommended one per AZ in each subnet we need to consume the service
-- PrivateLink supports IPv4 and TCP only (IPv6 is not supported!)
+- PrivateLink supports IPv4 and TCP only (~~IPv6 is not supported!~~, see: https://aws.amazon.com/about-aws/whats-new/2022/05/aws-privatelink-ipv6/)
 - Private DNS is supported for overriding public DNS names (if there is a public DNS provided by the service we consume)
 - PrivateLink endpoints can be accessed through Direct Connect, S2S VPN and VPC Peering
 

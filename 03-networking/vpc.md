@@ -133,12 +133,21 @@
 - If we chose to allocate an IP range for a VPC, AWS will use a hex pair to uniquely allocate IP addresses to the subnets
 - Routing is handled separately for the IPv6 addresses, we will have IPv4 routes and IPv6 routes
 - Egress only internet gateway: similar to NAT gateway, allows outbound traffic denying inbound traffic in case of IPv6 addressing. NAT gateways or instances do not support IPv6!
-- We can have both internet gateway and egress only interne t gateway associated to the same subnet
+- Only one internet gateway can be associated with a VPC, but we can have both internet gateway and egress only internet gateway associated to the same VPC. They are 2 different things
 ![IPv6 Architecture](images/IPv6EOIGW.png)
 - IPv6 can be set up while creating a VPC/subnet or we can migrate an existing VPC to IPv6
 - We can enable IPv6 on specific subnets only
 - We can point IPv6 traffic to internet gateway and egress only internet gateways as well
 - Not every service in AWS supports IPv6!
+
+## Advanced VPC Structure - How many AZs for HA?
+
+- The number of AZ required for HA:
+    - Buffer AZs: number of AZ-failures tolerated (usually 1 for exam questions)
+    - Nominal AZs: the number of AZs we can use for normal operations: the number fo AZs available in a region - Buffer AZs (example: 6 AZs available, failure tolerated is 1 AZ => 6 - 1 = 5)
+- Sometimes this calculation can influence which region we can use, since number of AZs can differ per region
+- Nominal instances: the number instances required for the application for the business load
+- Most efficient HA in with optimal costs: Nominal Instances / Nominal AZs => optimal number of instances per AZ
 
 ## Advanced VPC Structure - Subnets and Tiers
 
@@ -150,3 +159,4 @@
     - We need different subnets for different routing
     - Internet-facing load balancers can communicates with private instances. Internet facing load balancer needs to run in a public subnet
     - Number of subnets needed: number of subnets needed for the APP * AZs
+    - NAT Gateway: we cannot have the NAT Gateway in the same subnet in which we would want the resources to also use it. Reason: we cannot have 2 default routes in the Route Table
