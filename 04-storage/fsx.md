@@ -38,3 +38,24 @@
     - Scratch: base 200 MB/s per TiB of storage
     - Performance offers: 50 MB/s, 100 MB/s and 200 MB/s per TiB storage
     - For both types we can burst up to 1300 MB/s per TiB using credits
+
+## FSx For NetApp ONTAP
+
+- Fully managed storage built on NetAPP ONTAP
+- Provides reach set of features available with NetApp's data management software:
+    - Storage efficiencies: compression, deduplication, compaction, thin provisioning
+    - Low-cost, fully elastic capacity pool tiering
+    - Data protection: snapshots, SnapVault and native Amazon FSx backups
+    - Disaster recovery using SnapMirror and Amazon FSx Backups
+    - Caching: FlexCache, Global File Cache
+    - Multiprotocol access from Linux, Windows
+    - Other features: antivirus scanning
+- Intelligent policy-based data movement between tier:
+    - Amazon FSx for NetApp ONTAP file system has two storage tiers: primary storage and capacity pool storage
+        - Primary storage is provisioned, scalable, high-performance SSD storage (up to 192 TB) that’s purpose-built for the active portion of our data set
+        - Capacity pool storage is a fully elastic storage tier that can scale to petabytes in size and is cost-optimized for infrequently accessed data
+    - Enabling tiering allows intelligent data movement between tiers based on the access
+- Use case for NetApp ONTAP:
+    - Backup and archive using SnapVaults
+    - Cross region DR copy of FSx file data using SnapMirror
+    - FlexCache for caching data and bringing data closer between regions and on-prem access
