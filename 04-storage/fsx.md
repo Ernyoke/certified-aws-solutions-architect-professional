@@ -39,7 +39,7 @@
     - Performance offers: 50 MB/s, 100 MB/s and 200 MB/s per TiB storage
     - For both types we can burst up to 1300 MB/s per TiB using credits
 
-## FSx For NetApp ONTAP
+## FSx for NetApp ONTAP
 
 - Fully managed storage built on NetAPP ONTAP
 - Provides reach set of features available with NetApp's data management software:
@@ -59,3 +59,17 @@
     - Backup and archive using SnapVaults
     - Cross region DR copy of FSx file data using SnapMirror
     - FlexCache for caching data and bringing data closer between regions and on-prem access
+    - Can be used with Amazon WorkSpaces to provide shared network-attached storage (NAS) or to store roaming profiles for Amazon WorkSpaces accounts
+
+## FSx for OpenZFS
+
+- Fully managed file storage service built on the open-source OpenZFS file system
+- Can be accessed over the industry-standard Network File System (NFS) protocol
+- Powered by AWS Graviton processors, along with the latest AWS disk and networking technologies
+- Use cases:
+    - Migration of on-premises data stored in ZFS or other Linux-based file servers to AWS
+    - Wide range of Linux, Windows, and macOS workloads, including big data and analytics, code and artifact repositories, DevOps solutions, web content management, front-end electronic design automation (EDA), genomics research, and media processing
+- Data security:
+    - Encryption of data at rest is automatically enabled when we create an Amazon FSx for OpenZFS file system through the AWS
+    - Amazon FSx for OpenZFS uses industry-standard AES-256 encryption algorithm to encrypt file system data at rest
+    - Amazon FSx for OpenZFS file systems automatically encrypt data in transit when they are accessed from Amazon EC2 instances that support encryption in transit
