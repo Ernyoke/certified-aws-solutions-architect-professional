@@ -15,8 +15,9 @@
     - VSS - user-driven restores (view previous versions)
     - Native file system accessible over SMB
     - Uses Windows permission model
-    - DFS - scale-out file share structure
+    - Supports DFS - scale-out file share structure, group file shares together in one enterprise-wise structure
     - Managed - no file server admin
+    - Integrates with Amazon managed DS or our own directory
 
 ## FSx for Lustre
 
@@ -38,6 +39,15 @@
     - Scratch: base 200 MB/s per TiB of storage
     - Performance offers: 50 MB/s, 100 MB/s and 200 MB/s per TiB storage
     - For both types we can burst up to 1300 MB/s per TiB using credits
+- FSx for Luster deployment types:
+    - Scratch:
+        - Is designed for pure performance, for short term and temporary workloads
+        - Does not provide any type of HA or replication, in case of a HW failure all the data stored on that hardware is lost
+        - Larger file systems mean more servers, more disks => more chance of failure
+    - Persistent:
+        - Has replication within one AZ only
+        - Auto-heals when hardware failure occurs
+    - Both of these options provide backups to S3 (manual or automatic with a retention of 0-35 days)
 
 ## FSx for NetApp ONTAP
 
