@@ -16,7 +16,8 @@
 - EFS offers 2 different throughput modes:
     - Bursting (default): works similar to EBS GP2 storage
     - Provisioned: we can specify throughput requirements independent of the size
-- EFS offers 2 storage classes:
-    - Standard
-    - Infrequent Access (IA)
+- EFS offers 3 storage classes:
+    - Standard: for data that is accessed and modified frequently
+    - Infrequent Access (IA): cost-optimized storage class for data that is less frequently accessed (few times a quarter)
+    - Archive: for data that is accessed a few times a year
 - We can automatically move data between these 2 classes using lifecycle policies
