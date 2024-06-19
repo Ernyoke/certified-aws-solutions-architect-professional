@@ -29,6 +29,7 @@
     - [FSx](04-storage/fsx.md)
     - [EFS - Elastic File System](04-storage/efs.md)
     - [S3](04-storage/s3.md)
+    - [Amazon Macie](04-storage/macie.md)
     - [EBS and Instance Store](04-storage/ebs.md)
 5. Compute, Scaling and Load Balancing
     - [Regional and Global AWS Architecture](05-compute/aws-architecture.md)
