@@ -31,6 +31,7 @@
     - [S3](04-storage/s3.md)
     - [Amazon Macie](04-storage/macie.md)
     - [EBS and Instance Store](04-storage/ebs.md)
+    - [AWS Transfer Family](04-storage/transfer-family.md)
 5. Compute, Scaling and Load Balancing
     - [Regional and Global AWS Architecture](05-compute/aws-architecture.md)
     - [EC2](05-compute/ec2.md)
