@@ -37,20 +37,29 @@
 - **Scheduled Reserved Instances**:
     - Great for long term requirements which does not run constantly, ex. batch processing running 5 hours/day
     - For scheduled reserved instances we specify a time window. The capacity can be used only during the time window
-    - Minimum purchase per year is 1200 hours, minimum commitment is 1 year
+    - Limitations: 
+        - Does not support all kind of instance types
+        - Minimum purchase per year is 1200 hours, minimum commitment is 1 year
 - **Dedicated Hosts**:
     - They are EC2 hosts allocated to a customer entirely
     - They are hosts designed for specific instances, ex. A, C, R, etc.
     - Hosts come with all of the resources we expected from a physical machine: number of cores and CPUs, memory, local storage and connectivity
+    - We pay for the host, we don't pay anymore for instance usage per second in case we launch instances on the host
     - We have a capacity for a dedicated hosts, we can launch different sizes of instances based on the available capacity
     - Reasons for dedicated hosts: we want to use software which is licensed for number of cores or number of sockets
-    - Host affinity: links instances to hosts, if we stop and start the instance, it will remain on the same host
+    - Host affinity: feature of dedicated hosts. Links instances to hosts, if we stop and start the instance, it will remain on the same host
+    - Only our instances will run on a dedicated hosts
+    - Capacity management:
+        - We have to manage our capacity in terms of under utilization of the host
+        - We have a limited capacity in terms of how many EC2 instances we can launch
 - **Dedicated Instances**:
-    - Our instances run on an EC2 host with other instances of ours. The host is not shared with other AWS customers
+    - Our instances run on an EC2 host with other instances of ours. The host is not shared with other AWS customers, no other customers will use the same hardware
     - We don't pay for the host, nor do we share the host
-    - Extra fees:
-        - One of hourly fee for any regions in which we are using dedicated instances
+    - There are some extra fees for this kind of purchase option:
+        - One-of hourly fee for any regions in which we are using dedicated instances
         - There is a fee for the dedicated instances themselves
+    - Dedicated instances are common in industries where we cannot share hardware
+    - No extra capacity management required from us
 
 ## Capacity Reservations
 
@@ -58,11 +67,14 @@
 - After scheduled instances on-demand is prioritized
 - The leftover capacity can be used for spot instances
 - Capacity reservation is different compared to reserved instances
-- Regional reservation provides a billing discount for valid instances launched in any AZ in that region
-- While this is flexible, region reservation don't reserve capacity within az AZ - risky if the capacity is limited during a major fault
-- Zonal reservation: same billing discount as for region reservation, but the reservation applies only to specific AZs
+- Regional reservation 
+    - Provides a billing discount for valid instances launched in any AZ in that region
+    - While this is flexible, region reservation don't reserve capacity within az AZ - risky if the capacity is limited during a major fault
+- Zonal reservation: 
+    - Same billing discount as for region reservation, but the reservation applies only to specific AZs
 - Regional/zonal reservation commitment is 1 or 3 years
 - On-Demand capacity reservation: can be booked to ensure we always have access to capacity in an AZ when we need it but at full on-demand price. No term limits, but we pay regardless if we consume the reservation or not
+- Capacity reservations do not provide any billing benefit, we just reserve the capacity for EC compute
 
 ## EC2 Savings Plan
 
@@ -70,6 +82,7 @@
 - Saving Plan can be 2 different types:
     - General compute dollar amounts: we can save up to 66% version on-demand
     - EC2 Saving Plan: up to 72% saving for EC2
+    - SageMaker savings plan: reduces costs up to 64% for SageMaker usage. Applies to Sagemaker ML instances (ml.t3, ml.m5, ml.m5d)
 - General compute savings plan currently apply to EC2, Fargate and Lambda
 - Resource usage consumes savings plan commitment at the reduced saving plans rate, beyond commitment on-demand billing is used
 
