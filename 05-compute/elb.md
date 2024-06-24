@@ -94,3 +94,17 @@
     - If the instance to which the cookie maps to fails, then a new instance will be selected
     - If the cookie expires => the cookie will be removed, new cookie is created while a new instance is chosen
 - Session stickiness problems: load can become unbalanced
+
+## Connection Draining and Deregistration Delay
+
+- Connection draining a setting which controls what happens when instances are unhealthy or deregistered
+- Default behavior: LB closes all connections and the instance receives no new connections
+- Connections draining allows in-flight requests to complete for a certain amount of time, while no new connections are sent to the instance
+- Connection draining is supported on Classic Load Balancers only! It is defined on the load balancer itself
+- Connection draining is a timeout between 1 and 3600 seconds (default 300)
+- If the instance become unhealthy because if a failed health check, connection draining settings do not apply to it
+- If an instance is taken out of service manually or by an ASG, it is listed "InService: Instance deregistration currently in progress". If we use an ASG, it will wait for all connections to complete before terminating or for the timeout value
+- Deregistration delay is essentially the same feature as connection draining, but it is supported by ALB, NLB and GWLBs
+- It is defined on target groups, not on the LB
+- It works by stopping sending connections to deregistering targets. Existing connections can continue until thy complete naturally or the deregistration delay is reached
+- Deregistration delay is enabled by default on all the new LBs, default value for it is 300 seconds (configurable between 0-3600 seconds)
