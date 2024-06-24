@@ -95,12 +95,13 @@
 - Every instances is allocated a primary private IPv4 address from the subnet range. This IP address remains the within the lifetime of EC2 instance
 - The primary IP address is exposed to the OS
 - ENIs can also have one or more secondary IP addresses depending on the instance type
-- Public IP address is allocated to the instance if we launch it in a subnet where this is enabled or we explicitly enable a primary address to the instance
-- Public IPs are not static
+- Public IP address is allocated to the instance if we launch it in a subnet where this is enabled or we explicitly enable a primary address to the instance. These public IP addresses are dynamic and they can change if the EC2 instance is moving to another EC2 host
 - Public IPs are not visible to the OS
 - In order to get static public IP addresses, we can associate an Elastic IP to the instance
 - We can allocate one public IP per private IP
 - We get charged if the Elastic IPs are not associated to instances
+- ENIs can have 1 or more IPv6 addresses, 1 MAC address and 1 or more Security Groups
+- IPv6 addressing if enabled, all the IPv6 addresses are publicly routable
 - IPv6 addresses are always visible to the OS
 - Source/destination checks: each ENI has a flag which can be disabled
 - By default source/destination check is enabled, if disabled the ENI can process traffic which was not created by the EC2 instances or traffic for which the EC2 instance is not the destination
