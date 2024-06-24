@@ -2,23 +2,25 @@
 
 ## ELB Architecture
 
-- It is the job of the load balancer to accept connection from an user base and distribute it to the underlying services
-- ELBs support many different type of compute service
+- It is the job of the load balancer to accept connection from customers and distribute those connections to any registered backend compute
+- ELBs support many different type of compute services
 - LB architecture:
 ![LB Architecture](images/ELBArchitecture1.png)
 - Initial configurations for ELB:
     - IPv4 or double stacking (IPv4 + IPv6)
     - We have to pick the AZ which the LB will use, specifically we are picking one subnet in 2 or more AZs
     - When we pick a subnet, AWS places one or more load balancer nodes in that subnet
-    - When an LB is created, it has a DNS A record. The DNS name resolves all the nodes located in multiple AZs. The nodes are HA: if the node fails, a different one is created. If the load is to high, multiple nodes are created
+    - When an LB is created, it has a DNS A record. This A record points to all the nodes provisioned for the LB => all the incoming connections are distributed equally
+    - The nodes are HA: if the node fails, a different one is created. If the load is to high, multiple nodes are created
     - We have to decide on creation if the LB is internal or internet facing (have public IP addresses or not)
-- Listener configuration: what the LB is listening to (what protocols, ports etc.)
+- Load Balancers are configured with listeners which accept traffic on a port and protocol and communicate with the targets
 - An internat facing load balancer can connect to both public and private instances
-- Minimum subnet size for a LB is /28 - 8+ fee addresses per subnet (AWS suggests a minimum of /27)
+- Minimum subnet size for a LB to function is /28 - 8 or more fee addresses per subnet (AWS suggests a minimum of /27)
 
 ## Cross-Zone Load Balancing
 
-- Initially each LB node could distribute traffic to instances in the same AZ
+- An LB by default has at least one node per AZ that is configured for
+- Initially each LB node could distribute connections to instances in the same AZ
 - Cross-Zone Load Balancing: allows any LB node to distribute connections equally across all registered instances in all AZs
 
 ## User Session State
@@ -37,11 +39,14 @@
 - Currently there are 3 different types of LB in AWS
 - Load balancers are split between v1 and v2 (preferred)
 - LB product started with Classic Load Balancers (v1)
-- CLBs can load balance http and https and lower level protocols as well, although they can not understand the http protocol
-- CLBs can have only 1 SSL certificates
+- CLBs can load balance HTTP/HTTPS and lower level protocols as well, although they can not understand the http protocol, they can't make decision based on HTTP protocols features
+- CLBs can have only 1 SSL certificate per load balancer
 - They can not be considered entirely being a layer 7 product
-- Application Load Balancer (ALB - v2 LB) are layer 7 products supported HTTP(S) and WebSocket
-- Network Load Balancers (NLB) are also v2 load balancers supporting lower level protocols such as TCP, TLC and UDP
+- We should default to using v2 load balancer for newer deployments
+- Version 2 (v2) load balancers:
+    - Application Load Balancer (ALB - v2 LB) are layer 7 devices, they support HTTP(S) and WebSocket protocols
+    - Network Load Balancers (NLB) are also v2 load balancers supporting lower level protocols such as TCP, TLS and UDP
+- In general v2 load balancers are faster and they support target groups and rules
 
 ## Application and Network Load Balancers
 
