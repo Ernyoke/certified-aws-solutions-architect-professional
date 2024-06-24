@@ -86,7 +86,7 @@
 - Enabling stickiness:
     - CLB: we can enable it per LB
     - ALB: we can enable it per target group
-- When stickiness is enabled, the LB generates a cookie: `AWSALB` which is delivered to the end-user
+- When stickiness is enabled, the LB generates a cookie: `AWSALB` for ALB / `AWSELB` for CLB which is delivered to the end-user
 - This cookie has a duration defined between 1 sec and 7 days
 - When the user accesses the LB, it provides the cookie to the LB
 - The LB than can decide to route the connection to the same backend instance every time while the cookie is not expired
