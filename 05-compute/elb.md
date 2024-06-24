@@ -108,3 +108,18 @@
 - It is defined on target groups, not on the LB
 - It works by stopping sending connections to deregistering targets. Existing connections can continue until thy complete naturally or the deregistration delay is reached
 - Deregistration delay is enabled by default on all the new LBs, default value for it is 300 seconds (configurable between 0-3600 seconds)
+
+## `X-Forwarded-For` and PROXY protocol
+
+- In case a client connects to a backend without any load balancing in the front of the backend, the IP address of the client is visible and can be recorded
+- With load balancers this can be more complicated, this is where `X-Forwarded-For` header and the PROXY protocol become handy
+- `X-Forwarded-For` is a HTTP header, it only works with HTTP/HTTPS
+- This header is added/appended by proxies/load balancers. It can have multiple values in case the request is passing multiple proxies/load balancers
+- The backend server needs to be aware of this header and needs to support it
+- Supported on CLB and ALB, NLB does not supports it!
+- PROXY protocol works at Layer 4, it is an additional layer 4 (tcp) header => works with a wide range or protocols (including HTTP/HTTPS)
+- There are 2 versions of PROXY protocol:
+    - v1: human readable, works with CLB
+    - v2: binary encoded, works with NLB
+- v2 can support an unbroken HTTPS connection (tcp listener). Use case for this: end to end encryption
+- When using PROXY protocol, we can add a HTTP header, the request is not decrypted
