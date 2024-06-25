@@ -10,14 +10,14 @@
 
 ## CloudWatch - Data
 
-- Namespace: container for metrics
-- Data point: timestamp, value, unit of measure (optional)
-- Metric: time ordered set of data point. Example of builtin metrics: `CPUUtilization`, `NetworkIn`, `DiskWriteBytes` for EC2
+- **Namespace**: container for metrics
+- **Data point**: timestamp, value, unit of measure (optional)
+- **Metric**: time ordered set of data point. Example of builtin metrics: `CPUUtilization`, `NetworkIn`, `DiskWriteBytes` for EC2
 - Every metric has a `MetricName` and a namespace
-- Dimension: name/value pair, example: a dimension is the way for `CPUUtilization` metric to be separated from one instance to another
+- **Dimension**: name/value pair, example: a dimension is the way for `CPUUtilization` metric to be separated from one instance to another
 - Dimensions can be used to aggregate data, example aggregate data for all instances for an ASG
-- Resolution: standard (60 second granularity) or high (1 second granularity)
-- Metric resolution: minimum period that we can get one particular data point for
+- **Resolution**: standard (60 second granularity) or high (1 second granularity)
+- **Metric resolution**: minimum period that we can get one particular data point for
 - Data retention:
     - sub 60s granularity is retained for 3 hours
     - 60s granularity retained for 15 days
@@ -50,5 +50,34 @@
 - Metric Filter: can be defined on the log group and will look for pattern in the log events. Essentially creates a metric from the log streams by looking at occurrences of certain patterns defined by us (example: failed SSH logs in events)
 - Export logs from CloudWatch:
     - **S3 Export**: we can create an export task (`Create-Export-Task`) which will take up to 12 hours
-    - **Subscription**: deliver logs in real time. We should create a subscription filter for the following destination: Kinesis Data Firehose (near real time), Elastic Search using Lambda or custom Lambda, Kinesis Data Streams (any KCL consumer)
+    - **Subscription**: deliver logs in real time. We should create a subscription filter for the following destination: Kinesis Data Firehose (near real time), OpenSearch (ElasticSearch) using Lambda or custom Lambda, Kinesis Data Streams (any KCL consumer)
 - Subscription filters can be used to create a logging aggregation architecture
+
+## CloudWatch Dashboards
+
+- A great way to setup dashboards for quick access to key metrics
+- Dashboards are global
+- Dashboards can include graphs from different regions
+- We can change the time zone and time range of the dashboards
+- We can setup automatic refresh (10s, 1m, 2m, 5m, 15m)
+- Pricing:
+    - 3 dashboards (up to 50 metrics) for free
+    - $3/dashboard/month
+
+## CloudWatch Synthetics Canary
+
+- Synthetics Canary are configurable scripts that will monitor APIs and URLs
+- These scripts meant to reproduce what a customer would do in order to find issues before the app is deployed to production
+- They can be also used to check the availability and latency of our endpoints
+- They can store load time data and screenshots of the UI
+- They have integration with CloudWatch Alarms
+- The scripts can be written in Node.js or Python
+- Provides programmatic access to a headless Chrome browser
+- They can be run once or on a regular basis
+- Canary Blueprints:
+    - Heartbeat Monitor: load URL, store screenshot and an HTTP archive file
+    - API Canary: test basic read and write functions of a REST API
+    - Broken Link Checker: check all links inside a page
+    - Visual Monitoring: compare a screenshot taken during a canary run with a baseline screenshot
+    - Canary Recorder: used with CloudWatch Synthetics Recorder - used to record actions on a website and automatically generate a test script for that
+    - GUI Workflow Builder: verifies that actions can be taken on a webpage (example: test a webpage with a login form)
