@@ -37,6 +37,7 @@
     - [EC2](05-compute/ec2.md)
     - [ELB - Elastic Load Balancer](05-compute/elb.md)
     - [ASG - Auto Scaling Groups](05-compute/asg.md)
+    - [Gateway Load Balancers (GWLB)](05-compute/gwlb.md)
 6. Monitoring, Logging and Cost Management
     - [CloudWatch](06-monitoring/cloudwatch.md)
     - [CloudTrail](06-monitoring/cloudtrail.md)
