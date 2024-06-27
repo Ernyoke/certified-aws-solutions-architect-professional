@@ -17,7 +17,7 @@
     - MFA on Root Account
     - EBS Public Snapshots
     - RDS Public Snapshots
-    - 50 service limit checks
+    - 50 service limit checks: checks the 50 most common service limits and identifies any where we are over 80% of that limit
 - Anything beyond these basic checks requires business or enterprise support plans
 - With business and enterprise support we get further 115 checks
 - We also get access to the AWS Support API
@@ -27,7 +27,7 @@
     - Allows to get summaries and detailed information programmatically
     - Allows request for Truster Advisor refresh
 - AWS Support API allows to programmatically open support ticket, and manage them
-- With business and enterprise support we get CloudWatch Integration
+- With business and enterprise support we get CloudWatch integration => we can define event driven responses to actions
 
 ## AWS Support Plans
 
