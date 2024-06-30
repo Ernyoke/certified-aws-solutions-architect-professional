@@ -125,3 +125,36 @@
     - Normally login is controlled with local database users (username/password)
     - We can configure RDS to allow IAM authentication (only authentication, not authorization, authorization is handled internally!):
     ![ASG Lifecycle Hooks](images/RDSIAMAuthentication.png)
+
+## RDS Proxy
+
+- Opening and closing connections consumes resources and takes time => in case we only want to read/write a tiny amount of data the overhead of establishing a connection creates a significant latency
+- Handling failure of databases instances is hard, this adds significant overhead and risks to our application
+- DB proxies can help, but managing them is not always trivial (scaling, resilience)
+- In case of an RDS proxy our application connects to the proxy, which handles connection polling and connectivity to the database
+- RDS proxies provide multiplexing: a smaller number of connections can be used to connect to the database while having a larger number of applications using the database through the proxy. This helps to reduce the load on the database
+- RDS Proxy can help with database failover events abstracting this from the applications. The proxy can wait until a healthy database instance is in place and can automatically connect to it
+- When to use RDS proxy?
+    - In case we have errors such as `Too many connections`. An RDS proxy can reduce the number of connections to the dabase while being able to handle many more connections from the applications to itself
+    - Useful when using AWS Lambda, we won't need to invoke a new connection after each invocation of our function. Saves time by connection reuse and IAM auth
+    - Useful for long running applications (SAAS apps) by reducing latency
+- RDS Proxy key facts:
+    - Fully managed by RDS/Aurora
+    - By default provides auto scaling, HA
+    - Provides connections pooling, which reduces DB load
+    - Only accessible from a VPC, not accessible from the public internet
+    - Accessed via Proxy Endpoint
+    - Can enforce SSL/TLS connection
+    - Can reduce failover time by over 60% in case of Aurora
+    - Abstracts the failure of a database away for our application
+
+## RDS Custom
+
+- Fills the gap between the main RDS product and EC2 running a DB engine
+- The main RDS is fully managed database service => OS/Engine access is limited
+- In contrast databases running on EC2 are self managed, this can have significant management overhead
+- RDS custom bridges this gap, we can utilize RDS but still get access to customization we would have when running a DB instance on EC2
+- Currently RDS custom works from MSSQL or Oracle
+- We can connect to the underlying OS using SSH, RDP or Session Manager
+- RDS custom will run withing our AWS account. Classic RDS will run in an AWS managed environment
+- If we need to perform RDS customization for RDS Custom, we need to look inside the Database Automation settings to make sure we wont have any disruption caused by the Database Automation. We need to pause Database Automation for this period
