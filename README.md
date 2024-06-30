@@ -47,6 +47,7 @@
     - [AWS Billing and Cost Management](06-monitoring/billing.md)
 7. Databases
     - [RDS - Relational Database Service](07-databases/rds.md)
+    - [Amazon Aurora](07-databases/aurora.md)
     - [DynamoDB](07-databases/dynamodb.md)
     - [AWS ElasticSearch - ES](07-databases/elasticsearch.md)
     - [Amazon Athena](07-databases/athena.md)
