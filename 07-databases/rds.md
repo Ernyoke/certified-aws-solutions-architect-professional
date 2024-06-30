@@ -1,6 +1,6 @@
 # RDS - Relational Database Service
 
-- RDS is often described as a Database-as-a-service (DBaaS)
+- RDS is often described as a Database-as-a-service (DBaaS) but this is not accurate. It should be named Database Server as a Service (DBSaaS) product
 - RDS provides managed database instances, which can themselves hold one or more databases
 - Benefits of RDS are the we don't need to manage the physical hardware, the server operating system or the database system itself
 - RDS supports MySQL, MariaDB, PostgreSQL, Oracle, Microsoft SQL Server
