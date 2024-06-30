@@ -30,13 +30,21 @@
 - On-demand backups:
     - Full copy of the table is retained until the backup is removed
     - On-demand backups can be used restore data and config to same region or cross-region
-    - We can retain or remove indexes
-    - We can adjust encryption settings
+    - If we restore a backup we can retain or remove indexes
+    - Similarly, we can adjust encryption settings
 - Point-in-time Recovery:
     - Not enabled by default, has to be enabled
     - It is a continuous record of changes
     - Allows replay to any point in the window (35 days recovery window)
     - From this 35 day window we can restore to another table with a 1 second granularity
+
+## DynamoDB Considerations
+
+- It is a NoSQL database, it is NOT relational, not suited for relational data
+- It is a Key/Value database
+- Access to DynamoDB tables is via console, CLI, or API (SDK)
+- True SQL query language is not supported, DynamoDB offers support for PartiQL (SQL like language)
+- Billing: based on RCU/WCU, storage and additional features enabled. Reserved allocation can be purchased for longer commitments
 
 ## DynamoDB Operation, Consistency and Performance
 
