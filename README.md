@@ -49,7 +49,7 @@
     - [RDS - Relational Database Service](07-databases/rds.md)
     - [Amazon Aurora](07-databases/aurora.md)
     - [DynamoDB](07-databases/dynamodb.md)
-    - [AWS ElasticSearch - ES](07-databases/elasticsearch.md)
+    - [AWS OpenSearch (Formerly known as ElasticSearch)](07-databases/opensearch.md)
     - [Amazon Athena](07-databases/athena.md)
     - [Amazon Neptune](07-databases/neptune.md)
     - [Amazon Quantum Ledger Database - QLDB](07-databases/quantum-ledger.md)
