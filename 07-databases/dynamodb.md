@@ -63,19 +63,30 @@
 - Every table has a RCU and WCU bust pool (300 seconds)
 - DynamoDB operations:
     - **Query**:
-        - When a query is performed we need to take a partition key
+        - When a query is performed we need to provide a partition key. Optionally we can provide a sort key or a range
         - Query item can return 0 or more items, but we have to specify the partition key every time
         - We can specify specific attribute we would want to be returned, we will be charged for querying the whole item anyway
     - **Scan**:
         - Least efficient operation, but the most flexible
         - Scan moves through a table consuming the capacity of every item
         - Any attribute can be used and any filters can be applied, but scan will consume the capacity for every item scanned through
+
+## DynamoDB Consistency Model
+
 - DynamoDB can operate using two different consistency modes:
     - Eventually consistent
-    - Strongly consistent
+    - Strongly (immediately) consistent
 - DynamoDB replicates data cross AZs using storage nodes. Storage nodes have a leader node, which is elected from the existing nodes
-- Writes are directed to leader node
+- DynamoDB has a fleet of entities which redirect connections to the appropriate storage nodes. Writes are always directed to leader node
 - The leader nodes replicates data to other nodes, typically finishing within a few milliseconds
+- There are 2 types of reads possible in DynamoDB:
+    - Eventually consistent reads:
+        - It might happen that we attempt to read data which is outdated (stale) / not present at all
+        - We can read double the amount of data with the same number of RCUs
+    - Strongly consistent reads:
+        - These read operations always use the leader node
+        - Not every application can tolerate eventual consistent reads
+        - Strongly consistent reads cost two times more than eventual consistent ones
 
 ## WCU/RCU Calculation
 
@@ -102,31 +113,31 @@
 
 - **Must be created with the base table!**
 - We can have at max 5 LSIs per base table
-- LSIs are alternative sort key, same partition key
+- LSIs allow an alternative sort key, but with the same partition key
 - They share the same RCU and WCU with the main table
 - Attributes which can be projected into LSIs: `ALL`, `KEYS_ONLY`, `INCLUDE` (we can specifically pick which attribute to be included)
-- Indexes are sparse: only items which have a value in the index alternative sort key are added to the index
+- Local Secondary Indexes are sparse: only items which have a value in the index alternative sort key are added to the index
 
 ### Global Secondary Indexes (GSI)
 
 - They can be created at any time
 - It is a default limit of 20 GSIs per base table
 - We cane define different partition and sort keys
-- GSIs have their own RCU and WCU allocations
-- Attributes projected into the index: `ALL`, `KEYS_ONLY`, `INCLUDE`
-- GSIs are also sparce, only items which have values in the new PK and optional SK are added to the index
+- GSIs have their own RCU and WCU allocations in case we are using provisioned capacity
+- Attributes which can be projected into an index: `ALL`, `KEYS_ONLY`, `INCLUDE`
+- GSIs are also sparse, only items which have values in the new PK and optional SK are added to the index
 - GSIs are always eventually consistent, the data is replicated from the main table
 
 ### LSI and GSI Considerations
 
-- We have to be careful with the projection, more capacity is consumed if we project unnecessary attributes
+- We have to be careful with the projections, more capacity is consumed if we project unnecessary attributes
 - If we don't project a specific attribute and require that when querying the index, it will fetch the data from the main table, the query becoming inefficient
 - AWS recommends using GSIs as default, LSI only when strong consistency is required
 
 ## DynamoDB Streams and Triggers
 
-- A stream is a time ordered list of item changes in a DynamoDB table
-- A stream is a 24H rolling window
+- A DynamoDB stream is a time ordered list of item changes in a DynamoDB table
+- A DynamoDB stream is a 24H rolling window of these changes. Behind the scenes uses Kinesis Streams
 - Streams has to be enabled per table basis
 - Streams record inserts, updates and deletes
 - We can create different view types influencing what is in the stream
@@ -151,15 +162,18 @@
     - Items cache: holds results of (`Batch`)`GetItem` calls
     - Query cache: holds the collection of items based on query/scan parameters
 - DAX is accessed via an endpoint. This endpoint load balances across nodes
-- Cache hits are returned in microseconds, cache misses in milliseconds
+- Nodes are HA, if primary node fails another node is elected
+- DAX can scale UP or scale OUT
 - When writing data to DynamoDB, DAX uses write-through caching, the data is written at the same time to the cache as it is written to the DB
+- DAX is deployed in a VCP! Any application which wants to use DAX has to be in a VPC as well
+- Cache hits are returned in microseconds, cache misses in milliseconds
 - DAX is not suitable for applications requiring strongly consistent reads
 
 ## DynamoDB Global Tables
 
 - Global tables provide multi-master cross-region replication
-- Tables are created in multiple regions and added to the same global table (becoming replicate tables)
-- DynamoDB utilizes last writer wins in conflict resolution
+- To implement global tables we have to create tables in multiple regions and add them to the same global table (becoming replicate tables)
+- DynamoDB utilizes **last writer wins** in conflict resolution
 - We can read and write to any region, updates are replicated generally sub-second
 - Strongly consistent reads are only supported in the same region as writes
 - Global tables provide global HA and global DR/BC
