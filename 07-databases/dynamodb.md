@@ -187,4 +187,4 @@
 - Items where the TTL attribute is older than the current time are set to expired
 - Another per-partition background process scans for expired items and removes them from tables and indexes, adding a delete event to the streams is enabled
 - These processes run on the background without affecting the performance of the table and without any additional charge
-- We can create a dedicated stream linked to the TTL processes, having 24h rolling window for deletes
+- We can configure a dedicated stream linked to the TTL processes, having 24h rolling window for any deletions caused by the TTL processes. Useful if we want to have any housekeeping where we track the TTL events that occur on tables (for example we can implement an un-delete process)
