@@ -27,9 +27,28 @@
 - EMR is used for big data processing, manipulation, analytics, indexing, transformation, etc.
 - EMR architecture:
     ![EMR architecture](images/EMRArchitecture.png)
+    - Each cluster requires at least one **master node**. This manages the cluster and distributes workloads and acts as the NAME node within MapReduce (we SSH into this if necessary)
     - Historically we could have only one master node, nowadays we can have 3 master nodes
-    - Core nodes: they are used for tracking task, we don't want to destroy these nodes
+    - **Core nodes**: cluster can have many core nodes. They are used for tracking task, we don't want to destroy these nodes
     - Core nodes also managed to HDFS storage for the cluster. The lifetime of HDFS is linked to the lifetime of the core nodes/cluster
-    - Task nodes: used to only run tasks. If they are terminated, the HDFS storage is not affected. Ideally we use spot instances for task nodes
+    - **Task nodes**: used to only run tasks. If they are terminated, the HDFS storage is not affected. Ideally we use spot instances for task nodes
     - EMRFS: file system backed by S3, can persist beyond the lifetime of the cluster. Offers lower performance than HDFS, which is based on local volumes
 
+## Amazon EMR Serverless
+
+- It is a deployment option for Amazon EMR that provides a serverless runtime environment
+- With EMR Serverless we don't have to configure, optimize, secure or operate clusters to run applications with frameworks such as Spark and Hive
+- Job run:
+    - Is a request submitted to an EMR Serverless application that the application asynchronously executes and tracks it until completion
+    - When a job is submitted we must specify an IAM role that will provide required access for the job to other services such as S3
+    - We can submit different jobs at the same time with different runtime roles
+- Workers:
+    - EMR Serverless internally uses workers to execute our workloads
+    - The default size of this workloads depends on the application type and EMR version
+    - When we submit a job, EMR Serverless computes the resources that the application needs for the job and schedules workers
+    - EMR Serverless automatically scales workers up or down based on the workload and parallelism required at every stage of the job
+- Pre-initialized capacity:
+    - Used to keep workers initialized and ready to respond in seconds
+    - Effectively creates a warm pool of workers for an application
+- EMR Studio:
+    - It is the user console where we manage our EMR Serverless applications
