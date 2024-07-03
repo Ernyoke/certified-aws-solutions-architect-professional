@@ -7,11 +7,10 @@
 - It is a serverless product, it provides Ledgers and Tables. We have no servers to manage
 - It is resilient through 3 AZs, replicates data within each of those AZs
 - It can stream data to Amazon Kinesis, it can stream any changes to data into Kinesis in real-time
-- It is a document database model, storing JSON documents
+- It is a document database model, storing JSON documents (key-value pairs with a nested structure)
 - Provides ACID transactions
-- Uses cases for QLDB:
+- Use cases for QLDB:
     - Anything related to finance: account balances and transactions
     - Medical application: full history of data changes matters
     - Logistics: track movement of objects
     - Legal: track the usage and change of data (custody)
-    
