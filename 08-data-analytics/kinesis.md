@@ -1,19 +1,19 @@
 # Kinesis
 
 - Is a scalable streaming service, designed to ingest lots of data
-- Producers send data into a Kinesis stream
+- Producers send data into a Kinesis stream, the stream being the basic entity of Kinesis
 - Streams can scale from low to near infinite data rates
-- It is a public service and it is highly available by design
-- Persistence: streams store a 24H moving window of data
-- Kinesis include storage to be able to ingest and retain data for 24H
+- It is a public service and it is highly available in a region by design
+- Persistence: streams store by default a 24H moving window of data
+- Kinesis include storage to be able to ingest and retain it for 24H by default (can be increased to 365 days at additional cost)
 - Multiple consumers can access the data from that moving window
 
 ## Kinesis Data Streams
 
-- Kineses Data Streams are using shards to stream data, initially there is one shard, additional shards can be added over time to increase performance
-- Each shard provides its own performance, each shard has 1MB/s ingestion capacity, 2MB/s consumption capacity
+- Kineses Data Streams are using shards architecture for scaling, initially there is one shard, additional shards can be added over time to increase performance
+- Each shard provides its own capacity, each shard has 1MB/s ingestion capacity, 2MB/s consumption capacity
 - Shards directly affect the price of the Kinesis stream, we have to pay for each shard
-- Pricing is also affected by the length of the storage window. By default is 24H, it can be increased to 7days
+- Pricing is also affected by the length of the storage window. By default is 24H, it can be increased to 365 days
 - Data is stored in Kinesis Data Records (1MB), these records are distributed across shards
 
 ## SQS vs Kinesis Data Streams
@@ -34,10 +34,10 @@
 - Supports transformation of data on the fly using Lambda. This transformation can add latency
 - Firehose is a pay as you go service, we pay per volume of data
 - Firehose supported destinations:
-    - HTTP endpoints
-    - Splunk
+    - HTTP endpoints (third party providers)
+    - Splunk (has direct support for it)
     - RedShift
-    - ElasticSearch
+    - OpenSearch (ElasticSearch)
     - S3
 - Firehose can accept data directly from producers or from Kinesis Data Streams
 - Firehose receives the data in real-time, but the ingestion is buffered
