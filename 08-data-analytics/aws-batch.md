@@ -23,10 +23,12 @@
 # Managed vs Unmanaged AWS Batch
 
 - Managed:
-    - AWS manages capacity based on the workloads
-    - We define the instance types, size and if we want to use on-demand or spot instances
+    - AWS Batch manages capacity based on our workload needs
+    - We decide the instance type/size and if we want to use on-demand or spot instances
     - We can determine our own max spot price
     - We need to create VPC gateways for access to the resources
+    - Using the managed compute environment we allow AWS the manage all the infra on our behalf, we just need to tweak some high level values
 - Unmanaged:
-    - We manage everything
+    - We manage everything, we create the environment, we direct AWS to use that environment
     - Generally used if we have a full compute environment ready to go
+    - Requires specific AMI for the EC2 instances
