@@ -10,14 +10,15 @@
     - Federated Query: directly query data stored in remote data sources
 - Redshift integrates with Quicksight for visualization
 - It provides a SQL-like interface with JDBC/ODBC connections
-- Redshift is a provisioned product, it is not serverless. It does come with provisioning time
+- By Redshift is a provisioned product, it is not serverless (AWS offers Redshift Serverless option as well). It does come with provisioning time
 - It uses a cluster architecture. A cluster is a private network, and it can not be accessed directly
 - Redshift runs in one AZ, not HA by design
 - All clusters have a leader node with which we can interact in order to do querying, planning and aggregation
 - Compute nodes: perform queries on data. A compute node is partition into slices. Each slice is allocation a portion of memory and disk space, where it processes a portion of workload. Slices work in parallel, a node can have 2, 4, 16 or 32 slices, depending the resource capacity
 - Redshift if s VPC service, it uses VPC security: IAM permissions, KMS encryption at rest, CloudWatch monitoring
 - Redshift Enhance VPC Routing:
-    - Can be enabled
+    - By default Redshift uses public routes for traffic when communicating with external services or any public AWS service (such as S3)
+    - When enabled, traffic is routed based on the VPC networking configurations (SG, ACLs, etc.)
     - Traffic is routed based on the VPC networking configuration
     - Traffic can be controlled by security groups, it can use network DNS, it can use VPC gateways
 - Redshift architecture:
