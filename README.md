@@ -61,6 +61,7 @@
     - [AWS Quicksight](08-data-analytics/quicksight.md)
 9. App Services, Containers and Serverless
     - [ECS - Elastic Container Service](09-containers-and-serverless/ecs.md)
+    - [EKS - Elastic Kubernetes Service](09-containers-and-serverless/eks.md)
     - [SNS - Simple Notification Service](09-containers-and-serverless/sns.md)
     - [SQS - Simple Queue Service](09-containers-and-serverless/sqs.md)
     - [Amazon MQ](09-containers-and-serverless/mq.md)
