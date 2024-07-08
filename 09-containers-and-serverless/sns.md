@@ -17,7 +17,7 @@
 - SNS is used across AWS for notifications, example CloudWatch uses it extensively
 - It is possible to apply filters to a subscriber
 - Fan-out architecture: single topic with multiple SQS queue subscribers
-- SNS offers delivery status for supported subscribers (HTTP, Lambda SQS)
+- SNS offers delivery status for supported subscribers which are HTTP, Lambda and SQS
 - SNS supports delivery retries
 - SNS it is a HA and scalable service within a region
 - SNS supports Server Side Encryption (SSE)
