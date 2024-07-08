@@ -22,4 +22,3 @@
 - SNS it is a HA and scalable service within a region
 - SNS supports Server Side Encryption (SSE)
 - We can use cross-account access to a topic via topic policies
-
