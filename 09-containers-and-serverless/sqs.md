@@ -49,14 +49,15 @@
 - When we send a message using `SendMessage` API, the library uploads the content to S3 and stores a link to this content in the message
 - When receiving a message, the library loads the payload from S3 and replaces the link with the payload in the message
 - When deleting a message from a queue, the large S3 payload will also be deleted
-- The Extended Client Library has an implementation in Java
+- The Extended Client Library can handle messages up to 2 GB
+- It has an implementation in Java. Equivalent libraries are available for other languages
 
 ## SQS Delay Queues
 
 - Delay queues allow us to postpone the delivery of messages in SQS queues
 - For a delay queue we configure a `DelaySeconds` value. Messages added to the queue will be invisible for the amount of `DelaySeconds`
 - The default value of `DelaySeconds` is 0, the max value is 15 minutes. In order for a queue to be delay queue, the value should be set to be greater than 0
-- Message times allow a per-message basis invisibility to be set, overriding the queue setting. Min/max values are the same. Per message setting is not supported for FIFO queues
+- Message times allows a per-message basis invisibility to be set, overriding the queue setting. Min/max values are the same. Per message setting is not supported for FIFO queues
 
 ## SQS Dead Letter Queues (DLQ)
 
