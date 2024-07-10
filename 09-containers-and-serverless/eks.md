@@ -44,3 +44,25 @@
         - It is a networking proxy
         - It coordinates networking with the control plane
         - It helps implement "services" and configures rules allowing communications with pods from inside or outside of the cluster
+- Ingress: exposes a way into a service from outside to the cluster
+- Ingress Controller: a piece of software with arranges the underlying hardware to allow ingres (example: AWS LB Controller which use ALB/NLB)
+- Persistent Storage (PV): they are volumes whose lifecycle lives beyond any one single pod that is using it. "Normal" long running storage
+
+## Elastic Kubernetes Service 101
+
+- It is an AWS managed implementation of Kubernetes as a service
+- EKS can be run in different ways:
+    - On AWS itself as a product
+    - On Outposts: racks and servers operating in on-premises locations, but controlled and managed by AWS
+    - EKS Anywhere: EKS clusters running on on-premises or anywhere else
+    - EKS Distro: EKS product as open-source
+- The EKS control plane is managed by AWS and scales based on load. It runs across multiple AZs
+- Integrates with other AWS services such as ECR, ELB, IAM, VPC
+- EKS Cluster = EKS Control Plane and EKS Notes
+- etcd is also managed by AWS and distributed across multiple AZs
+- Nodes can be the following types:
+    - Self managed: EC2 instances managed by us
+    - Managed node groups: still EC2 instances, but EKS manages the provisioning and lifecycle managing
+    - Fargate: nodes are managed by EKS, we don't have to worry about scaling and optimizing clusters (similar to ECS Fargate)
+- Choosing between node types depends on for what we want to use the cluster. If we want Windows nodes, GPU, Inferentia, Bottlerocket, Outposts, Local zones, etc. we need to check which types of nodes support the feature we require
+- Persistent storage on EKS: it can use EBS, EFS, FSx for Lustre, FSx for NetApp ONTAP as storage providers

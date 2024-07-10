@@ -18,5 +18,5 @@
 - AWS FLow Framework - way of defining workflows supported by SWF
 - External Signals to intervene in process, we need SWF
 - Launch child flows and have the processing return to parent, we need ot use SWF
-- Bespoke/complex decision logic: use SWF (custom decider application)
+- Bespoke/complex decision logic: use SWF (custom decider application can be coded by us, we can implement whatever logic we want)
 - Mechanical Turk integration: use SWF (suggested AWS architecture)
