@@ -10,6 +10,10 @@
 - ET/MC architecture example:
     [ET/MC architecture](images/ElasticTranscoder&MediaConvert.png)
 - We use these products when we need to the media convert in a serverless, event-driven media processing pipeline
+
+## Choosing between ET and MC
+
+- ET is legacy, by default we should chose MC
 - MC supports more codecs, design for larger volume and parallel processing
 - MC supports reserved pricing
-- ET required for WebM(VP8/VP9), animated GIF, MP3, Vorbis and WAV. For everything else we should use MediaConvert
+- ~~ET required for WebM(VP8/VP9), animated GIF, MP3, Vorbis and WAV.~~ All of these codecs are supported for MC. For everything else we should use MediaConvert
