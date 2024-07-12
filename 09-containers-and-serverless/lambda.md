@@ -176,15 +176,3 @@
             "search": ["roffle", "winkie"]
         }
         ```
-
-## AWS SAM - Serverless Application Model
-
-- Serverless application is not just Lambda function, it can include many more services such as:
-    - Front end code and assets hosted by S3 and CloudFront
-    - API endpoint - API Gateway
-    - Compute - Lambda
-    - Database - DynamoDB
-    - Event sources, permissions and more...
-- SAM group of products has 2 main parts:
-    - AWS SAM template specification, which is an extension of CloudFormation
-    - AWS SAM CLI allowing local testing, local invocation and deployments into AWS
