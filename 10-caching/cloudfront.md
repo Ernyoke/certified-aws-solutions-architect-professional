@@ -16,6 +16,7 @@
 - **Origin fetch**: the content is fetched from the origin in case of a cache miss on the edge location
 - **Behavior**: it is configuration within a distribution. Origins are directly linked to behaviors, behaviors are linked to distributions
     ![CloudFront Behavior](images/CloudFrontArchitecture2.png)
+
 ## CloudFront Behaviors
 
 - Distributions are units of configuration in CF, lots of high level options are configured on the distribution level:
@@ -29,14 +30,19 @@
     - etc.
 - A single distribution can have one (default behavior) or multiple behaviors
 - Any incoming request is pattern matched against behavior's pattern
+- The default behavior has a wildcard (`*`) pattern and it will match anything that was not matched by other more specific behavior
 - Once a request is pattern matched against a behavior, it will become subject ot the behavior's configurations which can be the following:
     - Origin or origin group
     - Viewer protocol policy (redirect HTTP to HTTPS)
     - Allowed HTTP methods
     - Field level encryption
-    - Cache directives
+    - Cache directives - we can use:
+        - Legacy cache settings
+        - Cache policy nad origin request policy (recommended by AWS)
     - TTL (min, max, default)
-    - Restrict viewer access to a behavior (Trusted Signers)
+    - Restrict viewer access to a behavior: sets the entire behavior to restricted or private. If we select this , we need to specify the trusted authorization type, which can be:
+        - Trusted key groups (recommended by AWS)
+        - Trusted signer (legacy)
     - Compress objects automatically
     - Associate Lambda@Edge function
 
@@ -55,7 +61,7 @@
 - Custom headers for S3 origins can be configured in object's metadata
 - Cache invalidations are performed in a distribution and it applies to all edge locations (it takes time)
 - Cache invalidation invalidates every object regardless of the TTL value, based on the invalidation pattern
-- There is a cost allocated when invalidation is applied
+- There is a cost allocated when invalidation is applied. This cost is the same regardless of the number of files we invalidate
 - Instead of invalidation we may consider **versioned file names**
 - Versioned file names also help to:
     - Avoid using local browser cache in case of a newer file
@@ -65,32 +71,35 @@
 
 ## CloudFront and SSL
 
-- Each CFN distribution receives a default domain name (CNAME)
+- Each CF distribution receives a default domain name (CNAME)
 - HTTPS can be enabled by default for this address
 - CF allows alternate domain names (CNAME)
 - Process of adding alternate domain names:
-    - If we use HTTP, we need a certificate attached to the distribution which matches the alternate name
-    - Even if we don't want to use HTTPS, we need a way verifying that we onw and control the domain. This is accomplished by adding an SSL certificate which matches the alternate domain name
-    - The result is we need to add an SSL certificate wether we are using or not HTTPS
-- SSL certificates are imported using ACM (AWS Certificate Manager). ACM is a regional service, because of this the certificate for global services (such as CF) needs to be imported in *us-east-1* region
-- Option we can set on a CFN behavior for handling HTTP and HTTPS:
+    - If we use HTTPS, we need a certificate applied to the distribution which matches that name
+    - Even if we don't want to use HTTPS, we need a way verifying that we own and control the domain. This is accomplished by adding an SSL certificate which matches the the name we are adding to the CF distribution
+    - The result is we need to add an SSL certificate wether we are using HTTPS or not
+- SSL certificates are imported using ACM (AWS Certificate Manager)
+- ACM is a regional service, because of this the certificate for global services (such as CF) needs to be imported in *us-east-1* region
+- Option we can set on a CF behavior for handling HTTP and HTTPS:
     - We can allow both HTTP and HTTPS on a distribution
     - We can redirect HTTP to HTTPS
     - We can restrict to only allow HTTPS (any HTTP will fail)
-- There are two sets of connections when using CFN:
-    - Viewer => CFN (viewer protocol)
-    - CFN => Origin (origin protocol)
-- Both connections need valid public certificates (self-signed certificates will not work)
+- There are two sets of connections when any individual is using CF:
+    - Viewer => CF (viewer protocol)
+    - CF => Origin (origin protocol)
+- Both connections need valid public certificates as well as any intermediate certificates. Self-signed certificates will not work!
+- If our origin is S3, we don't have to worry about this certificate for the origin protocol. S3 handles this natively on it own. We don't/can't apply certificates to S3 buckets
 
-## CloudFront and SNI
+## CloudFront and SNI (Server Name Indication)
 
 - Historically every SSL enabled site needed its own IP
 - Encryption for HTTP/HTTPS happens on the TCP connection level
 - Host header happens after that at Layer 7. It allows to specify to which application we want to connect in case multiple applications run on the same server
 - TLS encryption happens before deciding which application we want to access
-- In 2003 an extension was added to TLS: SNI - allowing to specify which domain we want to be access
-- Older browser do not necessary support SNI. CFN needs to allocate dedicated IP addresses for these users, at extra charge
-- CFN can be used in SNI mode (free) or allocating extra IP addresses ($600 per month)
+- In 2003 an extension was added to TLS: SNI - allowing to specify which domain we want to access. This occurs in the TLS handshake, before HTTP being involved
+- This allows one server with a single IP to host many HTTPS websites which need their own certificates
+- Older browser do not necessary support SNI. CF needs to allocate dedicated IP addresses for these users, at extra charge
+- CF can be used in SNI mode (free) or allocating extra IP addresses ($600 per month per distribution)
 - CloudFront SSL/SNI architecture:
     ![SSL/SNI architecture](images/CloudFrontSSLSNI.png)
 - For S3 origin, we don't need to apply certificates for the origin protocol. For ALB/EC2/on-prem we can have public certificates which needs to match the DNS name of the origin
@@ -106,31 +115,35 @@
     - AWS media store container endpoint
     - everything else (web-servers) - custom origins
 - If S3 is configured to be used as a web-server, CF views it as a custom origin
-- S3 origin configurations:
-    - Origin Path: use a path instead of the top level of the bucket
-    - Origin Access Identity: allows to give CF a virtual identity and use this to access the bucket
-    - Origin Custom Headers
-    - Viewer protocol policy is also used for the origin protocol
-- Custom origin configurations:
-    - Origin Path: point to an origin but use a sub-path
-    - Minimum Origin SSL Protocol: best practice always to select the latest
-    - Origin Protocol Policy: HTTP, HTTPS or Match Viewer
-    - HTTP/HTTPS Port: we can use arbitrary port instead of 80 or 443
-    - Origin Custom Headers: can be used for security to restrict access only from CF
+- S3 origin configuration options:
+    - Origin Path: we can use a path from the bucket instead of the top level of the bucket
+    - Original access control settings: it is used to restrict access to the bucket only to CloudFront. The legacy version of this was Origin Access Identity
+    - Origin Access Identity (legacy): same purpose as the origin access control
+    - Add custom headers (optional): we can pass custom headers to the origin S3 bucket
+- In case of S3 the viewer protocol is matched with the origin protocol. This means if we use HTTP for the end-users, CF will also use HTTP to access the bucket
+- Custom origin configuration options:
+    - Origin Path: we can configure to use a sub-path to access the origin
+    - Minimum Origin SSL Protocol: minimum TLS protocol version to be used with the origin. Best practice is to select the latest supported by the origin
+    - Origin Protocol Policy: HTTP only, HTTPS only or Match Viewer protocol policy
+    - HTTP/HTTPS Port: we can use arbitrary port instead of 80 or 443 for being able to connect to the origin
+    - Origin Custom Headers: pass custom headers to the origin. Can be used for security to restrict access only from CF
 
 ## Caching Performance and Optimization
 
 - Cache Hit: object is available in the cache in the edge location
 - Cache Miss: object is not available in the cache, origin fetch is required
-- Content retrieval techniques:
-    - When we require an object from CFN, we usually request it using its name
-    - We can use query string parameters as well, example `index.html&lang=en`
-    - Cookies
-    - Request Headers
-- When using CFN all of this data reaches CloudFront first and than can be forwarded to the origin
-- We can configure CFN to cache data based on some or all of these request properties
-- When using CFN forward only the headers needed by the application and cache data based only on what can change the object
-- The more things are involved in caching, the less efficient the process is
+- To increase performance we need the maximize the ration between cache hit and cache miss
+- We can retrieve objects from CF based on these:
+    1. When we require an object from CF, we usually request it using its name
+    2. We can use query string parameters as well, example `index.html&lang=en`
+    3. Cookies
+    4. Request Headers
+- When using CF all of this data reaches CloudFront first and than can be forwarded to the origin
+- We can configure CF to cache data based on some or all of these request properties
+- These choices affect how performant would be the data retrieval from our CF distribution
+- Optimization recommendations:
+    - When using CF we should forward only the headers needed by the application and cache data based only on what can change the object
+    - The more things are involved in caching, the less efficient the process is
 
 ## CloudFront Security
 
