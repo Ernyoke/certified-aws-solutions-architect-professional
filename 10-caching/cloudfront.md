@@ -8,7 +8,7 @@
 
 - **Origin**: the source location of the content, can be S3 or custom origin (publicly routable IPv4 address)
 - **Distribution**: unit of configuration within CloudFront, which gets deployed out to the CloudFront network. Almost everything is configured within the distribution directly or indirectly
-- **Edge Location**: pieces of global infrastructure where the content is cached. They are smaller than AWS regions, but they are way bigger in number and more widely distributed. Can be used to distribute static data only
+- **Edge Location**: pieces of global infrastructure where the content is cached. They are smaller than AWS regions. They are way bigger in number than AWS locations and more widely distributed. Can be used to distribute static data only
 - **Regional Edge Cache**: larger version of an edge location, but there are fewer of them. Provides another layer of caching
 - CloudFront Architecture:
     ![CloudFront Architecture](images/CloudFrontArchitecture1.png)
