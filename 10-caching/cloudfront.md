@@ -147,16 +147,23 @@
 
 ## CloudFront Security
 
-### OAI and Custom Origins
+### OAI/OAC and Custom Origins
 
 - S3 origins:
-    - OAI - Origin Access Identity: is a type of identity, it can be associated with CloudFront distributions
-    - Essentially the CloudFront distributions "becomes" the OAI, meaning that this identity can be used in S3 bucket policies
-    - Common pattern is to lock the S3 bucket to be only accessible to CloudFront
-    - The edge location gains the attached OAI identity, meaning they will be able to access the bucket
-    - Direct access from the end-user to the bucket content can be disabled
+
+    - OAI - Origin Access Identity (legacy): 
+        - Is a type of identity, it can be associated with CloudFront distributions
+        - Essentially the CloudFront distributions "becomes" the OAI, meaning that this identity can be used in S3 bucket policies
+        - Common pattern is to lock the S3 bucket to be only accessible to CloudFront
+        - The edge locations gains the attached OAI identity, meaning they will be able to access the bucket
+        - Direct access from the end-user to the bucket content can be disabled with a bucket policy
+        - OAIs can be created and used one many CF distributions and many buckets at the same time. It is easier to manage one OAI with one CF distribution
+    - OAC -  Origin Access Control (recommended):
+        - Used for the same purpose as OAI - restrict access to bucket to CF only
+        - If enabled CF will sign each request to S3 bucket
+        - Once enabled, we will have to adjust the bucket policy to allow request from the CF distribution
 - Custom origins:
-    - We can not use OAI to control access
+    - We can not use OAI to control access!
     - We can utilize custom headers, which will be protected by the HTTPS protocol. CloudFront will be configured to send this custom header
     - Other way to handle CloudFront security from custom origins is to determine the IP ranges from which the request is coming from. CloudFront IP ranges are publicly available
 
@@ -167,9 +174,19 @@
     - Private: requests to CloudFront needs to be made with a signed url or cookie
 - If the CloudFront distribution has only 1 behavior the whole distribution is considered to be either public or private
 - In case of multiple behaviors: each behavior can be either public or private
-- In order to enable private distribution of content, we need to create a **CloudFront Key** by an Account Root User. That account is added as a **Trusted Signer**
-- Signed URLs provide access to one particular object. They are also used for legacy RTMP distributions which can not use cookies
-- Signed cookies can provide access to groups of objects or all files of a particular type
+- There are 2 ways two configure private behaviors in CF:
+    - The old way: in order to enable private distribution of content, we need to create a **CloudFront Key** by an Account Root User. That account is added as a **Trusted Signer**
+    - The new (preferred) way:
+        - Create Trusted Key Groups and assign them signers
+        - They key groups determine which keys can be used to create signed urls and signed cookies
+        - Few reasons we might use this compared to the legacy approach:
+            - We don't need the root user from the account to manage CF keys
+            - We can manage keys groups with CF API and we can associate a higher number of keys with our distribution/behavior giving us more flexibility
+- Signed URLs vs Cookies:
+    - Signed URLs provide access to one particular object
+    - We should use signed urls if the client does not support cookies
+    - Signed cookies can provide access to groups of objects or all files of a particular type
+    - With signed cookies we can maintain the application's URL if this is important
 
 ### CloudFront Geo Restriction
 
@@ -178,19 +195,22 @@
     - CloudFront Geo Restriction:
         - Whitelist or Blacklist countries
         - **Only works with countries!**
-        - Uses a GeoIP database with 99.8% accuracy
+        - Uses a GeoIP database with 99.8% claimed accuracy
         - Applies to the entire distribution
+        ![Geo Restriction Architecture](images/CloudFrontGeoRestriction.png)
     - 3rd Party Geolocation:
         - Completely customizable, can be used to filter on lots of other attributes, example: username, user attributes, etc.
         - Requires an application server in front of CloudFront, which controls weather the customer has access to the content or not
         - The application generates a signed url/cookie which is returned to the browser. This can be sent to CloudFront for authorization
+        ![3rd Party GeoLocation Architecture](images/CloudFront3rdPartyGeoLocation.png)
 
 ### Field-Level Encryption
 
-- Field-Level encryption happens at the edge
-- We can configure encryption using a public key for certain fields from the request
+- We can configure encryption ath the edge location for certain fields from the request using a public key
+- Useful for encrypting sensitive data such as passwords, payment information, etc. at the edge locations
 - Field-Level encryption happens separately from the HTTPS tunnel
 - A private key is needed to decrypt individual fields
+- Decryption of the encrypted fields can be done at the origin, if necessary
 - Field-Level encryption architecture:
     ![Field-Level encryption architecture](images/FieldLevelEncryption2.png)
 
@@ -198,16 +218,16 @@
 
 - Lambda@Edge allows us to run lightweight Lambda functions at the edge locations
 - These Lambda functions allow us to adjust data between the viewer and the origin
-- They don't have the full Lambda feature set:
+- Lambda functions running at the edge don't have the full Lambda feature set:
     - Currently only NodeJS and Python are supported
     - Functions don't have access to any resources in a VPC, they run in AWS public space
     - Lambda Layers are not supported
 - They have different size and duration limits compared to classic Lambda functions:
-    - Viewer side: 128MB/5seconds
-    - Origin side: same as classic Lambda/30seconds
+    - Viewer side: 128 MB limit in size / function timeout is 5 seconds
+    - Origin side: function size is the same as classic Lambda / function timeout is 30 seconds
 - Lambda@Edge use cases:
-    - A/B testing - viewer request function
-    - Migration between S3 origins - origin request function
-    - Different objects based on the type of device - origin request function
-    - Content displayed by country - origin request
+    - A/B testing - generally done with Viewer Request function. Lambda function can view the request from the viewer and can modify the response accordingly
+    - Migration between S3 origins - generally done with an Origin Request function
+    - Different objects based on the type of device - generally done with an Origin Request function
+    - Content displayed by country - generally done with an Origin Request function
     - More examples: [https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html#lambda-examples-redirecting-examples](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-examples.html#lambda-examples-redirecting-examples)
