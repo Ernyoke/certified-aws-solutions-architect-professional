@@ -21,7 +21,7 @@
 - It is a device which is ordered from AWS, log a job and device will be delivered to us
 - Any data stored in Snowball is encrypted using KMS
 - There are 2 types of devices with 50TB and 80TB capacity
-- In terms of network connectivity we can have 1Gbps (RJ45 1GBase-TX) or 10Gbps (LR/SR) networking
+- In terms of network connectivity we can have 1 Gbps (RJ45 1GBase-TX) or 10 Gbps (LR/SR) networking
 - Economical range for a Snowball is 10TB to 10PB range of data (multiple devices can be used)
 - Multiple devices can be ordered and be sent to multiple business premises
 - Snowball only includes storage capability
@@ -31,9 +31,9 @@
 - Includes both storage capability and compute capability
 - It has a larger capacity compared to classic Snowball and has faster networking connection
 - There are 3 different type of Snowball Edge:
-    - Storage optimized (with EC2 capability): 80TB, 24vCPU, 32Gib RAM, 1TB of local SSD for EC2 usage
-    - Compute optimized: 100TB + 7.68 NVME, 52vCPU, 208Gib RAM
-    - Compute optimized with GPU: 100TB + 7.68 NVME, 52vCPU, 208Gib RAM, GPU
+    - Storage optimized (with EC2 capability): 80 TB, 24 vCPU, 32 Gib RAM, 1 TB of local SSD for EC2 usage
+    - Compute optimized: 100 TB + 7.68 NVME, 52 vCPU, 208 Gib RAM
+    - Compute optimized with GPU: 100 TB + 7.68 NVME, 52 vCPU, 208 Gib RAM, GPU
 - Ideal for remote sites or where data processing on ingestion is needed
 
 ## Snowmobile
