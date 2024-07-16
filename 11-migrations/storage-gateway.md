@@ -9,30 +9,30 @@
 ## Volume Gateway
 
 - Offers 2 different types of operation:
-    - Stored Mode:
-        - The VM appliance presents volumes over iSCI to servers
+    - Volume Stored Mode:
+        - The virtual appliance presents volumes over iSCSI to servers running on-premises (similar to what NAS/SAN hardware would)
         - Servers can create files systems on top of these volumes and use it in a normal way
         - These volumes consume capacity on-premises
         - Storage gateway has local storage, used as primary storage, everything is stored locally
         - Upload buffer: any data written to the local storage is also copied in the upload buffer and it will be uploaded to the cloud asynchronously via the storage gateway endpoint
         - The upload data is copied into S3 as EBS snapshots which can be converted into EBS volumes
         - It is great to do full disk backups, offering excellent RTO and RPO values
-        - Stored Mode does not allow extending the data center capacity! The full copy of the data is stored locally
-        ![Stored Mode architecture](images/StorageGatewayVolumeStored.png)
-    - Cached Mode:
-        - Cached Mode shares the same basic architecture with Stored Mode
+        - Volume Stored Mode does not allow extending the data center capacity! The full copy of the data is stored locally
+        ![Volume Stored Mode architecture](images/StorageGatewayVolumeStored.png)
+    - Volume Cached Mode:
+        - Volume Cached Mode shares the same basic architecture with Stored Mode
         - The main location of data is no longer on-premises, it is on AWS S3
         - It has a local cache for the data only storing the frequently accessed data, the primary data will be in S3
         - The data will be stored in AWS managed area of S3, meaning it wont be visible using the AWS console. It can be viewed from the storage gateway console
         - The data is stored in raw block state
         - We can create EBS volumes out of the data
-        - Cached Mode allows for an architecture know as data center extension
-        ![Cached Mode architecture](images/StorageGatewayVolumeCached.png)
+        - Volume Cached Mode allows for an architecture know as data center extension
+        ![Volume Cached Mode architecture](images/StorageGatewayVolumeCached.png)
 
 ## Tape - VTL Mode
 
 - VTL - Virtual Tape Library
-- Examples of tape backups: LTO-9 Media which can hold 24TB raw data per tape
+- Examples of tape backups: LTO-9 (Linear Tape Open) Media which can hold 24TB raw data per tape
 - Tape Loader (Robot): robot arm can insert/remove/swap tapes
 - A Library is 1 ore more drives, 1 or more loaders and slots
 - Traditional tape backup architecture:
@@ -43,6 +43,10 @@
 - A Storage Gateway can handle at max 1PB ot data across 1500 virtual tapes
 - When virtual tapes are not used, they can be exported in the backup software marking them not being in the library (equivalent of ejecting them and moving them to the offsite storage)
 - When exported, the virtual tape is archived in the Virtual Shelf which is backed by Glacier
+- Storage Gateway in VTL Mode pretends to be a iSCSI tape library, tape change and iSCSI drive (physical tape backup system)
+- Use cases: 
+    - On-premises data storage extension into AWS
+    - Migration of historical sets a tape backups
 
 ## File Mode
 
@@ -55,7 +59,8 @@
     ![File Gateway architecture](images/StorageGatewayFile.png)
 - For Windows environments we can use AD authentication to access the File Gateway
 - File Mode can be used for multiple contributors (multiple shares on-premises)
+- File paths in a File Gateway map directly to S3 object names
 - `NotifyWhenUploaded`: API to notify other gateways when objects are changed
-- File Gateway does not support any kind of object locking!
-- The bucket backing the File Gateway can be used with CRR
+- File Gateway does not support any kind of object locking => one gateway can override files from another gateway. We should use a read only mode on other shares or tightly control file access
+- The bucket backing the File Gateway can be used with cross-region replication (CRR)
 - The lifecycle policies can also be used for files to be moved automatically between classes

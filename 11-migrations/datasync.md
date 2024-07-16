@@ -2,13 +2,13 @@
 
 - It is a data transfer service which allows data to be transferred into or out of AWS
 - Can be used for workflows such as migrations, data processing transfers, archival, cost effective storage, DR/BC
-- Each agent can handle 10Gbps transfer speed, each job can handle 15 million files
+- Each agent can handle 10 Gbps transfer speed, each job can handle 15 million files
 - It also handles the transfer of metadata (permissions, timestamps)
 - It provides built in data validation
 
 ## Key Features
 
-- Scalable: 10Gbps per agent (~100TB of data per day)
+- Scalable: 10 Gbps per agent (~100 TB of data per day)
 - Bandwidth Limiters: used to avoid link saturation
 - Incremental and scheduled transfer options
 - Compressions and encryption
