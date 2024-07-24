@@ -151,6 +151,7 @@
 - We integrate with it on the on-premises side by creating a private VIF and associate this with a DX Gateway instead of the Virtual Private Gateway (VGW). This integrates the on-premises router with the DX Gateway
 - On the AWS side we create VGW associations in any VPC in any AWS regions
 - DX gateways allow to route through them to the on-premises environments and vice-versa. They don't allow VPCs connected to the gateway to communicate with each other
+- 1 DX Gateway per VIF. 
 - We can have 10 VGW attachments per DX Gateway
 - 1 DX connection can have up to 50 private VIFs, each of which support 1 DX gateway and 1 DX gateway supports 10 VGW association => we can connect up to 500 VPCs
 - DX gateway don't have a cost, we have cost for data transit only
