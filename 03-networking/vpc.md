@@ -136,9 +136,9 @@
 - Only one internet gateway can be associated with a VPC, but we can have both internet gateway and egress only internet gateway associated to the same VPC. They are 2 different things
 ![IPv6 Architecture](images/IPv6EOIGW.png)
 - IPv6 can be set up while creating a VPC/subnet or we can migrate an existing VPC to IPv6
-**- We can enable IPv6 on specific subnets only
-****- We can point IPv6 traffic to internet gateway and egress only internet gateways as well
-**- Not every service in AWS supports IPv6!
+- We can enable IPv6 on specific subnets only
+- We can point IPv6 traffic to internet gateway and egress only internet gateways as well
+- Not every service in AWS supports IPv6!
 
 ## Advanced VPC Structure - How many AZs for HA?
 
