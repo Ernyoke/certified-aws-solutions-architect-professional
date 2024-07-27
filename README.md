@@ -94,7 +94,8 @@
     - [AWS Systems Manager Parameter Store](12-security-and-config/parameter-store.md)
     - [AWS Secrets Manager](12-security-and-config/secrets-manager.md)
     - [VPC Flow Logs](12-security-and-config/vpc-flow-logs.md)
-    - [AWS Shield and Web Application Firewall (WAF)](12-security-and-config/waf-shield.md)
+    - [Application (Layer 7) Firewalls](12-security-and-config/application-firewalls.md)
+    - [AWS Shield](12-security-and-config/shield.md)
 13. Disaster Recovery and Business Continuity in AWS
     - [DR/BC Architecture](13-disaster-recovery/dr.md)
 14. Infrastructure as Code

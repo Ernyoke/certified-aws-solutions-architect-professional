@@ -1,0 +1,88 @@
+# Application (Layer 7) Firewalls
+
+- Layer 3/4 firewalls:
+    - These kind of firewalls see packets, segments, IP addresses and ports
+    - The data stream for a request and for the response are seen as separate
+- Layer 5 firewalls:
+    - Introduces session capability by seeing the request/response streams as a single session
+    - With this it reduces admin overhead, with the addition of being able to implement more contextual security
+- In both cases they don't understand anything above the layer they operate
+- Layer 7 firewalls:
+    - They understand various layer 7 protocols, such as HTTP
+    - They can identify normal/abnormal elements of layer 7
+    - They can protect against various protocol level attacks and weaknesses
+    - In case of HTTPS, the encryption is terminated at the firewall in order for the data to be analyzed. A new HTTPS connection is created between the firewall and the server
+    - Layer 7 firewalls can inspect, block replace or tag data. They can protect against things such as adult content, spam content, off topic content or malware
+
+## WAF - Web Application Firewall
+
+- It is Layer 7 Firewall (understands HTTP/S)
+- Normally firewall operate at Layer 3, 4, 5
+- WAF protects against complex Layer 7 attacks/exploits such as SQL Injection, Cross-Site Scripting
+- It can filter based on location (Geo Blocks), and provides rate awareness
+- Web Access Control List (WEBACL) are used by WAF to protect services and we associate them with ALB, API Gateway, CloudFront or with AppSync
+- WEBACL has rules and they are evaluated when traffic arrives
+- (WAF) Rules:
+    - We have rules within Rule Groups in case fo WEBACL. Examples of AWS managed rule groups are:
+        - ALLOW LIST/DENY LIST
+        - SQL injection
+        - XSS
+        - HTTP Flood
+        - IP reputation
+        - Bots (protection against botnets)
+- Web Access Control Lists (WEBACL):
+    - They are the main unit of configuration within WAF
+    - The starting point of a WEBACL is a Default Action (ALLOW or BLOCK) used for any traffic that is not matched
+    - The WEBACL is created for CloudFront or for a regional service (ALB, API GW, AppSync)
+    - We need to add Rule Groups/Rules for a WEBACL in order to accomplish any filtering. Rules/rule groups are processed in order
+    - WEBACL have a limit of how much compute requirement can the rules use. AWS has a concept named WEBACL Capacity Units for this
+    - WEBACL Capacity Units (WCU): indication for the complexity of rules, there is a limit of how many WCU can be on a single ACL. The default maximum is 1500 (can be increased with a support ticket)
+    - Associating a WEBACL to a resource can take time (depending on the service), adjusting a WEBACL associated takes less time
+    - A AWS resource can have 1 ACL, but 1 WEBACL can be associated with many resources. We can't associate a CloudFront ACL with other region services
+    - AWS Outposts do not support WEBACLs
+- Rule groups:
+    - Groups of rules
+    - They don't have default actions, the default action is defined when groups are added to WEBACLs
+    - Rule groups can be Managed (AWS or Marketplace), Yours, Service Owned (Shield and Firewall Manager)
+    - AWS managed rule groups are mostly available for free for AWS customers (AWS WAF bot control/fraud control have addition fees)
+    - Rules groups attained by the marketplace has subscriptions attached
+    - When we create a rule group we define upfront the WCU capacity (max 1500)
+- Rules:
+    - Structure of a rule: Type, Statement, Action
+        - Type: determines at a high level how the rule works
+        - Statement: one or more things which can match traffic or not
+        - Action: what WAF does if traffic is matched
+    - The type of a rule can be Regular or Rate-based
+        - Regular: designed to match if something occurs
+        - Rate-based: designed to match if something occurs after a given rate
+    - Statement of a rule: define what the rules checks for
+        - For regular rules WHAT does the rule match against
+        - For rate-based rules we either apply a rate limit on a number of connection for a source IP address or we apply a rate limit on the nr of connections on an IP address for connection which match certain criteria
+    - In terms of criteria we can match against:
+        - Origin country
+        - IP
+        - Label
+        - Header
+        - Cookies
+        - Query parameters
+        - URI path
+        - Query string body (first 8192 bytes only)
+        - HTTP method
+    - We can have different types of matches: exact match, starts with, contains, regular expression, etc.
+    - We can also have more than one statement with AND, OR, NOT conditions
+    - Action: 
+        - For regular rules we can have allow, block, count, captcha, custom response/custom header(`x-amzn-waf-`), label
+        - For rate based rules allow is not a valid action, we only have block, count and captcha
+        - Custom response and custom header can be used with block action. For allow we can use a custom header only
+        - Label can be added to traffic. Labels are WAF internal concept. They allow multi-stage flows, where first rule adds a label, the rule after that can run wether the label is present or not
+- Pricing:
+    - We are charged for every WEBACL per month (currently $5/month). WEBACL can be reused!
+    - Rules on WEBACL are charged monthly (currently 1$/month)
+    - We will be charged for every rule group or every managed rule group we add to our ACL
+    - We will be charged for every request processed per ACL (monthly $0.60/1 million requests)
+    - Optional security features can be enabled for additional costs:
+        - Intelligent Threat Mitigation
+        - Bot Control ($10/month) + ($1/1mil requests)
+        - Captcha
+        - Fraud Control/Account Takeover
+    - Marketplace Rule groups come with extra charge

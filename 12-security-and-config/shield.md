@@ -1,6 +1,4 @@
-# AWS Shield and Web Application Firewall (WAF)
-
-## AWS Shield
+# AWS Shield
 
 - Provides protection against DDoS attacks
 - Provides a custom designed set of protection against DDoS attacks
@@ -14,12 +12,3 @@
         - Expands the range of products which can be protected: EC2, ELB, CloudFront, Global Accelerator and Route53
         - Shield Advanced provides access to 24/7 advanced response team
         - Provides financial insurance for any increase of payments in case of DDoS attacks
-
-## WAF - Web Application Firewall
-
-- It is Layer 7 Firewall (understands HTTP/S)
-- Normally firewall operate at Layer 3, 4, 5
-- WAF protects against complex Layer 7 attacks/exploits such as SQL Injection, Cross-Site Scripting
-- It can filter based on location (Geo Blocks), and provides rate awareness
-- Web Access Control List (WEBACL) integrated with ALB, API Gateway and CloudFront
-- WEBACL has rules and they are evaluated when traffic arrives
