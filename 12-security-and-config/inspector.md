@@ -1,11 +1,11 @@
 # AWS Inspector
 
-- Is a product designed to check EC2 instances and the operating systems running on those instances for any vulnerabilities or deviations against best practice
+- Is a product designed to check EC2 instances and the operating systems running on those instances, as well as container workflows, for any vulnerabilities or deviations against best practice
 - Inspector can be run for a certain period of time (15 min, 1 hour, 1 day, etc.) to identify any unusual traffic and configurations which can put instances to risk
-- Provides a report of findings ordered by severity
-- Inspector can work with 2 main type of assessment per instances:
-    - Network Assessment: can be conducted agentless
-    - Network and Host Assessment: requires an agent to be installed
+- At the end of this process, Inspector provides a report of findings ordered by severity
+- Inspector can work with 2 main type of assessments:
+    - Network Assessment: can be conducted agentless, but adding an agent can provide a more richer assessment
+    - Network and Host Assessment: requires an agent to be installed. The host assessment looks for OS level vulnerabilities, so it requires the presence of an agent
 - Rules packages: determine what is checked on an instance
 - Examples of rule packages:
     - **Network Reachability**: 
@@ -16,7 +16,7 @@
             - `RecognizedPortNoListener`
             - `RecognizedPortNoAgent`
             - `UnrecognizedPortWithListener`
-    - Host Assessment:
+    - **Host Assessment**:
         - Agent is required
         - Checks for Common vulnerabilities and exposures (CVE)
         - Center for Internet Security (CIS) Benchmarks
