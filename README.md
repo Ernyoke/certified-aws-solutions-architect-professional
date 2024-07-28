@@ -96,6 +96,7 @@
     - [VPC Flow Logs](12-security-and-config/vpc-flow-logs.md)
     - [Application (Layer 7) Firewalls](12-security-and-config/application-firewalls.md)
     - [AWS Shield](12-security-and-config/shield.md)
+    - [AWS Network and DNS Firewalls](12-security-and-config/network-and-dns-firewall.md)
 13. Disaster Recovery and Business Continuity in AWS
     - [DR/BC Architecture](13-disaster-recovery/dr.md)
 14. Infrastructure as Code
@@ -108,10 +109,17 @@
     - [AWS Systems Manager (SSM)](15-deployment/ssm.md)
 16. Everything Else
     - [Amazon Lex and Amazon Connect](16-other/lex.md)
+    - [Amazon Comprehend](16-other/comprehend.md)
+    - [Amazon Kendra](16-other/kendra.md)
+    - [Amazon Polly](16-other/polly.md)
     - [AWS Rekognition](16-other/rekognition.md)
     - [Kinesis Video Streams](16-other/kinesis-video-streams.md)
     - [AWS Glue](16-other/glue.md)
     - [AWS Device Farm](16-other/device-farm.md)
+    - [Amazon Textract](16-other/textract.md)
+    - [Amazon Transcribe](16-other/transcribe.md)
+    - [Amazon Forecast](16-other/forecast.md)
+    - [Amazon Fraud Detector](16-other/fraud-detector.md)
 
 ## Exam Description
 
