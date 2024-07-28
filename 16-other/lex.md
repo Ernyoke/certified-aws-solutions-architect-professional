@@ -2,7 +2,7 @@
 
 ## Amazon Lex
 
-- Provides text or voice conversational interfaces
+- Provides text or voice conversational interfaces (Lex for voice, Lex for Alexa)
 - Powers the Alexa service
 - Lex provides 2 main bits of functionality:
     - Automatic speech recognition (ASR) - speech to text

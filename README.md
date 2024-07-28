@@ -109,6 +109,9 @@
     - [AWS Systems Manager (SSM)](15-deployment/ssm.md)
 16. Everything Else
     - [Amazon Lex and Amazon Connect](16-other/lex.md)
+    - [Amazon Comprehend](16-other/comprehend.md)
+    - [Amazon Kendra](16-other/kendra.md)
+    - [Amazon Polly](16-other/polly.md)
     - [AWS Rekognition](16-other/rekognition.md)
     - [Kinesis Video Streams](16-other/kinesis-video-streams.md)
     - [AWS Glue](16-other/glue.md)
