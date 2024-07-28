@@ -116,6 +116,10 @@
     - [Kinesis Video Streams](16-other/kinesis-video-streams.md)
     - [AWS Glue](16-other/glue.md)
     - [AWS Device Farm](16-other/device-farm.md)
+    - [Amazon Textract](16-other/textract.md)
+    - [Amazon Transcribe](16-other/transcribe.md)
+    - [Amazon Forecast](16-other/forecast.md)
+    - [Amazon Fraud Detector](16-other/fraud-detector.md)
 
 ## Exam Description
 
