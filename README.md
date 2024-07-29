@@ -102,6 +102,7 @@
     - [AWS Network and DNS Firewalls](12-security-and-config/network-and-dns-firewall.md)
 13. Disaster Recovery and Business Continuity in AWS
     - [DR/BC Architecture](13-disaster-recovery/dr.md)
+    - [AWS Elastic Disaster Recovery (DRS)](13-disaster-recovery/drs.md)
 14. Infrastructure as Code
     - [CloudFormation](14-iac/cloudformation.md)
 15. Deployment and Management
