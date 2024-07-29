@@ -10,7 +10,7 @@
 - This structure is hierarchical, it is an inverted tree
 - At the top of this tree is the root container of the organization (just a container within the organization, NOT to be confused with the root user)
 - This root container can contain other containers, this containers are known as **Organizational Units (OU)**
-- OUs can contains accounts (Management/Member accounts) or other OUs
+- **OUs can contains accounts (Management/Member accounts) or other OUs**
 
 ## Consolidated Billing
 
@@ -36,7 +36,7 @@
 - They are JSON documents
 - They can be attached to the root of the organization, to one or more OUs or to individual AWS accounts
 - SCPs inherit down through the organization tree
-- The Management Account is special: even if it has SCPs attached (directly or through an OU) it wont be affected by the SCP
+- **The Management Account is special: even if it has SCPs attached (directly or through an OU) it wont be affected by the SCP**
 - SCPs are account permission boundaries:
     - They limit what the account (including the root user of the account) can do
     - We can never restrict a root user from an account, but we can restrict the account itself, hence these restrictions will apply to the root user as well
