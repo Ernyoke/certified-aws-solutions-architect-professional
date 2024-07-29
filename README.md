@@ -74,6 +74,7 @@
     - [Elastic Transcoder and AWS Elemental MediaConvert](09-containers-and-serverless/mediaconvert.md)
     - [AWS IOT](09-containers-and-serverless/iot.md)
     - [AWS SAM - Serverless Application Model](09-containers-and-serverless/sam.md)
+    - [AWS APP Runner](09-containers-and-serverless/app-runner.md)
 10. Caching, Delivery and Edge
     - [CloudFront](10-caching/cloudfront.md)
     - [ElastiCache](10-caching/elasticache.md)

@@ -33,3 +33,17 @@
 - Creates AMIs which can be used to create EC2 instances
 - It can be used with other tooling such as CloudFormations to automate repeated deployment of instances
 - It too integrates with AWS Migration Hub
+
+## AWS Application Migration Service (MGN)
+
+- Is used to migrate servers from on-prem to AWS
+-  It allows companies to lift-and-shift a large number of physical, virtual, or cloud servers without compatibility issues, performance disruption, or long cutover windows
+- AWS recommends agent-based replication when possible as it supports continuous data protection (CDP)
+- AWS MGN provides this agent. MGN creates a Launch Template which is then used to launch EC2 instances
+- AWS MGN provides a way to work out what kind of dependencies do we have between databases, app servers, web servers, etc. We can group these servers and migrate them together
+- It can also provide CloudFormation templates for deployment
+- Difference between SMS and MGN:
+    - Server Migration Service utilizes incremental, snapshot-based replication and enables cutover windows in hours
+    - Application Migration Service utilizes continuous, block-level replication and enables short cutover windows measured in minutes
+- AWS recommends to use MGN instead of SMS
+- We can migrate virtual and physical servers as well
