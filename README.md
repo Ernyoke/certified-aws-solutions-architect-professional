@@ -38,6 +38,7 @@
     - [ELB - Elastic Load Balancer](05-compute/elb.md)
     - [ASG - Auto Scaling Groups](05-compute/asg.md)
     - [Gateway Load Balancers (GWLB)](05-compute/gwlb.md)
+    - [Other Compute Related Products](05-compute/others.md)
 6. Monitoring, Logging and Cost Management
     - [CloudWatch](06-monitoring/cloudwatch.md)
     - [CloudTrail](06-monitoring/cloudtrail.md)
@@ -59,6 +60,7 @@
     - [Amazon Redshift](08-data-analytics/redshift.md)
     - [AWS Batch](08-data-analytics/aws-batch.md)
     - [AWS Quicksight](08-data-analytics/quicksight.md)
+    - [Other Data Analytics Related Products](08-data-analytics/others.md)
 9. App Services, Containers and Serverless
     - [ECS - Elastic Container Service](09-containers-and-serverless/ecs.md)
     - [EKS - Elastic Kubernetes Service](09-containers-and-serverless/eks.md)
@@ -74,7 +76,7 @@
     - [Elastic Transcoder and AWS Elemental MediaConvert](09-containers-and-serverless/mediaconvert.md)
     - [AWS IOT](09-containers-and-serverless/iot.md)
     - [AWS SAM - Serverless Application Model](09-containers-and-serverless/sam.md)
-    - [AWS APP Runner](09-containers-and-serverless/app-runner.md)
+    - [AWS App Runner](09-containers-and-serverless/app-runner.md)
 10. Caching, Delivery and Edge
     - [CloudFront](10-caching/cloudfront.md)
     - [ElastiCache](10-caching/elasticache.md)
