@@ -65,7 +65,7 @@
 
 - Only IDENTITY permissions are impacted by boundaries - any resource policies are applied full
 - Permission boundaries can be applied to IAM Users and IAM Roles
-- Permission boundaries don't grant access to any action. They define maximum permissions an identity can receive
+- **Permission boundaries don't grant access to any action. They define maximum permissions an identity can receive**
 - Use cases for permission boundaries:
     - Delegation problem: if we give elevated permissions to an user, he/she could promote itself to have administrator permissions or could create another user with administrator permissions
     - Solution is to have a boundary which forbids changing its onw user's permissions and forbid creating other users/roles with elevated permissions
