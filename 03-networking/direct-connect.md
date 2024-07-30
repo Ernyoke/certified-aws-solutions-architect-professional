@@ -127,7 +127,7 @@
     - Chose the customer side BGP ASN (ideally this is public ANS for full functionality offered by public VIFs)
     - Configure MD5 authentication and select optional peering IP addresses
     - We have to select which prefixes we want to advertise
-- Private VIFs architecture:
+- Public VIFs architecture:
 ![Public VIFs Architecture](images/DXPublicVIFS.png)
 
 ## Direct Connect Public VIF + VPN
@@ -160,7 +160,7 @@
 ## Transit VIFs and TGW
 
 - A DX Gateway does not route between the associated VPCs to that gateway, it only routes from on-premises to AWS side or vice-versa
-- Transit Gateways are regionals, it is possible to peer TGWs allowing connections between regions
+- Transit Gateways are regional, it is possible to peer TGWs allowing connections between regions
 - Transit Gateways are hub-and-spoke architecture, anything associated with a TGW is able to communicate with anything other associated to that TGW
 - This architecture also works within peered TGWs
 - DX-TGW Architecture:

@@ -100,6 +100,8 @@
     - [Application (Layer 7) Firewalls](12-security-and-config/application-firewalls.md)
     - [AWS Shield](12-security-and-config/shield.md)
     - [AWS Network and DNS Firewalls](12-security-and-config/network-and-dns-firewall.md)
+    - [AWS Detective](12-security-and-config/detective.md)
+    - [Security Hub](12-security-and-config/security-hub.md)
 13. Disaster Recovery and Business Continuity in AWS
     - [DR/BC Architecture](13-disaster-recovery/dr.md)
     - [AWS Elastic Disaster Recovery (DRS)](13-disaster-recovery/drs.md)
