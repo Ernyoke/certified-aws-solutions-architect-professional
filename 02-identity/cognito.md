@@ -15,6 +15,9 @@
 
 <img width="1312" alt="image" src="https://github.com/user-attachments/assets/6caff77a-6d75-4439-bc30-59c03a94a6ae">
 
+<img width="1312" alt="image" src="https://github.com/user-attachments/assets/c70b26ff-f4e2-41ad-a87d-94786a116546">
+
+
 ## Cognito concepts
 
 ![Cognito Concepts](images/CognitoConcepts.png)
