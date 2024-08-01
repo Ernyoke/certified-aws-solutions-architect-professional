@@ -1,10 +1,10 @@
 # AWS Security Hub
 
-- Provides a comprehensive view of your security state in AWS
+- Provides a comprehensive view of our security state in AWS
 - Helps us assess our AWS environment against security industry standards and best practices
-- Security Hub collects security data across AWS accounts, AWS services, and supported third-party products and helps you analyze your security trends and identify the highest priority security issues
+- Security Hub collects security data across AWS accounts, AWS services, and supported third-party products and helps us analyze our security trends and identify the highest priority security issues
 - Security Hub needs to be enabled to be used. There are two ways to enable AWS Security Hub, by integrating with AWS Organizations or manually
-- And organization can have a delegated administrator for the Security Hub
+- Organization can have a delegated administrator for the Security Hub
 
 ## Central Configuration
 

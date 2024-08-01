@@ -46,6 +46,7 @@
     - [Cost Allocation Tags](06-monitoring/cost-allocation-tags.md)
     - [AWS Trusted Advisor](06-monitoring/trusted-advisor.md)
     - [AWS Billing and Cost Management](06-monitoring/billing.md)
+    - [AWS Compute Optimizer](06-monitoring/compute-optimizer.md)
 7. Databases
     - [RDS - Relational Database Service](07-databases/rds.md)
     - [Amazon Aurora](07-databases/aurora.md)
@@ -102,6 +103,7 @@
     - [AWS Network and DNS Firewalls](12-security-and-config/network-and-dns-firewall.md)
     - [AWS Detective](12-security-and-config/detective.md)
     - [Security Hub](12-security-and-config/security-hub.md)
+    - [AWS Audit Manager](12-security-and-config/audit-manager.md)
 13. Disaster Recovery and Business Continuity in AWS
     - [DR/BC Architecture](13-disaster-recovery/dr.md)
     - [AWS Elastic Disaster Recovery (DRS)](13-disaster-recovery/drs.md)
@@ -113,6 +115,7 @@
     - [Elastic Beanstalk - EB](15-deployment/eb.md)
     - [AWS OpsWorks](15-deployment/opsworks.md)
     - [AWS Systems Manager (SSM)](15-deployment/ssm.md)
+    - [AWS Proton](15-deployment/proton.md)
 16. Everything Else
     - [Amazon Lex and Amazon Connect](16-other/lex.md)
     - [Amazon Comprehend](16-other/comprehend.md)
