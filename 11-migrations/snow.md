@@ -20,9 +20,9 @@
 
 - It is a device which is ordered from AWS, log a job and device will be delivered to us
 - Any data stored in Snowball is encrypted using KMS
-- There are 2 types of devices with 50TB and 80TB capacity
+- There are 2 types of devices with 50 TB and 80T B capacity
 - In terms of network connectivity we can have 1 Gbps (RJ45 1GBase-TX) or 10 Gbps (LR/SR) networking
-- Economical range for a Snowball is 10TB to 10PB range of data (multiple devices can be used)
+- Economical range for a Snowball is 10 TB to 10 PB range of data (multiple devices can be used)
 - Multiple devices can be ordered and be sent to multiple business premises
 - Snowball only includes storage capability
 
@@ -36,7 +36,7 @@
     - Compute optimized with GPU: 100 TB + 7.68 NVME, 52 vCPU, 208 Gib RAM, GPU
 - Ideal for remote sites or where data processing on ingestion is needed
 
-## Snowmobile
+## Snowmobile (Discontinued)
 
 - Portable data center within a shipping container on a truck
 - Needs to be specially ordered from AWS
