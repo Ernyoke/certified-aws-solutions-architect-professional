@@ -107,7 +107,7 @@
     ```
 - Conditions can be nested
 
-## DependsOne
+## DependsOn
 
 - Allows us to establish dependencies between resources
 - CFN tried to be efficient by creating/updating/deleting resources in parallel
@@ -131,7 +131,7 @@
 
 ## Nested Stacks
 
-- Most simple projects will generally utilise a CFN stack
+- Most simple projects will generally utilize a CFN stack
 - Stacks can have limits:
     - Resource limit: 500 resources per stack
     - We can't easily reuse resources, example reference a VPC
@@ -147,13 +147,13 @@
 - We can provide input values to the nested stacks. We need to supply values to any parameters from a nested stack if the parameter does not have a default value defined
 - Any outputs of a nested stack are returned to the root stack which can be referenced as `NESTEDStack.Outputs.XXX`
 - Benefits of a nested stack is to reuse the same template, not the actual stack created
-- We should use nested stacks when we want to link the lifecycles of different stacks
+- We should use nested stacks when we want to link the life cycles of different stacks
 
 ## Cross-Stack References
 
 - CFN stacks are designed to be isolated and self-contained
 - With nested stacks we can reuse code only, with cross-stack references we can reference resources created by other stacks
-- Outputs are normally not visible from other stacks, exception being nested stacks which can reference them
+- Outputs are normally not visible from other stacks, exception being nested stacks which case the parent stack can reference the nested stack output
 - Outputs of a template can be exported making them visible from other stacks
 - Exports must have unique names in the region
 - To use the exported resources we can use `Fn::ImportValue` intrinsic function

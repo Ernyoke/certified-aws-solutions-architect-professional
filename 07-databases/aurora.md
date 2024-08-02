@@ -6,13 +6,13 @@
 - It uses the base entity of a cluster, which something that other instances of RDS database do not have
 - Aurora does not use local storage for the compute instances, instead an Aurora cluster has a shared custom volume
 - A cluster is made up from a number of important things:
-    - A single primary instance + 0 ore more replicas
+    - A single primary instance + 0 or more replicas
     - The replicas can be used for read during normal operations
 - Aurora uses a *Cluster*:
     - Made up of a single primary instance and 0 or more replicas
     - The replicas can be used for reads (not like the standby replica in RDS)
     - Storage: the cluster uses a shared cluster volume (SSD based by default). Provides faster provisioning, improved availability and better performance. Size can go up to 128 TiB
-    - The storage has 6 replicas across AZ. The data is replicated synchronously. Replication happens at the storage level, no extra resources are consumed for replication
+    - The storage has 6 replicas across AZs. The data is replicated synchronously. Replication happens at the storage level, no extra resources are consumed for replication
     - By default only the primary instance are able to write to the storage, replicas and the primary can perform read operation
     - Self-healing: Aurora can repair its data if a replica or part of the replica if there is a disk failure
     - Aurora uses the cluster to repair the data with no corruption. As a result, Aurora avoids data loss and reduces needs for point-in-time restores or snapshot restores
