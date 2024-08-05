@@ -18,6 +18,9 @@
     - Supports DFS - scale-out file share structure, group file shares together in one enterprise-wise structure
     - Managed - no file server admin
     - Integrates with Amazon managed DS or our own directory
+ 
+<img width="1308" alt="image" src="https://github.com/user-attachments/assets/f1535870-ae68-4f72-8c3a-26d06b7f8803">
+
 
 ## FSx for Lustre
 
