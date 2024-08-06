@@ -21,3 +21,5 @@
     - Infrequent Access (IA): cost-optimized storage class for data that is less frequently accessed (few times a quarter)
     - Archive: for data that is accessed a few times a year
 - We can automatically move data between these 2 classes using lifecycle policies
+
+<img width="1290" alt="image" src="https://github.com/user-attachments/assets/2fc3161d-1c4d-4287-a1d4-ab8f424130b0">
