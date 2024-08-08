@@ -7,10 +7,10 @@
     - Applied to a VPC: all interfaces in that VPC
     - Subnet: every network interface in the subnet only
     - Network interface: only monitor traffic at a specific interface
-- VPC Flow Logs are NOT realtime
-- Flow logs can be configured to use S3 or CloudWatch Logs for the destination
+- VPC Flow Logs are NOT realtime, there is delay between traffic leaving monitored interfaces and showing up in the flow logs
+- Flow logs can be configured to use S3, CloudWatch Logs or Kinesis Firehose for the destination
 
-## VPC Flow Logs Content
+## VPC Flow Logs Record Content
 
 - `<version>`
 - `<account-id>`

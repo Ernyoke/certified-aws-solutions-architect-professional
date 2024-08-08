@@ -9,6 +9,24 @@
 - If a stack's template are changed, physical resources are changed as well
 - If a stack is deleted, normally the physical resources are deleted
 
+## Stacks
+
+- A stack is a collection of AWS resources that you can manage as a single unit
+- All the resources in a stack are defined by the stack's CloudFormation template
+- Stack options:
+    - Tags: key/value pairs attached to the stack. Can be used to identify the stack for cost allocation purposes
+    - Permissions: IAM service role that can be assumed by CloudFormation
+    - Stack failure options:
+        - Specifies what to do if something fails while the stack is provisioned
+        - Options:
+            - Roll back all stack resources
+            - Preserve successfully provisioned resources
+    - Stack policy: defines the resources that we want to protect from unintentional updates during a stack update
+    - Rollback configuration: we can monitor the stack while it is being created/updated and we can roll it back in case a threshold is breached (example if any alarm goes to ALARM state)
+    - Notification options: we can specify an SNS topic where notifications should go
+    - Stack creation options: following options are included for stack creation, but aren't available as part of stack updates:
+        - Timeout: Specifies the amount of time, in minutes, that CloudFormation should allot before timing out stack creation operations
+
 ## Template Parameters and Pseudo Parameters
 
 - Template parameters allow input via the console, CLI or API when the stack is created or updated
@@ -89,7 +107,7 @@
     ```
 - Conditions can be nested
 
-## DependsOne
+## DependsOn
 
 - Allows us to establish dependencies between resources
 - CFN tried to be efficient by creating/updating/deleting resources in parallel
@@ -113,7 +131,7 @@
 
 ## Nested Stacks
 
-- Most simple projects will generally utilise a CFN stack
+- Most simple projects will generally utilize a CFN stack
 - Stacks can have limits:
     - Resource limit: 500 resources per stack
     - We can't easily reuse resources, example reference a VPC
@@ -129,13 +147,13 @@
 - We can provide input values to the nested stacks. We need to supply values to any parameters from a nested stack if the parameter does not have a default value defined
 - Any outputs of a nested stack are returned to the root stack which can be referenced as `NESTEDStack.Outputs.XXX`
 - Benefits of a nested stack is to reuse the same template, not the actual stack created
-- We should use nested stacks when we want to link the lifecycles of different stacks
+- We should use nested stacks when we want to link the life cycles of different stacks
 
 ## Cross-Stack References
 
 - CFN stacks are designed to be isolated and self-contained
 - With nested stacks we can reuse code only, with cross-stack references we can reference resources created by other stacks
-- Outputs are normally not visible from other stacks, exception being nested stacks which can reference them
+- Outputs are normally not visible from other stacks, exception being nested stacks which case the parent stack can reference the nested stack output
 - Outputs of a template can be exported making them visible from other stacks
 - Exports must have unique names in the region
 - To use the exported resources we can use `Fn::ImportValue` intrinsic function

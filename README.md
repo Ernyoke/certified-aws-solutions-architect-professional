@@ -38,6 +38,7 @@
     - [ELB - Elastic Load Balancer](05-compute/elb.md)
     - [ASG - Auto Scaling Groups](05-compute/asg.md)
     - [Gateway Load Balancers (GWLB)](05-compute/gwlb.md)
+    - [Other Compute Related Products](05-compute/others.md)
 6. Monitoring, Logging and Cost Management
     - [CloudWatch](06-monitoring/cloudwatch.md)
     - [CloudTrail](06-monitoring/cloudtrail.md)
@@ -45,6 +46,7 @@
     - [Cost Allocation Tags](06-monitoring/cost-allocation-tags.md)
     - [AWS Trusted Advisor](06-monitoring/trusted-advisor.md)
     - [AWS Billing and Cost Management](06-monitoring/billing.md)
+    - [AWS Compute Optimizer](06-monitoring/compute-optimizer.md)
 7. Databases
     - [RDS - Relational Database Service](07-databases/rds.md)
     - [Amazon Aurora](07-databases/aurora.md)
@@ -59,6 +61,7 @@
     - [Amazon Redshift](08-data-analytics/redshift.md)
     - [AWS Batch](08-data-analytics/aws-batch.md)
     - [AWS Quicksight](08-data-analytics/quicksight.md)
+    - [Other Data Analytics Related Products](08-data-analytics/others.md)
 9. App Services, Containers and Serverless
     - [ECS - Elastic Container Service](09-containers-and-serverless/ecs.md)
     - [EKS - Elastic Kubernetes Service](09-containers-and-serverless/eks.md)
@@ -73,6 +76,8 @@
     - [Amazon Mechanical Turk](09-containers-and-serverless/mechanical-turk.md)
     - [Elastic Transcoder and AWS Elemental MediaConvert](09-containers-and-serverless/mediaconvert.md)
     - [AWS IOT](09-containers-and-serverless/iot.md)
+    - [AWS SAM - Serverless Application Model](09-containers-and-serverless/sam.md)
+    - [AWS App Runner](09-containers-and-serverless/app-runner.md)
 10. Caching, Delivery and Edge
     - [CloudFront](10-caching/cloudfront.md)
     - [ElastiCache](10-caching/elasticache.md)
@@ -93,9 +98,15 @@
     - [AWS Systems Manager Parameter Store](12-security-and-config/parameter-store.md)
     - [AWS Secrets Manager](12-security-and-config/secrets-manager.md)
     - [VPC Flow Logs](12-security-and-config/vpc-flow-logs.md)
-    - [AWS Shield and Web Application Firewall (WAF)](12-security-and-config/waf-shield.md)
+    - [Application (Layer 7) Firewalls](12-security-and-config/application-firewalls.md)
+    - [AWS Shield](12-security-and-config/shield.md)
+    - [AWS Network and DNS Firewalls](12-security-and-config/network-and-dns-firewall.md)
+    - [AWS Detective](12-security-and-config/detective.md)
+    - [Security Hub](12-security-and-config/security-hub.md)
+    - [AWS Audit Manager](12-security-and-config/audit-manager.md)
 13. Disaster Recovery and Business Continuity in AWS
     - [DR/BC Architecture](13-disaster-recovery/dr.md)
+    - [AWS Elastic Disaster Recovery (DRS)](13-disaster-recovery/drs.md)
 14. Infrastructure as Code
     - [CloudFormation](14-iac/cloudformation.md)
 15. Deployment and Management
@@ -104,12 +115,20 @@
     - [Elastic Beanstalk - EB](15-deployment/eb.md)
     - [AWS OpsWorks](15-deployment/opsworks.md)
     - [AWS Systems Manager (SSM)](15-deployment/ssm.md)
+    - [AWS Proton](15-deployment/proton.md)
 16. Everything Else
     - [Amazon Lex and Amazon Connect](16-other/lex.md)
+    - [Amazon Comprehend](16-other/comprehend.md)
+    - [Amazon Kendra](16-other/kendra.md)
+    - [Amazon Polly](16-other/polly.md)
     - [AWS Rekognition](16-other/rekognition.md)
     - [Kinesis Video Streams](16-other/kinesis-video-streams.md)
     - [AWS Glue](16-other/glue.md)
     - [AWS Device Farm](16-other/device-farm.md)
+    - [Amazon Textract](16-other/textract.md)
+    - [Amazon Transcribe](16-other/transcribe.md)
+    - [Amazon Forecast](16-other/forecast.md)
+    - [Amazon Fraud Detector](16-other/fraud-detector.md)
 
 ## Exam Description
 

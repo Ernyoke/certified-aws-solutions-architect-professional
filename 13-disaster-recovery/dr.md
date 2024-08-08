@@ -11,14 +11,17 @@
     - Data is constantly backup up at the primary site
     - The only costs are backup media and management, no ongoing space infrastructure costs
     - Has little or no upfront costs, but implies a significant time for recovery
+    - Expected recovery time is counted in hours
 - **Pilot Light**:
     - Primary site is running at full
     - Pilot Light implies running a secondary environment only having the absolute minimum services running
     - In the event of a disaster the shutdown services can be spined up, no costs are expected to be inquired if there is no need for DR
+    - Expected recovery time is a few 10s of minutes
 - **Warm Standby**:
     - Primary site is running at full, everything is replicated on the backup site at a smaller scale
     - Ready to be increased in size when failover is required
     - It is faster than pilot light approach and cheaper than active/active approach
+    - Expected recovery time is a few minutes
 - **Active/Active (Multi-site):**
     - Primary site is entirely replicated on a secondary site
     - Data is constantly replicated from the primary site to the backup

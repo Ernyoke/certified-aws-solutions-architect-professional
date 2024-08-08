@@ -4,15 +4,15 @@
 - EB is a developer focused product, providing managed application environments
 - At a high level, developers provide code and EB handles infrastructure
 - EB is fully customizable - uses AWS products under the covers provisioned with CloudFormation
-- Using EB requires application support, does not come for free
+- Using EB requires application support, there are things to do as a developer. This does not come for free, and it not something a non-technical end-user could do
 
-## EB Platforms
+## Platforms
 
 - EB is capable of accepting code in many languages known as platforms
 - EB has support for built-in languages, Docker and custom platforms
 - Built-in supported languages: Go, Java SE, Java Tomcat, .NET Core (Linux) and .NET (Windows), Node.JS, PHP, Python, Ruby
-- Docker options: single container docker and multicontainer docker (ECS)
-- Preconfigured Docker: way to provide runtimes which are not yet natively supported, example Java with Glassfish
+- Docker options: single container docker and multi container docker (ECS)
+- Pre-configured Docker: way to provide runtimes which are not yet natively supported, example Java with Glassfish
 - We can create our own custom platform using packer which can be used with Beanstalk
 
 ## EB Terminology
@@ -71,19 +71,18 @@
     3. Create a new EB environment with the same app version
     4. Ensure new environment can connect to the DB
     5. Swap environment (CNAME or DNS)
-    6. Terminate the old environment -  this will try to terminate the RDS instance
-    7. Locate the `DELETE_FAILED` stack in CFN, manually delete the stack and pick to retain stuck resources
+    6. Terminate the old environment - this will try to terminate the RDS instance
+    7. Locate the `DELETE_FAILED` stack in CloudFormation console, manually delete the stack and pick to retain stuck resources
 
 ## Customizing via `.ebextensions`
 
 - We can include directive to customize EB environments using `.ebextensions` folder
-- Anything added in this folder as YAML or JSON format ending in `.config` is regarded to be configuration file
-- This files has to be formatted as CloudFormation files
+- Anything added in this folder as YAML or JSON and it ends in `.config` is regarded to be an EB extension configuration file. These configurations files are CloudFormation definitions, and they are used to influence the EB environment itself to change its configuration or provision new resources
 - EB will use CFN to create additional resources within the environment specified in the `.config` files
-- This files can have also a number of config elements:
-    - `option_settings`: allows us to set options for resources
-    - `Resources`: allows us to create new resources using CFN elements
-    - packages, sources, files, users, groups, commands, container_commands and services
+- These files can have the following sections:
+    - `option_settings`: allows us to set options of resources (example: use NLB instead of ALB for the EB environment)
+    - `Resources`: allows us to create new resources using CFN (example: configure OpenSearch cluster for our environment)
+    - Additional sections: packages, sources, files, users, groups, commands, container_commands and services
 
 ## EB with HTTPS
 
@@ -94,9 +93,9 @@
 ## Environment Cloning
 
 - Cloning allows to create new EB environment by cloning existing environments
-- By cloning an environment we don't have to manually configure options, env. variables, resources and other settings
+- By cloning an environment we don't have to manually configure options, environment variables, resources and other settings
 - A clone does copy any RDS instance defined, but the data is not copied by default
-- EB cloning does not include any un-managed changes to resources from the environment
+- EB cloning does not include any un-managed changes to resources from the environment. Changes to AWS resources we make using tools other than the EB console/CLI/API are considered un-managed changes
 - To clone an environment from the eb command line we can use `eb clone <ENV>` command
 
 ## EB and Docker
@@ -115,5 +114,5 @@
 - Elastic Beanstalk uses ECS to create a cluster
 - ECS uses EC2 instances provisioned in the cluster and an ELB for HA
 - EB takes care of ECS tasks, cluster creation, task definition and task execution
-- We need to provide an `Dockerrun.aws.json` (version 2) file in the application source bundle (root level)
+- We need to provide an `Dockerrun.aws.json` (~~version 2~~ version 3) file in the application source bundle (root level)
 - Any images need to be stored in a container registry such as ECR

@@ -26,14 +26,14 @@
 
 ## AWS CodePipeline
 
-- It is a Continuos Delivery Tools
+- It is a Continuos Delivery tool
 - Controls the flow from source code, through build towards deployment
-- A pipeline is build from stages. These contain actions which can be sequential or parallel
+- Pipelines are built from stages. Stages contain actions which can be sequential or parallel
 - Movement between stages can happen automatically or it can require a manual approval
-- Action can consume artifacts or they can generate artifacts
+- Actions within stages can consume artifacts or they can generate artifacts
 - Artifacts are just files which are generated and/or consumed by actions
-- Any changes to the sate of pipelines, stages or actions generate events which are published to Event Bridge
-- CloudTrail or Console UI can be used to view/interact with the pipeline
+- Any changes to the sate of a pipeline, stages or actions generate events which are published to Event Bridge
+- CloudTrail can be used to monitor API calls. Console UI can be used to view/interact with the pipeline
 
 ## AWS CodeBuild
 
@@ -62,21 +62,22 @@
 ## AWS CodeDeploy
 
 - Is a code deployment as a service product
-- It is an alternative for for third-party services such as Jenkins, Ansible, Chef, Puppet and even CloudFormation
+- It is an alternative for third-party services such as Jenkins, Ansible, Chef, Puppet or even CloudFormation
 - It is used to deploy code, not resources (use CloudFormation for that)
-- CodeDeploy can deploy code to EC2, on-premises, Lambda and Ecs
+- Uses docker for build environments, it can be customized
+- CodeDeploy can deploy code to EC2, on-premises, Lambda and ECS
 - Besides code, it can deploy configurations, executables, packages, scripts, media and many more
-- CodeDeploy integrates with other AWS services such as AWS Code*
+- CodeDeploy integrates with other AWS services such as KMS, IAM, VPC, CloudTrail, S3
 - In order to deploy code on EC2 and on-premises, CodeDeploy requires the presence of an agent
 
 ### `appspec.[yaml|json]`
 
 - It controls how deployments occur on the target
 - Manages deployments: configurations + lifecycle event hooks
-- Configuration section:
-    - Files: applies to EC2/on-premises. Provides information about which files should be installed on the instance
-    - Resources: applies to ECS/Lambda. For Lambda it contains the name, alias, current version and target version of a Lambda function. For ECS contains things like the task definition and container details (ports, traffic routing)
-    - Permissions: applies to EC2/on-premises. Details any special permissions and how should be applies to files and folders from the files sections
+- Configuration section - has 3 important sections:
+    - **Files**: applies to EC2/on-premises. Provides information about which files should be installed on the instance
+    - **Resources**: applies to ECS/Lambda. For Lambda it contains the name, alias, current version and target version of a Lambda function. For ECS contains things like the task definition and container details (ports, traffic routing)
+    - **Permissions**: applies to EC2/on-premises. Details any special permissions and how should be applies to files and folders from the files sections
 - Lifecycle event hooks:
     - `ApplicationStop`: happens before the application is downloaded. Used for gracefully stop the application
     - `DownloadBundle`: agent copies the application to a temp location
