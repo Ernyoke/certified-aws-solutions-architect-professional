@@ -3,7 +3,7 @@
 ## EC2 Purchase Options (Launch Types)
 
 - **On-Demand (default)**:
-    - Average of anything, no specific cons of pros
+    - Average of anything, no specific cons or pros
     - On-demand instances are isolated but multiple customer instances run on a shared hardware
     - Multiple instance types (different sizes) can run on the same EC2 hosts, consuming a different allocation of resources
     - Billing: per-second billing while an instance is running, if a system is shut down, we don't get billed for that
@@ -12,6 +12,7 @@
     - With on-demand there are no interruptions. We start an instance and it should run as long as we don't decide to shut it down
     - In case of resource shortage the reserved instances receive highest priority, consider them instead of on-demand in case of business critical systems
     - On-demand offers predictable pricing without any discount options
+    - If you are unsure of duration or type of workload, On-demand should be considered.
 - **Spot instances**:
     - Cheapest way to get EC2 compute capacity
     - Spot pricing is selling EC2 capacity at lower price in order make use of spare EC2 capacity on the host machines
