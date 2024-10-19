@@ -12,16 +12,19 @@
     - When we pick a subnet, AWS places one or more load balancer nodes in that subnet
     - When an LB is created, it has a DNS A record. This A record points to all the nodes provisioned for the LB => all the incoming connections are distributed equally
     - The nodes are HA: if the node fails, a different one is created. If the load is to high, multiple nodes are created
-    - We have to decide on creation if the LB is internal or internet facing (have public IP addresses or not)
+    - We have to decide on creation if the LB is internal or internet facing. The internet facing the nodes will have public IP addresses otherwise private IP address is assigned. EC2 innstances need not have public IP address for internet facing LB. <span style="color: #ff5733;"><!Important for EXAM></span>
 - Load Balancers are configured with listeners which accept traffic on a port and protocol and communicate with the targets
 - An internat facing load balancer can connect to both public and private instances
 - Minimum subnet size for a LB to function is /28 - 8 or more fee addresses per subnet (AWS suggests a minimum of /27)
+- Internal LB are same as internet LB but they have private IP address assiged to the nodes. Internal LB are used to connect to private nodes and help in internal scaling,
 
 ## Cross-Zone Load Balancing
 
 - An LB by default has at least one node per AZ that is configured for
 - Initially each LB node could distribute connections to instances in the same AZ
-- Cross-Zone Load Balancing: allows any LB node to distribute connections equally across all registered instances in all AZs
+- Cross-Zone Load Balancing: allows any LB node to distribute connections equally across all registered instances in all AZs.
+- This help with the uneven distribution of load and could be helpful in <span style="color: #ff5733;">EXAM</span>
+![CROSS-ZONE LB Architecture](images/ELBArchitecture2.png)
 
 ## User Session State
 
