@@ -28,6 +28,7 @@
         - We pay for unused reservations
         - Reservations can be bought for a specific type of instances. They can be region and AZ locked
         - Az locked instances reserve EC2 capacity
+        - If an instance is reserved for a region,it doesn't reserve capacity but it can benefit any instances launched in any AZ in that region.
         - Reservations can have a partial effects in a sense the we can get discounts for larger instances compared to which the reservation was purchased
         - We can commit to reservations of 1 year of 3 years
         - Payment structures:
@@ -110,15 +111,20 @@
 ## Bootstrapping and AMI Baking
 
 - Bootstrapping:
-    - Is a way of building EC2 instances in a flexible way
+    - Is a way of building EC2 instances in a flexible way. Isn't fast, but super flexible.
     - Flexible, automated building of EC2 instances
-    - We provision EC2 instances and add a scrip to the user data
+    - We provision EC2 instances and add a script to the user data
     - CloudInit runs the script on the instance when the instance is launched
     - This process can longer time, although it is very flexible
+    - When finished, ec2 instance is ready to use.
 - AMI Baking:
     - We front-load the time and effort required to configure an instance
+    - Our aim is to get the instance ready or almost ready at this point of the process. We can use bootstrapping to install the software and make the instance ready.
     - We launch an EC2 instance and perform the necessary tasks from which we can create an AMI
-    - We can use the AMI to deploy many instances quickly
+    - We can use the AMI to deploy many instances quickly.
+    - The tradeoff is, it harder to change the AMI.
+    - AMI baking and bootstrappig are not mutually exclusive.
+    - <span style="color: orange;">If there are any exam question related to time taken to launch the EC2 instance, think of AMI baking.</span>
 
 ## EC2 Placement Groups
 
