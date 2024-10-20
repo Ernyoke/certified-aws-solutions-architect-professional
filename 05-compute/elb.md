@@ -48,8 +48,9 @@
 - We should default to using v2 load balancer for newer deployments
 - Version 2 (v2) load balancers:
     - Application Load Balancer (ALB - v2 LB) are layer 7 devices, they support HTTP(S) and WebSocket protocols
-    - Network Load Balancers (NLB) are also v2 load balancers supporting lower level protocols such as TCP, TLS and UDP
-- In general v2 load balancers are faster and they support target groups and rules
+    - Network Load Balancers (NLB) are also v2 load balancers supporting lower level protocols such as TCP, TLS and UDP. 
+      These could be used for applications like Email servers, Games or applications which does't use HTTP/s protocols.
+- In general v2 load balancers are faster and they support target groups and rules, this allow to use single LB for multiple things.
 
 ## Application and Network Load Balancers
 
@@ -64,7 +65,7 @@
     - It can understand layer 7 content, such as cookies, custom headers, user location, app behavior, etc.
     - Any incoming connection (HTTP, HTTPS) is always terminated on the ALB - no unbroken SSL
     - All ALBs using HTTPS must have SSL certificates installed
-    - ALBs are slower than NLBs because they require more levels of networking stack to process
+    - ALBs are slower than NLBs because they require more levels of networking stack to process. Any <span style="color: #ff5733;">EXAM</span> question which talks about performance, NLB should be considered instead of ALB.
     - ALB offer health checks evaluation at application layer
     - Application Load Balancer Rules:
         - Rules direct connection which arrive at a listener
@@ -72,15 +73,23 @@
         - Rule conditions: host-header, http-header, http-request-method, path-pattern, query-string and source-ip
         - Rule actions: forward, redirect, fixed-response, authenticate-oidc and authenticate-cognito
     - The connection from the LB and the instance is a separate connection
+    - If you need to forward connections without terminating on the LB, then you need to consider NLB. (<span style="color: #ff5733;">EXAM</span>)
 - **Network Load Balancer (NLB)**:
     - NLBs are layer 4 load balancers, meaning they support TPC, TLS, UDP, TCP_UDP connections
     - They have no understanding of HTTP or HTTPS => no concept of network stickiness
-    - They are really fast, can handle millions of request per second having 25% latency of ALBs
-    - Recommended for SMTP, SSH, game servers, financial apps (not HTTP(S))
+    - They are really fast, can handle millions of request per second having 25% latency of ALBs because they don't have to deal with any  of the heavy computational upper layers.
+    - Recommended for SMTP, SSH, game servers, financial apps (not HTTP(S)) <-- <span style="color: #ff5733;">EXAM</span>
     - Health checks can only check ICMP or TCP handshake
-    - They can be allocated with static IP addresses
-    - They can forward TCP straight through the instances => unbroken encryption
-    - NLBs can be used for PrivateLink
+    - They can be allocated with static IP addresses which is udeful for whitelisting which is beneficial for corporate client.
+    - They can forward TCP straight through the instances => unbroken encryption <-- <span style="color: #ff5733;">EXAM</span>
+    - NLBs can be used for PrivateLink <-- <span style="color: #ff5733;">EXAM</span>
+
+- **Scenarios for NLB**:
+    - Unbroken encryption
+    - Static IP for whitelisting
+    - Fast performance
+    - Protocols other tha HTTP or HTTPS
+    - Privatelink
 
 ## Session Stickiness
 
