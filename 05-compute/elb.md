@@ -106,6 +106,7 @@
     - If the instance to which the cookie maps to fails, then a new instance will be selected
     - If the cookie expires => the cookie will be removed, new cookie is created while a new instance is chosen
 - Session stickiness problems: load can become unbalanced
+- Enable session stickiness if an application does't use external sessions
 
 ## Connection Draining and Deregistration Delay
 

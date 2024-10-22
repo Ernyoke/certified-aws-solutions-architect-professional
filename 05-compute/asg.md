@@ -4,17 +4,19 @@
 - Provide the ability to implement a self-healing architecture
 - ASGs make use of configurations defined in launch templates or launch configurations
 - ASGs are using one version of a launch template/configuration
-- ASG have 3 important values defined: *Minimum*, *Desired* and *Maximum* size
+- ASG have 3 important values defined: *Minimum*, *Desired* and *Maximum* size. Desired size has to be more than the minimum size and less than Maximum size.
 - ASG provides on foundational job: keeps the size of running instances at the desired size
+- Archechturally ASG define where the EC2 instances are launcehd. They are attcahed to VPC and which subnets are configured within the VPC in ACG. 
 - **Scaling Policies**: update the desired capacity based on some metric (CPU usage, number of connections, etc.)
     - They are essentially rules defined by us which can adjust the values of an ASG
+    - Scaling policies are used with ASG.
     - Scaling types:
-        - **Manual Scaling**
-        - **Scheduled Scaling**: scheduling based on know time window
+        - **Manual Scaling** : Manually adjusts the desired capcacity.
+        - **Scheduled Scaling**: Scheduling based on know time window
         - **Dynamic Scaling**
         - **Predictive Scaling**: scale based on historical load to detect patterns in traffic flows
 - Dynamic Scaling has 3 subtypes:
-    - **Simple Scaling**: example "CPU above 50%  +1", "CPU Below 50% -1"
+    - **Simple Scaling**: Based on Metric. Example "CPU above 50%  +1", "CPU Below 50% -1"
     - **Step Scaling**: scaling based on difference, allowing to react quicker
     - **Target Tracking**: example desired aggregate CPU = 40%. Not all metrics are supported by target tracking scaling
 - **Cooldown Period**: a value in seconds, controls how long to wait after a scaling action happened before starting another action
