@@ -144,12 +144,13 @@
 - They offer the lowest latency possible and max PPS(packets per second) possible in AWS
 - To achieve these levels of performance we need to use instances with high performant networking: instances with more bandwidth and with Enhanced Networking
 - Cluster placement groups should be used for highest performance. They offer no HA and very little resilience
-- Considerations for cluster placement groups:
+- Considerations for cluster placement groups: <span style="color: #ff5733;">Important for EXAM!!!</span>
     - We can not span over AZs, the AZ is locked when the first instance is launching
     - We can span over VPC peers, but this will impact performance negatively
     - Cluster placement groups are not supported for every instance type
     - *Recommended*: use the same type of instances and launch them at the same time
     - Cluster placement groups offer 10 Gbps for single stream performance
+    - Use cases: High performace, fast speeds, low latency
 
 ### Spread Placement Groups
 
@@ -157,10 +158,11 @@
 - They can span multiple AZs
 - Instances in the same spread placement group are located on different racks, having isolated networking and power supplies
 - There is a limit for 7 instances per AZ in case of spread placement groups. This is because each instance is a completely separate instance rack 
-- Considerations:
+- Considerations: <span style="color: #ff5733;">Important for EXAM!!!</span>
     - Spread placement provides infrastructure isolation
     - Hard limit: 7 instances per AZ
     - We can not use dedicated instances or hosts
+    - Use cases: Small number of critical instances that need to be kept seperated from each other. May be mirrors of file server, or may be different domain controllers within an organization.
 
 ### Partition Placement Groups
 
@@ -170,8 +172,9 @@
 - At creation we specify the number of partition per AZ (max 7 per AZ)
 - Each partition has its own rack with isolated power and networking
 - We can launch as many instances as we need in a partition group. We can select the partition by hand or we can let EC2 decide on a partition for a new instance
-- Use cases for partition groups: HDFS, HBase, Cassandra, topology aware applications
+- Use cases for partition groups: HDFS, HBase, Cassandra, topology aware applications<span style="color: #ff5733;">Important for EXAM!!!</span>
 - Instances can be placed in a specific partition or we can let AWS to decide
+- Offer visibility in partitions and you can see which instance is in which partition.
 
 ## EC2 Spot Instances
 

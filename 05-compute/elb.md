@@ -126,10 +126,10 @@
 
 - In case a client connects to a backend without any load balancing in the front of the backend, the IP address of the client is visible and can be recorded
 - With load balancers this can be more complicated, this is where `X-Forwarded-For` header and the PROXY protocol become handy
-- `X-Forwarded-For` is a HTTP header, it only works with HTTP/HTTPS
-- This header is added/appended by proxies/load balancers. It can have multiple values in case the request is passing multiple proxies/load balancers
+- `X-Forwarded-For` is a HTTP header, it only works with HTTP/HTTPS. This is a layer 7 header.
+- This header is added/appended by proxies/load balancers. It can have multiple values in case the request is passing multiple proxies/load balancers. E.g X-Forwarded-For: 1.3.3.7(ClientIP), proxy1, proxy2..
 - The backend server needs to be aware of this header and needs to support it
-- Supported on CLB and ALB, NLB does not supports it!
+- Supported on CLB and ALB, NLB does not supports it because they don't support the layer 7 of the OSI stack.
 - PROXY protocol works at Layer 4, it is an additional layer 4 (tcp) header => works with a wide range or protocols (including HTTP/HTTPS)
 - There are 2 versions of PROXY protocol:
     - v1: human readable, works with CLB
