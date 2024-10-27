@@ -7,19 +7,21 @@
 - CloudWatch stores data in a persistent way
 - Data can be viewed from the console, CLI or API, but also CloudWatch also provides dashboards and anomaly detection
 - CloudWatch Alarms: react to metrics, can be used to notify or to perform actions
+- Instances in public subnet can connect to cloudwatch using Internet gateway and the instances in the private subnets can connect to the cloudwatch usig Interface Endpoint.
 
 ## CloudWatch - Data
 
-- **Namespace**: container for metrics
+- **Namespace**: container for metrics e.g. AWS/EC2 for EC2 NS, AW/Lambda for lambda NS. Its possible to have same mertic name for different service, NS helps to segregate them.
 - **Data point**: timestamp, value, unit of measure (optional)
 - **Metric**: time ordered set of data point. Example of builtin metrics: `CPUUtilization`, `NetworkIn`, `DiskWriteBytes` for EC2
-- Every metric has a `MetricName` and a namespace
+- Every metric has a `MetricName` and a namespace e.g. CPUUtilization for AWS/EC2
 - **Dimension**: name/value pair, example: a dimension is the way for `CPUUtilization` metric to be separated from one instance to another
 - Dimensions can be used to aggregate data, example aggregate data for all instances for an ASG
 - **Resolution**: standard (60 second granularity) or high (1 second granularity)
 - **Metric resolution**: minimum period that we can get one particular data point for
 - Data retention:
     - sub 60s granularity is retained for 3 hours
+    - High resolution can be measured but they cost more. Resolution determines the minimum period which ca be specified and get a valid value. Standard (60 Sec) .. High (1 Sec)
     - 60s granularity retained for 15 days
     - 5 min retained for 63 days
     - 1 hour retained for 455 days
