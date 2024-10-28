@@ -10,7 +10,7 @@
     - Service Limit
 - Trusted Advisor is not a free service, at least if we want to get out the most of it
 - The free version is available if the account has basic or developer support plans
-- The free version provides 7 basic core checks:
+- The free version provides 7 basic core checks <span style="color: #ff5733;">(Remember them for EXAM)</span> :
     - S3 bucket permissions (open access permissions)
     - Security Groups - specific ports unrestricted
     - IAM use
