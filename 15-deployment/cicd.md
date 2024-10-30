@@ -43,7 +43,7 @@
 - CodeBuild uses Docker for build environments which can be customized by us
 - CodeBuild integrates with other AWS services such as KMS, IAM, VPC, CloudTrails, S3, etc.
 - Architecturally CodeBuild gets source material from GitHub, CodeCommit, CodePipeline or even S3
-- It builds and tests code. The build can be customized via `buildspec.yml` file which has to be located in the root of the source
+- It builds and tests code. The build can be customized via `buildspec.yml` file which has to be located in the root of the source <span style="color: red;">Remember the spelling of file and location for EXAM</span>
 - CodeBuild output logs are published to CloudWatch Logs, metrics are also published to CloudWatch Metrics and events to Event Bridge (or CloudWatch Events)
 - CodeBuild supports build environments such as Java, Ruby, Python, Node.JS, PHP, .NET, Go and many more
 
@@ -85,4 +85,4 @@
     - `Install`: agent copies the application from the temp folder to the final location
     - `AfterInstall`: perform post-install steps
     - `ApplicationStart`: used to restart/start services which were stopped during the `ApplicationStop` hook
-    - `ValidateService`: verify the deployment was completed successfully
+    - `ValidateService`: verify the deployment was completed successfully<span style="color: red;">Remember for EXAM</span>
