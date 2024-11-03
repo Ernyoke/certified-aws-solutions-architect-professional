@@ -7,6 +7,7 @@
     - OpsWorks: AWS implementation of Chef, no servers. Chef at a basic level, little admin overhead
 - Generally we should only chose to use them if we are required to use Chef or Puppet, for example in case of a migration
 - Other use case would be a requirement to automate
+- If you see an y mention of Recipes, Cookbook or Manifests than you know that it would be any of the three options mentioned above.
 
 ## Opsworks Mode
 
