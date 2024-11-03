@@ -33,14 +33,17 @@
 - **Rolling**:
     - Application code is deployed in rolling batches
     - It is safer, since the deployment will continue only if the previous batch is healthy
-    - The application will encounter loss in capacity
+    - The application will encounter loss in capacity based on size of batch you selected.
+    - We need to select the batch size based on decision how many instances you can tolerate out of service at any one time. 
 - **Rolling with additional batch**:
     - Same as rolling deployment, with the addition of having a new batch in order to maintain capacity during the deployment process
     - Recommended for production environment with real load
+    - This deployment takes longer time but is asfer and good for prod because we don't drop any capacity.
 - **Immutable**:
     - New temporary ASG is created with the newer version of the application
     - Once the validation is complete, the older stack is removed
-    - It is easier to roll back
+    - It is easier to roll back as if anything goes wrong the original instances are available in their original state.
+    - It has the highest cost as it uses the double of instances.
 - **Traffic Splitting**:
     - Fresh instances are created in a similar way as in case of immutable deployment
     - Traffic will be split between the older and the newer version
