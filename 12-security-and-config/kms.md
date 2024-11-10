@@ -45,7 +45,7 @@
 - Can handle symmetric and asymmetric keys
 - Can perform cryptographic operations such as encryption and decryption
 - **Keys never leave KMS!** Keys can be created, imported but they are locked inside KMS
-- KMS also provides a FIPS 140-2 (L2) compliance
+- KMS also provides a FIPS 140-2 (L2) compliance <span style="background-color: Red"><-- REMEMBER THIS</span>
 
 ### KMS Keys (Formerly known mainly as CMK - Customer Master Keys)
 

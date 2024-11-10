@@ -7,7 +7,7 @@
     - OpsWorks: AWS implementation of Chef, no servers. Chef at a basic level, little admin overhead
 - Generally we should only chose to use them if we are required to use Chef or Puppet, for example in case of a migration
 - Other use case would be a requirement to automate
-- If you see an y mention of Recipes, Cookbook or Manifests than you know that it would be any of the three options mentioned above.
+- If you see any mention of Recipes, Cookbook or Manifests than you know that it would be any of the three options mentioned above.
 
 ## Opsworks Mode
 
@@ -25,6 +25,6 @@
     - **Time-Based** instances: configured to start and stop on a schedule
     - **Load-Based** instances: turn on or off based on system metrics (similar to ASG)
 - Instance **auto-healing**: Opsworks automatically restarts instances in they fail for some reason
-- **Apps**: they can be stored in repositories such as S3. Each app is represented by an OpsWorks App which specifies the application type and containing any information needed to deploy the app
+- **Apps**: they can be stored in repositories such as S3. Each app is represented by an OpsWorks App which specifies the application type and containing any information needed to deploy the app from repositories to instances.
 - OpsWorks architecture:
     ![OpsWorks architecture](images/AWSOpsWorks.png)
