@@ -17,7 +17,7 @@
 1. Define an IAM role within an account or cross-account
 2. Define which principals can access the IAM role
 3. Use the AWS STS (Secure Token Service) to retrieve the IAM role we have access to (`AssumeRole` API)
-4. Temporary credentials can be valid between 15 minutes to 1 hour
+4. Temporary credentials can be valid from 15 minutes up to hours
 
 ## Revoke IAM Role Temporary Credentials
 
