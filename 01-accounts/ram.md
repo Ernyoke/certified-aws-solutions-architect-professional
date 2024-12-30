@@ -33,7 +33,7 @@
 - It is a VPC which provides infrastructure which can be used by other services
 - In AWS this has been traditionally architected using separate networks connected using VPC peering or Transit Gateways. With AWS RAM and AWS Organizations we can create something which is more effective:
     ![Shared Services VPC](images/RAM.png)
-- VPC owner can create and manage the VPC and subnets which shared with participants
+- VPC owner can create and manage the VPC and subnets which are shared with participants
 - Participants can provision services into the shared subnets, can read an reference network objects but can not modify or delete the subnets
 - Resources created by a participant account will not be visible for other participants or by the VPC owner account
 - Resources created by a participant account can be accessed from other resources created by other participant accounts because they are on the same network
