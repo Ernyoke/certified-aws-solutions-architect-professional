@@ -21,7 +21,7 @@
 - **Owner account**: 
     - Owns the resource, creates a share, provides the name
     - Retains full permission over the resource shared
-    - Defines the principal (AWS account, OU, entire AWS organization) with whom the share a specific resource
+    - Defines the principal (AWS account, OU, entire AWS organization) with whom they share a specific resource
 - **Principle**:
     - It can be an AWS account, OU, entire AWS organization
     - Resources are shared with a principle
