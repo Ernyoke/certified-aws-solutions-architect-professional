@@ -8,6 +8,7 @@
 - Global services may have a per account quota instead per region
 - Most services quotas can be increased as needed
 - Some service quotes can not be changed, example: number of IAM users per account (5000)
+- The higher the increase, the more time is needed to get the change-request approved
 - Service endpoint and quotas: [https://docs.aws.amazon.com/general/latest/gr/aws-service-information.html](https://docs.aws.amazon.com/general/latest/gr/aws-service-information.html)
 - **Service Quotas**: 
     - From the console we can go to *Service Quotas* page, where we can create dashboards for quotas we want to monitor
